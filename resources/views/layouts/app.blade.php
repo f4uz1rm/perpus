@@ -11,8 +11,9 @@
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
-    <title>Perpustakaan</title>
+    <title> @yield('title') | Perpustakaan</title>
 
+    <link rel="stylesheet" href="{{ asset('assets/vendors/datatables.net-bs5/dataTables.bootstrap5.css') }}">
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -22,6 +23,11 @@
     <link rel="stylesheet" href="{{ asset('assets/vendors/flag-icon-css/css/flag-icon.min.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/demo1/style.css') }}">
     <link rel="shortcut icon" href="{{ asset('assets/images/favicon.png') }}" />
+    <!-- Plugin css for this page -->
+    <script src="{{ asset('assets/js/jquery.js') }}"></script>
+    <!-- End plugin css for this page -->
+
+
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 
@@ -71,6 +77,11 @@
     <script src="{{ asset('assets/vendors/core/core.js') }}"></script>
     <script src="{{ asset('assets/vendors/feather-icons/feather.min.js') }}"></script>
     <script src="{{ asset('assets/js/template.js') }}"></script>
+
+    <!-- Plugin js for this page -->
+    <script src="{{ asset('assets/vendors/datatables.net/jquery.dataTables.js') }}"></script>
+    <script src="{{ asset('assets/vendors/datatables.net-bs5/dataTables.bootstrap5.js') }}"></script>
+    <script src="{{ asset('assets/js/data-table.js') }}"></script>
 </body>
 
 </html>

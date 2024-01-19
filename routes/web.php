@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\MasterController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
@@ -14,9 +15,9 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+// Route::get('/', function () {
+//     return view('welcome');
+// });
 
 Route::get('/dashboard', function () {
     return view('dashboard');
@@ -28,4 +29,12 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-require __DIR__.'/auth.php';
+Route::controller(MasterController::class)->group(function () {
+    Route::get('/list_buku', 'list_buku')->name('list_buku');
+    Route::get('/list_anggota', 'list_anggota')->name('list_anggota');
+    Route::get('/list_pengunjung', 'list_pengunjung')->name('list_pengunjung');
+    Route::get('/list_kategori', 'list_kategori')->name('list_kategori');
+});
+
+
+require __DIR__ . '/auth.php';

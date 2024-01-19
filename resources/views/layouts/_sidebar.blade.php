@@ -13,7 +13,7 @@
         <ul class="nav">
             <li class="nav-item nav-category">Menu</li>
             <li class="nav-item">
-                <a href="dashboard.html" class="nav-link">
+                <a href="{{ route('dashboard') }}" class="nav-link">
                     <i class="link-icon" data-feather="box"></i>
                     <span class="link-title">Dashboard</span>
                 </a>
@@ -42,37 +42,37 @@
                 </div>
             </li>
             <li class="nav-item">
-              <a href="pages/apps/chat.html" class="nav-link">
-                  <i class="link-icon" data-feather="calendar"></i>
-                  <span class="link-title">Jadwal Kunjungan</span>
-              </a>
-          </li>
-          <li class="nav-item nav-category">Master</li>
-            <li class="nav-item">
                 <a href="pages/apps/chat.html" class="nav-link">
+                    <i class="link-icon" data-feather="calendar"></i>
+                    <span class="link-title">Jadwal Kunjungan</span>
+                </a>
+            </li>
+            <li class="nav-item nav-category">Master</li>
+            <li class="nav-item">
+                <a href="{{ route('list_buku') }}" class="nav-link">
                     <i class="link-icon" data-feather="book-open"></i>
                     <span class="link-title">Data Buku</span>
                 </a>
             </li>
             <li class="nav-item">
-                <a href="pages/apps/chat.html" class="nav-link">
+                <a href="{{ route('list_kategori') }}" class="nav-link">
                     <i class="link-icon" data-feather="bookmark"></i>
                     <span class="link-title">Kategori Buku</span>
                 </a>
             </li>
             <li class="nav-item">
-                <a href="pages/apps/chat.html" class="nav-link">
+                <a href="{{ route('list_anggota') }}" class="nav-link">
                     <i class="link-icon" data-feather="users"></i>
                     <span class="link-title">Data Anggota</span>
                 </a>
             </li>
             <li class="nav-item">
-                <a href="pages/apps/chat.html" class="nav-link">
+                <a href="{{ route('list_pengunjung') }}" class="nav-link">
                     <i class="link-icon" data-feather="user-check"></i>
                     <span class="link-title">Data Pengunjung</span>
                 </a>
             </li>
-          
+
 
             <li class="nav-item nav-category">Laporan</li>
             <li class="nav-item">
@@ -102,4 +102,3 @@
         </ul>
     </div>
 </nav>
-
