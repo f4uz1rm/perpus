@@ -1,3 +1,7 @@
+
+@import url("../../public/assets/css/demo1/style.css");
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+

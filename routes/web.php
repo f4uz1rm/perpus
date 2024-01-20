@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\MasterController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\TransaksiController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -32,6 +33,14 @@ Route::controller(MasterController::class)->group(function () {
     Route::get('/list_anggota', 'list_anggota')->name('list_anggota');
     Route::get('/list_pengunjung', 'list_pengunjung')->name('list_pengunjung');
     Route::get('/list_kategori', 'list_kategori')->name('list_kategori');
+});
+
+Route::controller(TransaksiController::class)->group(function () {
+    Route::get('/list_peminjaman', 'list_peminjaman')->name('list_peminjaman');
+    Route::get('/form_peminjaman', 'form_peminjaman')->name('form_peminjaman');
+    Route::get('/list_pengembalian', 'list_pengembalian')->name('list_pengembalian');
+    Route::get('/list_jadwalkunjungan', 'list_jadwalkunjungan')->name('list_jadwalkunjungan');
+    Route::get('/list_denda', 'list_denda')->name('list_denda');
 });
 
 

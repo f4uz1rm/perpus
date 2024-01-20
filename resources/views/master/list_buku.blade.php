@@ -133,7 +133,6 @@
         })
 
         $("#btn-add").on("click", function() {
-            console.log("asd")
             $("#modal-buku").modal("show");
         })
     </script>

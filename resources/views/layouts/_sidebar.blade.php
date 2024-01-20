@@ -1,4 +1,4 @@
-<nav class="sidebar"  x-data="{ open: false }">
+<nav class="sidebar" x-data="{ open: false }">
     <div class="sidebar-header">
         <a href="#" class="sidebar-brand">
             Perpustakaan
@@ -29,13 +29,13 @@
                 <div class="collapse" id="transaksi">
                     <ul class="nav sub-menu">
                         <li class="nav-item">
-                            <a href="pages/email/inbox.html" class="nav-link">Peminjaman Buku</a>
+                            <a href="{{ route('list_peminjaman') }}" class="nav-link">Peminjaman Buku</a>
                         </li>
                         <li class="nav-item">
-                            <a href="pages/email/read.html" class="nav-link">Pengembalian Buku</a>
+                            <a href="{{ route('list_pengembalian') }}" class="nav-link">Pengembalian Buku</a>
                         </li>
                         <li class="nav-item">
-                            <a href="pages/email/read.html" class="nav-link">Denda</a>
+                            <a href="{{ route('list_denda') }}" class="nav-link">Denda</a>
                         </li>
 
                     </ul>
