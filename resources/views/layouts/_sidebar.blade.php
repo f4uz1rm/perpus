@@ -1,4 +1,4 @@
-<nav class="sidebar">
+<nav class="sidebar"  x-data="{ open: false }">
     <div class="sidebar-header">
         <a href="#" class="sidebar-brand">
             Perpustakaan

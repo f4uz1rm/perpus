@@ -1,7 +1,4 @@
-@extends('layouts.app')
-@section('title', 'Dashboard')
-@section('content')
-
+<x-app-layout>
     <div class="card">
 
         <div class="card-header card-title d-flex justify-content-between">
@@ -31,7 +28,7 @@
                                 Masa Aktif Anggota
                             </th>
                             <th>
-                              #
+                                #
                             </th>
                         </tr>
                     </thead>
@@ -59,4 +56,4 @@
         })
     </script>
 
-@endsection
+</x-app-layout>

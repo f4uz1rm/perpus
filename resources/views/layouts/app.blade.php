@@ -9,10 +9,9 @@
     <title>{{ config('app.name', 'Laravel') }}</title>
 
     <!-- Fonts -->
+    <title> @yield('title') | Perpustakaan</title>
     <link rel="preconnect" href="https://fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
-    <title> @yield('title') | Perpustakaan</title>
-
     <link rel="stylesheet" href="{{ asset('assets/vendors/datatables.net-bs5/dataTables.bootstrap5.css') }}">
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -28,7 +27,8 @@
     <!-- End plugin css for this page -->
 
 
-    @vite(['resources/css/app.css', 'resources/js/app.js'])
+    {{-- @vite(['resources/css/app.css', 'resources/js/app.js']) --}}
+    @vite(['resources/js/app.js'])
 </head>
 
 <body class="font-sans antialiased">
@@ -65,6 +65,9 @@
 
             <div class="page-content">
                 @yield('content')
+
+                {{ $slot }}
+
             </div>
 
             <!-- partial:../../partials/_footer.html -->

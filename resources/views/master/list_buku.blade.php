@@ -1,6 +1,4 @@
-@extends('layouts.app')
-@section('title', 'Dashboard')
-@section('content')
+<x-app-layout>
 
     <div class="card">
 
@@ -140,4 +138,4 @@
         })
     </script>
 
-@endsection
+</x-app-layout>

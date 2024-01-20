@@ -1,6 +1,4 @@
-@extends('layouts.app')
-@section('title', 'Dashboard')
-@section('content')
+<x-app-layout>
 
     <div class="card">
 
@@ -16,10 +14,10 @@
                     <thead>
                         <tr class="text-center">
                             <th>
-                               Tanggal Kunjungan
+                                Tanggal Kunjungan
                             </th>
                             <th>
-                                Nama Lengkap 
+                                Nama Lengkap
                             </th>
                             <th>
                                 Kelas
@@ -27,7 +25,7 @@
                             <th>
                                 Tujuan Ke Pespustakaan
                             </th>
-                         
+
                         </tr>
                     </thead>
                     <tbody>
@@ -49,4 +47,4 @@
         })
     </script>
 
-@endsection
+</x-app-layout>

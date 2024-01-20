@@ -1,5 +1,5 @@
 <x-app-layout>
-    <x-slot name="header">
+    {{-- <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
             {{ __('Dashboard') }}
         </h2>
@@ -13,5 +13,11 @@
                 </div>
             </div>
         </div>
+    </div> --}}
+
+    <div class="h6 mb-1">
+        Selamat Datang di Dashboard
     </div>
+
+ 
 </x-app-layout>

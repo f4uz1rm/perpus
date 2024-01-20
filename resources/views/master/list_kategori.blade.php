@@ -1,6 +1,4 @@
-@extends('layouts.app')
-@section('title', 'Dashboard')
-@section('content')
+<x-app-layout>
 
     <div class="card">
 
@@ -46,5 +44,4 @@
             $('table').DataTable();
         })
     </script>
-
-@endsection
+</x-app-layout>
