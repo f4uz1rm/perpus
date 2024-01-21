@@ -113,6 +113,10 @@
                             <input type="search" class="form-control" id="penerbit" placeholder="Penerbit">
                         </div>
                         <div class="mb-3">
+                            <label for="jml_buku" class="form-label">Jumlah Buku</label>
+                            <input type="search" class="form-control" id="jml_buku" placeholder="Jumlah Buku">
+                        </div>
+                        <div class="mb-3">
                             <label for="lokasi_rak" class="form-label">Lokasi RAK</label>
                             <input type="search" class="form-control" id="lokasi_rak" placeholder="Contoh ( A01 )">
                         </div>

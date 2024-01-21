@@ -34,7 +34,7 @@
                                 Status
                             </th>
                             <th>
-                                #
+                                Aksi
                             </th>
                         </tr>
                     </thead>
@@ -61,7 +61,7 @@
         </div>
     </div>
 
-    <div class="modal fade" id="modal-kategori" tabindex="-1" data-bs-backdrop="static">
+    <div class="modal fade" id="modal-anggota" tabindex="-1" data-bs-backdrop="static">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
@@ -70,20 +70,61 @@
                 <div class="modal-body">
                     <form>
                         <div class="mb-3">
-                            <label for="kd_kategori" class="form-label">Kode Kategori</label>
-                            <input type="search" class="form-control" id="kd_kategori" readonly
+                            <label for="kd_anggota" class="form-label">Kode Anggota</label>
+                            <input type="search" class="form-control" id="kd_anggota" readonly
                                 placeholder="Otomatis Terisi">
                         </div>
                         <div class="mb-3">
-                            <div class="row">
-                                <div class="col">
-                                    <label for="ketegori" class="form-label">Kategori</label>
-                                    <input type="text" id="" class="form-control" placeholder="Kategori">
-                                </div>
-                            </div>
+                            <label for="nm_anggota" class="form-label">NISN ( Nomer Induk Siswa Nasional )</label>
+                            <input type="search" class="form-control" id="nisn"
+                                placeholder="Masukan NISN Jika tersedia">
+                        </div>
+                        <div class="mb-3">
+                            <label for="nm_anggota" class="form-label">Nama Anggota</label>
+                            <input type="search" class="form-control" id="nm_anggota" placeholder="Nama Anggota">
                         </div>
 
-
+                        <div class="mb-3">
+                            <label for="nm_anggota" class="form-label">Jenis Kelamin</label>
+                            <select class="form-control" id="">
+                                <option value="Laki-Laki">Laki-Laki</option>
+                                <option value="Perempuan">Perempuan</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="nm_anggota" class="form-label">Status</label>
+                            <select class="form-control" id="">
+                                <option value="siswa">Siswa / Siswi</option>
+                                <option value="guru">Guru</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="nm_anggota" class="form-label">Kelas</label>
+                            <select class="form-control" id="">
+                                <option value="" selected>Pilih Kelas</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="nm_anggota" class="form-label">Masa Aktif</label>
+                            <div class="input-group">
+                                <select class="form-control" id="">
+                                    <option value="" selected>Pilih Durasi</option>
+                                    <option value="">1</option>
+                                    <option value="">2</option>
+                                    <option value="">4</option>
+                                </select>
+                                <span class="input-group-text">Tahun</span>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="nm_anggota" class="form-label">Masa Aktif Sampai</label>
+                            <div class="input-group">
+                                <input class="form-control" type="text" name="" id="" placeholder="DD-MM-YYYY">
+                                <span class="input-group-text">
+                                    <i class="icon-sm" data-feather="calendar"></i>
+                                </span>
+                            </div>
+                        </div>
                     </form>
                 </div>
                 <div class="modal-footer ">
@@ -96,7 +137,12 @@
 
     <script>
         $(document).ready(function() {
-            $('table').DataTable();
+            $('table').DataTable({
+                responsive: true,
+            });
+        })
+        $("#btn-add").click(function() {
+            $("#modal-anggota").modal("show");
         })
     </script>
 

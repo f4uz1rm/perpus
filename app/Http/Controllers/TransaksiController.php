@@ -18,6 +18,10 @@ class TransaksiController extends Controller
     {
         return view('transaksi.list_pengembalian');
     }
+    function form_pengembalian()
+    {
+        return view('transaksi.form_pengembalian');
+    }
     function list_jadwalkunjungan()
     {
         return view('transaksi.list_jadwalkunjungan');

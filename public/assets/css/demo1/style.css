@@ -20253,6 +20253,7 @@ address p {
     transition: margin .1s ease, width .1s ease; }
     .main-wrapper .page-wrapper .page-content {
       flex-grow: 1;
+      /* padding: 25px; */
       padding: 25px;
       margin-top: 60px; }
       @media (max-width: 767px) {

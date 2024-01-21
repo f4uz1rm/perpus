@@ -13,7 +13,7 @@
 					</form> --}}
         <div class="search-form">
             <div class="h5">
-                Pondok Pesantren Miftahul Ulum
+                Sistem Informasi Perpustakaan 
             </div>
         </div>
         <ul class="navbar-nav">
