@@ -1,4 +1,4 @@
-<x-guest-layout>
+{{-- <x-guest-layout>
     <!-- Session Status -->
 
 
@@ -39,15 +39,56 @@
         </div>
 
         <div class="flex items-center justify-end mt-4">
-            {{-- @if (Route::has('password.request'))
-                <a class="underline text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:focus:ring-offset-gray-800" href="{{ route('password.request') }}">
-                    {{ __('Forgot your password?') }}
-                </a>
-            @endif --}}
 
             <x-primary-button class="ms-3">
                 {{ __('Log in') }}
             </x-primary-button>
         </div>
     </form>
+</x-guest-layout> --}}
+
+
+<x-guest-layout>
+
+    <div class="page-content d-flex align-items-center justify-content-center">
+        <div class="row w-100 mx-0 auth-page">
+            <div class="col-md-8 col-xl-6 mx-auto">
+                <form method="POST" action="{{ route('login') }}">
+                    @csrf
+                    <div class="card">
+                        <div class="row">
+                            <div class="col-md-12 ps-md-0">
+                                <div class="auth-form-wrapper px-4 py-5">
+                                    <a href="#" class="noble-ui-logo d-block mb-2">Sistem Informasi<span
+                                            class="ml-1">Perpustakaan</span></a>
+                                    <h5 class="text-muted fw-normal mb-4">Selamat datang! Silahkan login menggunakan
+                                        akun
+                                        yang terdaftar.</h5>
+                                    <form class="forms-sample">
+                                        <div class="mb-3">
+                                            <label for="email" class="form-label">Email</label>
+                                            <input type="email" name="email" class="form-control" id="email"
+                                                placeholder="Email">
+                                            <x-input-error :messages="$errors->get('email')" class="mt-2" />
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="userPassword" class="form-label">Password</label>
+                                            <input type="password" class="form-control" id="password"
+                                                autocomplete="current-password" placeholder="Password" name="password">
+                                            <x-input-error :messages="$errors->get('password')" class="mt-2" />
+                                        </div>
+
+                                        <div>
+                                            <button class="btn btn-primary">Login</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+    </div>
 </x-guest-layout>

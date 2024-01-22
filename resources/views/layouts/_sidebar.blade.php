@@ -42,12 +42,18 @@
                 </div>
             </li>
             <li class="nav-item">
-                <a href="pages/apps/chat.html" class="nav-link">
+                <a href="{{ route('list_jadwalkunjungan') }}" class="nav-link">
                     <i class="link-icon" data-feather="calendar"></i>
                     <span class="link-title">Jadwal Kunjungan</span>
                 </a>
             </li>
             <li class="nav-item nav-category">Master</li>
+            <li class="nav-item">
+                <a href="{{ route('list_kelas') }}" class="nav-link">
+                    <i class="link-icon" data-feather="columns"></i>
+                    <span class="link-title">Data Kelas</span>
+                </a>
+            </li>
             <li class="nav-item">
                 <a href="{{ route('list_buku') }}" class="nav-link">
                     <i class="link-icon" data-feather="book-open"></i>
@@ -66,6 +72,7 @@
                     <span class="link-title">Data Anggota</span>
                 </a>
             </li>
+          
             <li class="nav-item">
                 <a href="{{ route('list_pengunjung') }}" class="nav-link">
                     <i class="link-icon" data-feather="user-check"></i>

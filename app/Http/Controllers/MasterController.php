@@ -23,4 +23,8 @@ class MasterController extends Controller
     {
         return view('master.list_kategori');
     }
+    function list_kelas(): View
+    {
+        return view('master.list_kelas');
+    }
 }

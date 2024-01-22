@@ -11,24 +11,65 @@
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+    <!-- End fonts -->
 
+    <!-- core:css -->
+    <link rel="stylesheet" href="{{ asset('assets/vendors/core/core.css') }}">
+    <!-- endinject -->
+
+    <!-- Plugin css for this page -->
+    <!-- End plugin css for this page -->
+
+    <!-- inject:css -->
+    <link rel="stylesheet" href="{{ asset('assets/fonts/feather-font/css/iconfont.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/vendors/flag-icon-css/css/flag-icon.min.css') }}">
+    <!-- endinject -->
+
+    <!-- Layout styles -->
+    <link rel="stylesheet" href="{{ asset('assets/css/demo1/style.css') }}">
+    <!-- End layout styles -->
+
+    <link rel="shortcut icon" href="{{ asset('assets/images/favicon.png') }}" />
     <!-- Scripts -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 
 <body class="font-sans text-gray-900 antialiased">
-    <div class="min-h-screen flex flex-col sm:justify-center items-center pt-6 sm:pt-0 bg-gray-100 dark:bg-gray-900">
+    {{-- <div class="min-h-screen flex flex-col sm:justify-center items-center pt-6 sm:pt-0 bg-gray-100 dark:bg-gray-900">
         <div>
-            <a href="/">
-                {{-- <x-application-logo class="w-20 h-20 fill-current text-gray-500" /> --}}
-            </a>
+            <a href="/"></a>
         </div>
 
         <div
             class="w-full sm:max-w-md mt-6 px-6 py-4 bg-white dark:bg-gray-800 shadow-md overflow-hidden sm:rounded-lg">
             {{ $slot }}
         </div>
+    </div> --}}
+
+    <div class="main-wrapper">
+        <div class="page-wrapper full-page">
+           {{ $slot}}
+        </div>
     </div>
 </body>
+
+<!-- core:js -->
+<script src="{{ asset('assets/vendors/core/core.js') }}"></script>
+<!-- endinject -->
+
+<!-- Plugin js for this page -->
+<!-- End plugin js for this page -->
+
+<!-- inject:js -->
+<script src="{{ asset('assets/vendors/feather-icons/feather.min.js') }}"></script>
+<script src="{{ asset('assets/js/template.js') }}"></script>
+<!-- endinject -->
+
+<!-- Custom js for this page -->
+<!-- End custom js for this page -->
 
 </html>
