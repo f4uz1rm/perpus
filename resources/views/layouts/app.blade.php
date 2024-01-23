@@ -26,6 +26,8 @@
     <script src="{{ asset('assets/js/jquery.js') }}"></script>
     <!-- End plugin css for this page -->
 
+    <link rel="stylesheet" href="{{ 'assets/vendors/sweetalert2/sweetalert2.min.css' }}">
+
 
     {{-- @vite(['resources/css/app.css', 'resources/js/app.js']) --}}
     @vite(['resources/js/app.js'])
@@ -77,6 +79,7 @@
         </div>
     </div>
 
+    <script src="{{ asset('assets/vendors/sweetalert2/sweetalert2.min.js') }}"></script>
     <script src="{{ asset('assets/vendors/core/core.js') }}"></script>
     <script src="{{ asset('assets/vendors/feather-icons/feather.min.js') }}"></script>
     <script src="{{ asset('assets/js/template.js') }}"></script>

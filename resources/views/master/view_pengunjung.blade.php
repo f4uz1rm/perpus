@@ -43,10 +43,7 @@
                                                 placeholder="Tujuan Ke Perpustakaan" maxlength="200">
                                         </div>
                                         <div>
-                                            <button class="btn btn-success w-100" id="btn-simpan">
-                                                <i class="icon-sm" data-feather="save"></i>
-                                                Simpan Data</button>
-                                            <button class="btn btn-success w-100" id="btn-simpan">
+                                            <button class="btn btn-success py-3 w-100" id="btn-simpan">
                                                 <i class="icon-sm" data-feather="save"></i>
                                                 Simpan Data</button>
                                         </div>
