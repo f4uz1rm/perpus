@@ -32,6 +32,7 @@ Route::middleware('auth')->group(function () {
         Route::get('/list_buku', 'list_buku')->name('list_buku');
         Route::get('/list_anggota', 'list_anggota')->name('list_anggota');
         Route::get('/list_pengunjung', 'list_pengunjung')->name('list_pengunjung');
+        Route::get('/view_pengunjung', 'view_pengunjung')->name('view_pengunjung');
         Route::get('/list_kategori', 'list_kategori')->name('list_kategori');
     });
     

@@ -9,6 +9,7 @@ use App\Models\m_anggota;
 use App\Models\m_kelas;
 use App\Models\m_kategori;
 use App\Models\m_buku;
+use App\Models\m_rak;
 
 class MasterController extends Controller
 {
@@ -203,8 +204,6 @@ class MasterController extends Controller
         }
     }
 
-
-
     function get_kategori(Request $request)
     {
         $id_kategori = $request->input('id_kategori');
@@ -263,6 +262,7 @@ class MasterController extends Controller
             ], 200);
         }
     }
+
     function delete_kategori(Request $request)
     {
         $data = m_kategori::find($request->input('id_kategori'));
@@ -281,8 +281,6 @@ class MasterController extends Controller
             ], 200);
         }
     }
-
-
 
     function get_buku(Request $request)
     {
@@ -358,6 +356,87 @@ class MasterController extends Controller
     function delete_buku(Request $request)
     {
         $data = m_buku::find($request->input('id_buku'));
+
+        if (!$data) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Data tidak di temukan',
+            ], 200);
+        } else {
+            $data->delete();
+            return response()->json([
+                'success' => true,
+                'message' => 'Berhasil di hapus',
+                'data' => $data
+            ], 200);
+        }
+    }
+
+    function get_rak(Request $request)
+    {
+        $id_rak = $request->input('id_rak');
+
+        if ($id_rak) {
+            return response()->json([
+                'success' => true,
+                'message' => 'Berhasil di tampilkan',
+                'data' => m_rak::where('id', $id_rak)->first()
+            ], 200);
+        } else {
+            return response()->json([
+                'success' => true,
+                'message' => 'Berhasil di tampilkan',
+                'data' => m_rak::all()
+            ], 200);
+        }
+    }
+    function add_rak(Request $request)
+    {
+        $data = new m_rak();
+        $get_buku = m_rak::select("nm_rak")->where("nm_rak", $request->input('nm_rak'))->first();
+
+        if ($get_buku) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Nama sudah tersedia / silahkan gunakan yang lain',
+            ], 200);
+        } else {
+
+            $data->nm_rak                   = $request->input('nm_rak');
+            $data->lokasi_rak               = $request->input('lokasi_rak');
+            $data->timestamps              = false;
+            $data->save();
+            return response()->json([
+                'success' => true,
+                'message' => 'Berhasil di tambahkan',
+                'data' => $data
+            ], 200);
+        }
+    }
+    function update_rak(Request $request)
+    {
+        $data = m_rak::find($request->input('id_rak'))->first();
+        if ($data) {
+            $data->nm_rak                     = $request->input('nm_rak');
+            $data->lokasi_rak               = $request->input('lokasi_rak');
+            $data->timestamps              = false;
+            $data->update();
+            return response()->json([
+                'success' => true,
+                'message' => 'Berhasil di update',
+                'data' => $data
+            ], 200);
+        } else {
+            return response()->json([
+                'success' => false,
+                'message' => 'Gagal di update',
+            ], 200);
+        }
+    }
+
+    function delete_rak(Request $request)
+    {
+        $data = m_rak::find($request->input('id_rak'));
 
         if (!$data) {
             return response()->json([

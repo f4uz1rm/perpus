@@ -42,4 +42,9 @@ Route::controller(MasterController::class)->group(function () {
     Route::post('/add_buku', 'add_buku');
     Route::put('/update_buku', 'update_buku');
     Route::delete('/delete_buku', 'delete_buku');
+
+    Route::get('/get_rak', 'get_rak');
+    Route::post('/add_rak', 'add_rak');
+    Route::put('/update_rak', 'update_rak');
+    Route::delete('/delete_rak', 'delete_rak');
 });

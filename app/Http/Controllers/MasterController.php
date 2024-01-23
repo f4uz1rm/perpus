@@ -19,6 +19,10 @@ class MasterController extends Controller
     {
         return view('master.list_pengunjung');
     }
+    function view_pengunjung(): View
+    {
+        return view('master.view_pengunjung');
+    }
     function list_kategori(): View
     {
         return view('master.list_kategori');
