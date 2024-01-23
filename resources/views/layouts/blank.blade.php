@@ -24,7 +24,8 @@
     <link rel="shortcut icon" href="{{ asset('assets/images/logo-ponpes.png') }}" />
     <!-- Plugin css for this page -->
     <script src="{{ asset('assets/js/jquery.js') }}"></script>
-    <link rel="stylesheet" href="{{ 'assets/vendors/sweetalert2/sweetalert2.min.css' }}">
+    <script src="{{ asset('assets/js/moment.js') }}"></script>
+    <link rel="stylesheet" href="{{ asset('assets/vendors/sweetalert2/sweetalert2.min.css') }}">
 
     <!-- End plugin css for this page -->
 

@@ -26,7 +26,7 @@
     <script src="{{ asset('assets/js/jquery.js') }}"></script>
     <!-- End plugin css for this page -->
 
-    <link rel="stylesheet" href="{{ 'assets/vendors/sweetalert2/sweetalert2.min.css' }}">
+    <link rel="stylesheet" href="{{ asset('assets/vendors/sweetalert2/sweetalert2.min.css') }}">
 
 
     {{-- @vite(['resources/css/app.css', 'resources/js/app.js']) --}}
