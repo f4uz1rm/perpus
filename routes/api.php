@@ -20,5 +20,26 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::controller(MasterController::class)->group(function () {
-    Route::get('/get_pengunjung', 'get_pengunjung')->name('get_pengunjung');
+    Route::get('/get_pengunjung', 'get_pengunjung');
+    Route::post('/add_pengunjung', 'add_pengunjung');
+    
+    Route::get('/get_kelas', 'get_kelas');
+    Route::post('/add_kelas', 'add_kelas');
+    Route::put('/update_kelas', 'update_kelas');
+    Route::delete('/delete_kelas', 'delete_kelas');
+
+    Route::get('/get_anggota', 'get_anggota');
+    Route::post('/add_anggota', 'add_anggota');
+    Route::put('/update_anggota', 'update_anggota');
+    Route::delete('/delete_anggota', 'delete_anggota');
+
+    Route::get('/get_kategori', 'get_kategori');
+    Route::post('/add_kategori', 'add_kategori');
+    Route::put('/update_kategori', 'update_kategori');
+    Route::delete('/delete_kategori', 'delete_kategori');
+
+    Route::get('/get_buku', 'get_buku');
+    Route::post('/add_buku', 'add_buku');
+    Route::put('/update_buku', 'update_buku');
+    Route::delete('/delete_buku', 'delete_buku');
 });
