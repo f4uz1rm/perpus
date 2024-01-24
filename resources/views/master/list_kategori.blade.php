@@ -10,32 +10,32 @@
         </div>
         <div class="card-body py-2">
             <div class="table-responsive">
-                <x-table id="table-kelas">
+                <x-table id="table-kategori">
                     <thead>
                         <tr class="text-center">
                             <th>
-                                Kode Kelas
+                                Kode Kategori
                             </th>
                             <th>
-                                Nama Kelas
+                                Nama Kategori
                             </th>
                             <th>
                                 #
                             </th>
                         </tr>
                     </thead>
-                    <tbody id="tbody-kelas">
+                    <tbody id="tbody-kategori">
 
                     </tbody>
                 </x-table>
             </div>
         </div>
     </div>
-    <div class="modal fade" id="modal-kelas" tabindex="-1" data-bs-backdrop="static">
+    <div class="modal fade" id="modal-kategori" tabindex="-1" data-bs-backdrop="static">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="modal-title">Tambah / Ubah Kelas</h5>
+                    <h5 class="modal-title" id="modal-title">Tambah / Ubah Kategori</h5>
                 </div>
                 <div class="modal-body">
                     <form>
@@ -45,15 +45,16 @@
                                 placeholder="Otomatis Terisi">
                         </div>
                         <div class="mb-3">
-                            <label for="id_kelas" class="form-label">Kode Kelas</label>
-                            <input type="search" class="form-control" id="id_kelas" readonly
+                            <label for="id_kategori" class="form-label">Kode Kategori</label>
+                            <input type="search" class="form-control" id="id_kategori" readonly
                                 placeholder="Otomatis Terisi">
                         </div>
                         <div class="mb-3">
                             <div class="row">
                                 <div class="col">
-                                    <label for="nm_kelas" class="form-label">Nama Kelas</label>
-                                    <input type="search" id="nm_kelas" class="form-control" placeholder="Nama Kelas">
+                                    <label for="nm_kategori" class="form-label">Nama Kategori</label>
+                                    <input type="search" id="nm_kategori" class="form-control"
+                                        placeholder="Nama Kelas">
                                 </div>
                             </div>
                         </div>
@@ -63,7 +64,7 @@
                 </div>
                 <div class="modal-footer ">
                     <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Batal</button>
-                    <button type="button" class="btn btn-success" onclick="simpan_kelas()">Simpan</button>
+                    <button type="button" class="btn btn-success" onclick="simpan_kategori()">Simpan</button>
                 </div>
             </div>
         </div>
@@ -71,18 +72,25 @@
 
     <script>
         $("#btn-add").on("click", function() {
-            ubah_kelas("");
+            ubah_kategori("");
         })
-        get_kelas()
-        function get_kelas() {
+
+        $("#nm_kategori").on("keypress", function() {
+            if (event.keyCode === 13) {
+                simpan_kategori();
+            }
+        })
+        get_kategori()
+
+        function get_kategori() {
             $.ajax({
                 type: "GET",
-                url: "{{ route('get_kelas') }}",
+                url: "{{ route('get_kategori') }}",
 
                 beforeSend: function() {
-                    $("#tbody-kelas").html(`
+                    $("#tbody-kategori").html(`
                     <tr>
-                        <td colspan="4" class="text-center">Loading...</td>
+                        <td colspan="3" class="text-center">Loading...</td>
                     </tr>
                 `);
                 },
@@ -92,25 +100,25 @@
                         data.data.forEach((item, index) => {
                             html += `<tr>`;
                             html += `<td class="text-center">${item.id}</td>`;
-                            html += `<td class="text-center">${item.nm_kelas}</td>`;
+                            html += `<td class="text-center">${item.nm_kategori}</td>`;
                             html += `<td class="text-center">`;
                             html +=
-                                `<button class="btn btn-sm btn-danger mx-1" onclick="hapus_kelas(${item.id})">Hapus</button>`;
+                                `<button class="btn btn-sm btn-danger mx-1" onclick="hapus_kategori(${item.id})">Hapus</button>`;
                             html +=
-                                `<button class="btn btn-sm btn-success mx-1" onclick="ubah_kelas(${item.id})" >Ubah</button>`;
+                                `<button class="btn btn-sm btn-success mx-1" onclick="ubah_kategori(${item.id})" >Ubah</button>`;
                             html += `</td>`;
                             html += `</tr>`;
                         });
-                        $("#tbody-kelas").html(html);
-                        if ($("#table-kelas").hasClass("dataTable")) {
-                            $("#table-kelas").DataTable().destroy();
+                        $("#tbody-kategori").html(html);
+                        if ($("#table-kategori").hasClass("dataTable")) {
+                            $("#table-kategori").DataTable().destroy();
                         }
-                        $("#tbody-kelas").html(html);
+                        $("#tbody-kategori").html(html);
                         $('table').DataTable();
                     } else {
-                        $("#tbody-kelas").html(`
+                        $("#tbody-kategori").html(`
                         <tr>
-                            <td colspan="4" class="text-center">Tidak ada data yang ditampilkan</td>
+                            <td colspan="3" class="text-center">Tidak ada data yang ditampilkan</td>
                         </tr>
                     `);
                     }
@@ -126,12 +134,12 @@
             })
         }
 
-        function ubah_kelas(id) {
+        function ubah_kategori(id) {
             $.ajax({
                 type: "GET",
-                url: "{{ route('get_kelas') }}",
+                url: "{{ route('get_kategori') }}",
                 data: {
-                    id_kelas: id
+                    id_kategori: id
                 },
 
                 beforeSend: function() {
@@ -144,21 +152,19 @@
                 success: function(data) {
                     Swal.close()
                     let value = data.data;
-                    if (id =!"") {
-                        $("#is_metode").val("ubah");
-                        $("#modal-kelas").modal("show");
-                        $("#modal-title").html("Ubah Kelas");
-                        $("#id_kelas").val(value.id).trigger("change");
-                        $("#nm_kelas").val(value.nm_kelas).trigger("change");
-
-                    } else {
+                    if (id == "") {
                         $("#is_metode").val("tambah");
-                        $("#modal-kelas").modal("show");
-                        $("#modal-title").html("Tambah Kelas");
-                        $("#id_kelas").val("").trigger("change");
-                        $("#nm_kelas").val("").trigger("change");
-
+                        $("#modal-title").html("Tambah Kategori");
+                        $("#id_kategori").val("").trigger("change");
+                        $("#nm_kategori").val("").trigger("change");
+                    } else {
+                        $("#is_metode").val("ubah");
+                        $("#modal-title").html("Ubah Kategori");
+                        $("#id_kategori").val(value.id).trigger("change");
+                        $("#nm_kategori").val(value.nm_kategori).trigger("change");
                     }
+                    $("#modal-kategori").modal("show");
+
                 }
             }).fail(function(err) {
                 Swal.fire({
@@ -169,17 +175,17 @@
             })
         }
 
-        function simpan_kelas() {
+        function simpan_kategori() {
             let is_metode = $("#is_metode").val();
-            let id_kelas = $("#id_kelas").val();
-            let nm_kelas = $("#nm_kelas").val();
-            if (nm_kelas == "") {
+            let id_kategori = $("#id_kategori").val();
+            let nm_kategori = $("#nm_kategori").val();
+            if (nm_kategori == "") {
                 Swal.fire({
                     icon: 'error',
                     title: 'Oops...',
-                    text: "Nama Kelas tidak boleh kosong"
+                    text: "Nama Kategori tidak boleh kosong"
                 })
-                $("#nm_kelas").addClass("is-invalid");
+                $("#nm_kategori").addClass("is-invalid");
             } else {
 
 
@@ -192,114 +198,114 @@
                     cancelButtonText: 'Tidak, Batalkan!',
                     reverseButtons: true
                 }).then((result) => {
-                        if (result.isConfirmed) {
-                            $.ajax({
-                                type: is_metode == "tambah" ? "POST" : "PUT",
-                                url: is_metode == "tambah" ? "{{ route('add_kelas') }}" :
-                                    "{{ route('update_kelas') }}",
-                                data: {
-                                    _token: "{{ csrf_token() }}",
-                                    id_kelas: id_kelas,
-                                    nm_kelas: nm_kelas
-                                },
+                    if (result.isConfirmed) {
+                        $.ajax({
+                            type: is_metode == "tambah" ? "POST" : "PUT",
+                            url: is_metode == "tambah" ? "{{ route('add_kategori') }}" :
+                                "{{ route('update_kategori') }}",
+                            data: {
+                                _token: "{{ csrf_token() }}",
+                                id_kategori: id_kategori,
+                                nm_kategori: nm_kategori
+                            },
 
-                                beforeSend: function() {
-                                    Swal.fire({
-                                        title: 'Loading...',
-                                        text: "Sedang memuat data",
-                                        showConfirmButton: false,
-                                    })
-                                },
-                                success: function(data) {
-                                    Swal.close()
-                                    if (data.success == true) {
-                                        Swal.fire({
-                                            icon: 'success',
-                                            title: 'Berhasil',
-                                            text: data.message,
-                                            timer: 1500,
-                                            showConfirmButton: false,
-                                            outsideClick: false
-                                        }).then((result) => {
-                                            $("#modal-kelas").modal("hide");
-                                                get_kelas();
-                                        })
-                                    } else {
-                                        Swal.fire({
-                                            icon: 'error',
-                                            title: 'Oops...',
-                                            text: "Gagal menyimpan data, silahkan coba lagi",
-                                        })
-                                    }
-                                }
-                            }).fail(function(err) {
+                            beforeSend: function() {
                                 Swal.fire({
-                                    icon: 'error',
-                                    title: 'Oops...',
-                                    text: "Gagal memuat data, silahkan refresh halaman"
+                                    title: 'Loading...',
+                                    text: "Sedang memuat data",
+                                    showConfirmButton: false,
                                 })
+                            },
+                            success: function(data) {
+                                Swal.close()
+                                if (data.success == true) {
+                                    Swal.fire({
+                                        icon: 'success',
+                                        title: 'Berhasil',
+                                        text: data.message,
+                                        timer: 1500,
+                                        showConfirmButton: false,
+                                        outsideClick: false
+                                    }).then((result) => {
+                                        $("#modal-kategori").modal("hide");
+                                        get_kategori();
+                                    })
+                                } else {
+                                    Swal.fire({
+                                        icon: 'error',
+                                        title: 'Oops...',
+                                        text: data.message
+                                    })
+                                }
+                            }
+                        }).fail(function(err) {
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Oops...',
+                                text: "Gagal memuat data, silahkan refresh halaman"
                             })
-                        }
-                    })
-                }
+                        })
+                    }
+                })
+            }
         }
 
-        function hapus_kelas(id_kelas){
+        function hapus_kategori(id) {
             Swal.fire({
-                    title: 'Apakah anda yakin?',
-                    text: "Data akan dihapus",
-                    icon: 'warning',
-                    showCancelButton: true,
-                    confirmButtonText: 'Ya, Lanjutkan!',
-                    cancelButtonText: 'Tidak, Batalkan!',
-                    reverseButtons: true
-                }).then((result) => {
-                        if (result.isConfirmed) {
-                            $.ajax({
-                                type: "DELETE",
-                                url: "{{ route('delete_kelas') }}",
-                                data: {
-                                    _token: "{{ csrf_token() }}",
-                                    id_kelas: id_kelas,
-                                },
+                title: 'Apakah anda yakin?',
+                text: "Data akan dihapus",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'Ya, Lanjutkan!',
+                cancelButtonText: 'Tidak, Batalkan!',
+                reverseButtons: true
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $.ajax({
+                        type: "DELETE",
+                        url: "{{ route('delete_kategori') }}",
+                        data: {
+                            _token: "{{ csrf_token() }}",
+                            id_kategori: id,
+                        },
 
-                                beforeSend: function() {
-                                    Swal.fire({
-                                        title: 'Loading...',
-                                        text: "Sedang memuat data",
-                                        showConfirmButton: false,
-                                    })
-                                },
-                                success: function(data) {
-                                    Swal.close()
-                                    if (data.success == true) {
-                                        Swal.fire({
-                                            icon: 'success',
-                                            title: 'Berhasil',
-                                            text: data.message,
-                                        }).then((result) => {
-                                            if (result.isConfirmed) {
-                                                $("#modal-kelas").modal("hide");
-                                                get_kelas();
-                                            }
-                                        })
-                                    } else {
-                                        Swal.fire({
-                                            icon: 'error',
-                                            title: 'Oops...',
-                                            text: "Gagal menyimpan data, silahkan coba lagi",
-                                        })
+                        beforeSend: function() {
+                            Swal.fire({
+                                title: 'Loading...',
+                                text: "Sedang memuat data",
+                                showConfirmButton: false,
+                            })
+                        },
+                        success: function(data) {
+                            Swal.close()
+                            if (data.success == true) {
+                                Swal.fire({
+                                    icon: 'success',
+                                    title: 'Berhasil',
+                                    text: data.message,
+                                }).then((result) => {
+                                    if (result.isConfirmed) {
+                                        $("#modal-kategori").modal("hide");
+                                        get_kategori();
                                     }
-                                }
-                            }).fail(function(err) {
+                                })
+                            } else {
                                 Swal.fire({
                                     icon: 'error',
                                     title: 'Oops...',
-                                    text: "Gagal memuat data, silahkan refresh halaman"
+                                    text: "Gagal menyimpan data, silahkan coba lagi",
                                 })
-                            })
+                            }
                         }
+                    }).fail(function(err) {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Oops...',
+                            text: "Gagal memuat data, silahkan refresh halaman"
+                        })
                     })
+                }
+            })
         }
     </script>
 </x-app-layout>

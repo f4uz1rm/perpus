@@ -1,7 +1,7 @@
 <nav class="sidebar" x-data="{ open: false }">
     <div class="sidebar-header">
         <a href="#" class="sidebar-brand">
-            Perpustakaan
+            E-Perpus
         </a>
         <div class="sidebar-toggler not-active">
             <span></span>

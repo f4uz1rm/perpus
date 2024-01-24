@@ -53,6 +53,7 @@ Route::middleware('auth')->group(function () {
         Route::delete('/delete_anggota', 'delete_anggota')->name('delete_anggota');
 
 
+        Route::get('/get_kategori', 'get_kategori')->name('get_kategori');
         Route::get('/list_kategori', 'list_kategori')->name('list_kategori');
         Route::post('/add_kategori', 'add_kategori')->name('add_kategori');
         Route::put('/update_kategori', 'update_kategori')->name('update_kategori');
