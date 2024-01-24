@@ -15,11 +15,13 @@ class MasterController extends Controller
 {
     function get_pengunjung(Request $request)
     {
-        $data =  m_pengunjung::all();
+        $pengunjung = m_pengunjung::join('m_kelas', 'm_pengunjung.id_kelas', '=', 'm_kelas.id')
+                              ->select('m_pengunjung.nm_lengkap', 'm_pengunjung.tujuan', 'm_pengunjung.tgl_kunjungan', 'm_kelas.nm_kelas')
+                              ->get();
         return response()->json([
             'success' => true,
             'message' => 'Berhasil di tampilkan',
-            'data' => $data
+            'data' => $pengunjung
         ], 200);
     }
     function add_pengunjung(Request $request)
@@ -88,7 +90,7 @@ class MasterController extends Controller
 
     function update_anggota(Request $request)
     {
-        $data = m_anggota::find($request->input('id_anggota'))->first();
+        $data = m_anggota::find($request->input('id_anggota'));
         if ($data) {
             $data->nm_lengkap           = $request->input('nm_lengkap');
             $data->jns_kelamin          = $request->input('jns_kelamin');
@@ -169,21 +171,14 @@ class MasterController extends Controller
 
     function update_kelas(Request $request)
     {
-        $data = m_kelas::find($request->input('id_kelas'))->first();
-        if ($data) {
-            $data->nm_kelas           = $request->input('nm_kelas');
-            $data->update();
-            return response()->json([
-                'success' => true,
-                'message' => 'Berhasil di update',
-                'data' => $data
-            ], 200);
-        } else {
-            return response()->json([
-                'success' => false,
-                'message' => 'Gagal di update',
-            ], 200);
-        }
+        $data = m_kelas::find($request->input('id_kelas'));
+        $data->nm_kelas           = $request->input('nm_kelas');
+        $data->update();
+        return response()->json([
+            'success' => true,
+            'message' => 'Berhasil di update',
+            'data' => $data
+        ], 200);
     }
     function delete_kelas(Request $request)
     {
@@ -246,7 +241,7 @@ class MasterController extends Controller
 
     function update_kategori(Request $request)
     {
-        $data = m_kategori::find($request->input('id_kategori'))->first();
+        $data = m_kategori::find($request->input('id_kategori'));
         if ($data) {
             $data->nm_kategori  = $request->input('nm_kategori');
             $data->update();
@@ -331,7 +326,7 @@ class MasterController extends Controller
     }
     function update_buku(Request $request)
     {
-        $data = m_buku::find($request->input('id_buku'))->first();
+        $data = m_buku::find($request->input('id_buku'));
         if ($data) {
             $data->judul                     = $request->input('judul');
             $data->penulis                   = $request->input('penulis');
@@ -415,7 +410,7 @@ class MasterController extends Controller
     }
     function update_rak(Request $request)
     {
-        $data = m_rak::find($request->input('id_rak'))->first();
+        $data = m_rak::find($request->input('id_rak'));
         if ($data) {
             $data->nm_rak                     = $request->input('nm_rak');
             $data->lokasi_rak               = $request->input('lokasi_rak');

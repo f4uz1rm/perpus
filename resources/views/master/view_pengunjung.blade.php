@@ -13,7 +13,7 @@
                                             width="200px">
                                     </div>
                                     <div class="d-flex justify-content-center mb-3">
-                                        <h6>
+                                        <h6 class="text-center">
                                             Selamat Datang Di Perpustakaan Miftahul'ulum
                                         </h6>
                                     </div>
@@ -23,9 +23,8 @@
                                     </div>
                                     <div class="mb-3">
                                         <label for="tgl_kunjungan" class="form-label">Tanggal Kunjungan</label>
-                                        <input type="search" name="tgl_kunjungan" class="form-control"
-                                            value="{{ date('d-m-Y h:i:s') }}" id="tgl_kunjungan"
-                                            placeholder="Tanggal Kunjungan" readonly>
+                                        <input type="search" name="tgl_kunjungan" class="form-control" value=""
+                                            id="tgl_kunjungan" placeholder="Tanggal Kunjungan" readonly>
                                     </div>
                                     <div class="mb-3">
                                         <label for="nm_lengkap" class="form-label">Nama Lengkap</label>
@@ -35,16 +34,6 @@
                                     <div class="mb-3">
                                         <label for="kelas" class="form-label">Kelas</label>
                                         <select name="kelas" id="kelas" class="form-control">
-                                            <option value="" selected>Pilih Kelas</option>
-                                            <option value="1">7A</option>
-                                            <option value="2">7B</option>
-                                            <option value="3">8A</option>
-                                            <option value="4">9A</option>
-                                            <option value="5">9B</option>
-                                            <option value="6">10A</option>
-                                            <option value="7">10B</option>
-                                            <option value="8">11</option>
-                                            <option value="9">12</option>
                                         </select>
                                     </div>
                                     <div class="mb-3">
@@ -67,9 +56,37 @@
     </div>
 
     <script>
-        setInterval(function() {
-            $("#tgl_kunjungan").val("{{ date('d-m-Y h:i:s') }}");
+        setInterval(() => {
+            $("#tgl_kunjungan").val(moment().format('DD-MM-YYYY  h:mm:ss'));
         }, 1000);
+
+        get_kelas()
+
+        function get_kelas() {
+            $.ajax({
+                url: "{{ route('get_kelas') }}",
+                type: "GET",
+                typeData: "JSON",
+                success: function(data) {
+                    if (data.success == true) {
+                        var html = "";
+                        html += "<option value='' selected>Silahkan Pilih Kelas</option>";
+                        $.each(data.data, function(index, item) {
+                            html += "<option value='" + item.id + "'>" + item.nm_kelas + "</option>";
+                        })
+                        $("#kelas").html(html);
+                    }
+                }
+            }).fail(function(err) {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Terjadi Kesalahan',
+                    text: "Silahkan Coba Lagi",
+                })
+            })
+
+
+        }
 
         $("#btn-simpan").click(function() {
             tambah_kunjungan();
@@ -82,6 +99,7 @@
         })
 
         function tambah_kunjungan() {
+
             var nm_lengkap = $("#nm_lengkap").val();
             var kelas = $("#kelas").val();
             var tujuan = $("#tujuan").val();
@@ -115,12 +133,21 @@
                     url: "{{ route('tambah_pengunjung') }}",
                     type: "POST",
                     typeData: "JSON",
+                    beforeSend: function() {
+                        Swal.fire({
+                            title: 'Mohon Tunggu',
+                            html: 'Sedang Menyimpan Data',
+                            didOpen: () => {
+                                Swal.showLoading()
+                            },
+                        })
+                    },
                     data: {
                         _token: "{{ csrf_token() }}",
-                        "nm_lengkap": nm_lengkap,
-                        "id_kelas": kelas,
-                        "tujuan": tujuan,
-                        "tgl_kunjungan": moment(tgl_kunjungan, 'DD-MM-YYYY h:i:s').format('YYYY-MM-DD HH:mm:ss'),
+                        nm_lengkap: nm_lengkap,
+                        id_kelas: kelas,
+                        tujuan: tujuan,
+                        tgl_kunjungan: moment(tgl_kunjungan, 'DD-MM-YYYY h:i:s').format('YYYY-MM-DD HH:mm:ss'),
                     },
                     success: function(data) {
                         if (data.success == true) {
@@ -128,8 +155,11 @@
                                 icon: 'success',
                                 title: "Data Berhasil Disimpan",
                                 text: 'Selamat Datang Di Perpustakaan',
+                                timer: 1500,
+                                showConfirmButton: false,
                             })
                             $("#nm_lengkap, #kelas , #tujuan").val("").trigger("change");
+                            $("#tgl_kunjungan").val(moment().format('DD-MM-YYYY  h:mm:ss'));
                         }
                     }
                 }).fail(function(err) {

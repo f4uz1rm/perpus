@@ -67,7 +67,7 @@
                                             width="200px">
                                     </div>
                                     <div class="d-flex justify-content-center mb-3">
-                                        <h6>Selamat datang di Perpustakaan Miftahul'ulum </h6>
+                                        <h6 class="text-center">Selamat datang di Perpustakaan Miftahul'ulum </h6>
                                     </div>
                                     <h6 class="alert alert-info">Silahkan login menggunakan
                                         akun

@@ -21,7 +21,7 @@
     <link rel="stylesheet" href="{{ asset('assets/fonts/feather-font/css/iconfont.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/vendors/flag-icon-css/css/flag-icon.min.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/demo1/style.css') }}">
-    <link rel="shortcut icon" href="{{ asset('assets/images/favicon.png') }}" />
+    <link rel="shortcut icon" href="{{ asset('assets/images/logo-ponpes.png') }}" />
     <!-- Plugin css for this page -->
     <script src="{{ asset('assets/js/jquery.js') }}"></script>
     <!-- End plugin css for this page -->

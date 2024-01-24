@@ -6,9 +6,9 @@
             <div class="">
                 Data Pengunjung
             </div>
-            <x-btn-add />
+            {{-- <x-btn-add /> --}}
         </div>
-        <div class="card-body py-0">
+        <div class="card-body py-2">
             <div class="table-responsive">
                 <x-table id="table-buku">
                     <thead>
@@ -28,13 +28,8 @@
 
                         </tr>
                     </thead>
-                    <tbody>
-                        <tr>
-                            <td class="text-center">25 Januari 2024 10:00</td>
-                            <td class="text-wrap">Fauzi Rizky Mauladani</td>
-                            <td class="text-center">7A</td>
-                            <td class="">Membaca Buku</td>
-                        </tr>
+                    <tbody id="tbody-pengunjung">
+
                     </tbody>
                 </x-table>
             </div>
@@ -52,13 +47,14 @@
                         <div class="mb-3">
                             <label for="tgl_kunjungan" class="form-label">Tanggal Kunjungan</label>
                             <input type="search" class="form-control" id="tgl_kunjungan" readonly
-                                placeholder="Otomatis Terisi" value="{{ date('d-m-Y h:i:s')}}">
+                                placeholder="Otomatis Terisi" value="{{ date('d-m-Y h:i:s') }}">
                         </div>
                         <div class="mb-3">
                             <div class="row">
                                 <div class="col">
                                     <label for="ketegori" class="form-label">Nama Lengkap</label>
-                                    <input type="text" id="" class="form-control" placeholder="Nama Lengkap">
+                                    <input type="text" id="" class="form-control"
+                                        placeholder="Nama Lengkap">
                                 </div>
                             </div>
                         </div>
@@ -74,7 +70,8 @@
                             <div class="row">
                                 <div class="col">
                                     <label for="ketegori" class="form-label">Tujuan Ke Perpustakaan</label>
-                                    <input type="text" id="" class="form-control" placeholder="Tujuan Ke Perpustakaan">
+                                    <input type="text" id="" class="form-control"
+                                        placeholder="Tujuan Ke Perpustakaan">
                                 </div>
                             </div>
                         </div>
@@ -91,11 +88,46 @@
     </div>
 
     <script>
-        $(document).ready(function() {
-            $('table').DataTable();
-        })
-        $("#btn-add").click(function() {
-            $("#modal-pengunjung").modal("show");
+        $.ajax({
+            metode: "GET",
+            url: "{{ route('get_pengunjung') }}",
+            beforeSend: function() {
+                $("#tbody-pengunjung").html(`
+                    <tr>
+                        <td colspan="4" class="text-center">Loading...</td>
+                    </tr>
+                `);
+            },
+            success: function(data) {
+                if (data.data.length > 0) {
+                    let html = "";
+                    data.data.forEach((item, index) => {
+                        html += `<tr>`;
+                        html += `<td class="text-center">${item.tgl_kunjungan}</td>`;
+                        html += `<td class="text-wrap">${item.nm_lengkap}</td>`;
+                        html += `<td class="text-center">${item.nm_kelas}</td>`;
+                        html += `<td class="text-wrap">${item.tujuan}</td>`;
+                        html += `</tr>`;
+                    });
+                    $("#tbody-pengunjung").html(html);
+                    if ($("#table-pengunjung").hasClass("dataTable")) {
+                        $("#table-pengunjung").DataTable().destroy();
+                    }
+                    $('table').DataTable();
+                } else {
+                    $("#tbody-pengunjung").html(`
+                        <tr>
+                            <td colspan="4" class="text-center">Tidak ada data yang ditampilkan</td>
+                        </tr>
+                    `);
+                }
+            }
+        }).fail(function(err) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: "Gagal memuat data, silahkan refresh halaman"
+            })
         })
     </script>
 
