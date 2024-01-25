@@ -10,6 +10,7 @@ use App\Models\m_kelas;
 use App\Models\m_kategori;
 use App\Models\m_buku;
 use App\Models\m_rak;
+use Illuminate\Support\Facades\DB;
 
 class MasterController extends Controller
 {
@@ -288,10 +289,21 @@ class MasterController extends Controller
                 'data' => m_buku::where('id', $id_buku)->first()
             ], 200);
         } else {
+            // $data = DB::table("m_buku")->join("m_kategori", "m_buku.id_kategori", "=", "m_kategori.id")
+            //     ->select("m_buku.*", "m_kategori.nm_kategori")
+            //     ->get();
+
+            $data = DB::table("m_buku");
+            $data->join("m_kategori", "m_buku.id_kategori", "=", "m_kategori.id");
+            $data->join("m_rak", "m_buku.lokasi_rak", "=", "m_rak.id");
+            $data->select("m_buku.*", "m_kategori.nm_kategori", "m_rak.nm_rak", "m_rak.lokasi_rak as lok_rak");
+            $hasil = $data->get();
+
+       
             return response()->json([
                 'success' => true,
                 'message' => 'Berhasil di tampilkan',
-                'data' => m_buku::all()
+                'data' => $hasil
             ], 200);
         }
     }

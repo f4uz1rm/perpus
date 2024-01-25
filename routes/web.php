@@ -42,9 +42,9 @@ Route::middleware('auth')->group(function () {
 
         Route::get('/list_buku', 'list_buku')->name('list_buku');
         Route::get('/get_buku', 'get_buku')->name('get_buku');
-        Route::post('/add_buku', 'add_buku')->name('get_buku');
-        Route::put('/update_buku', 'update_buku')->name('get_buku');
-        Route::delete('/delete_buku', 'delete_buku')->name('get_buku');
+        Route::post('/add_buku', 'add_buku')->name('add_buku');
+        Route::put('/update_buku', 'update_buku')->name('update_buku');
+        Route::delete('/delete_buku', 'delete_buku')->name('delete_buku');
 
 
         Route::get('/list_anggota', 'list_anggota')->name('list_anggota');

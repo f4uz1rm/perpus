@@ -29,10 +29,7 @@
                                 Jumlah
                             </th>
                             <th>
-                                ISBN
-                            </th>
-                            <th>
-                                Pengarang
+                                Penulis
                             </th>
                             <th>
                                 Penerbit
@@ -45,21 +42,8 @@
                             </th>
                         </tr>
                     </thead>
-                    <tbody>
-                        <tr>
-                            <td class="text-center">AB001</td>
-                            <td class="text-wrap">Kitab Kuning</td>
-                            <td class="text-center">2024</td>
-                            <td class="text-center">5</td>
-                            <td class="text-center">-</td>
-                            <td class="text-wrap">Fauzi</td>
-                            <td class="text-wrap">Mauladani</td>
-                            <td class="text-center">A001</td>
-                            <td class="text-center">
-                                <button class="btn btn-sm btn-danger" id="btn-delete">Hapus</button>
-                                <button class="btn btn-sm btn-success" id="btn-edit">Ubah</button>
-                            </td>
-                        </tr>
+                    <tbody id="tbody-buku">
+                     
                     </tbody>
                 </x-table>
             </div>
@@ -70,7 +54,7 @@
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="varyingModalLabel">Tambah / Ubah Buku</h5>
+                    <h5 class="modal-title" id="modal-title">Tambah / Ubah Buku</h5>
                 </div>
                 <div class="modal-body">
                     <form>
@@ -101,12 +85,8 @@
                             <input type="search" class="form-control" id="tahun" placeholder="Tahun">
                         </div>
                         <div class="mb-3">
-                            <label for="isbn" class="form-label">ISBN</label>
-                            <input type="search" class="form-control" id="isbn" placeholder="ISBN">
-                        </div>
-                        <div class="mb-3">
-                            <label for="pengarang" class="form-label">Pengarang</label>
-                            <input type="search" class="form-control" id="pengarang" placeholder="Pengarang">
+                            <label for="pengarang" class="form-label">Penulis</label>
+                            <input type="search" class="form-control" id="penulis" placeholder="Pengarang">
                         </div>
                         <div class="mb-3">
                             <label for="penerbit" class="form-label">Penerbit</label>
@@ -114,11 +94,14 @@
                         </div>
                         <div class="mb-3">
                             <label for="jml_buku" class="form-label">Jumlah Buku</label>
-                            <input type="search" class="form-control" id="jml_buku" placeholder="Jumlah Buku">
+                            <input type="search" class="form-control" id="jumlah" placeholder="Jumlah Buku">
                         </div>
                         <div class="mb-3">
                             <label for="lokasi_rak" class="form-label">Lokasi RAK</label>
-                            <input type="search" class="form-control" id="lokasi_rak" placeholder="Contoh ( A01 )">
+                            <select name="lokasi_rak" class="form-control" id="lokasi_rak">
+                                <option value="" selected>Pilih Lokasi Rak</option>
+                                <option value="1">Rak Matematika</option>
+                            </select>
                         </div>
 
                     </form>
@@ -132,13 +115,245 @@
     </div>
     </div>
     <script>
-        $(document).ready(function() {
-            $('table').DataTable();
+        $("#btn-add").on("click", function() {
+            ubah_buku("");
         })
 
-        $("#btn-add").on("click", function() {
-            $("#modal-buku").modal("show");
-        })
+        get_buku()
+
+        function get_buku() {
+            $.ajax({
+                type: "GET",
+                url: "{{ route('get_buku') }}",
+
+                beforeSend: function() {
+                    $("#tbody-buku").html(`
+                    <tr>
+                        <td colspan="9" class="text-center">Loading...</td>
+                    </tr>
+                `);
+                },
+                success: function(data) {
+                    if (data.data.length > 0) {
+                        let html = "";
+                        data.data.forEach((item, index) => {
+                            html += `<tr>`;
+                            html += `<td class="text-center">${item.kd_buku}</td>`;
+                            html += `<td class="text-center">${item.judul}</td>`;
+                            html += `<td class="text-center">${item.tahun}</td>`;
+                            html += `<td class="text-center">${item.stok}</td>`;
+                            html += `<td class="text-center">${item.penulis}</td>`;
+                            html += `<td class="text-center">${item.penerbit}</td>`;
+                            html += `<td class="text-center">${item.lok_rak}</td>`;
+                            html += `<td class="text-center">`;
+                            html +=
+                                `<button class="btn btn-sm btn-danger mx-1" onclick="hapus_kategori(${item.id})">Hapus</button>`;
+                            html +=
+                                `<button class="btn btn-sm btn-success mx-1" onclick="ubah_buku(${item.id})" >Ubah</button>`;
+                            html += `</td>`;
+                            html += `</tr>`;
+                        });
+                        $("#tbody-buku").html(html);
+                        if ($("#table-buku").hasClass("dataTable")) {
+                            $("#table-buku").DataTable().destroy();
+                        }
+                        $("#tbody-buku").html(html);
+                        $('table').DataTable();
+                    } else {
+                        $("#tbody-buku").html(`
+                        <tr>
+                            <td colspan="9" class="text-center">Tidak ada data yang ditampilkan</td>
+                        </tr>
+                    `);
+                    }
+
+
+                }
+            }).fail(function(err) {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: "Gagal memuat data, silahkan refresh halaman"
+                })
+            })
+        }
+
+        function ubah_buku(id) {
+            $.ajax({
+                type: "GET",
+                url: "{{ route('get_buku') }}",
+                data: {
+                    id_kategori: id
+                },
+
+                beforeSend: function() {
+                    Swal.fire({
+                        title: 'Loading...',
+                        text: "Sedang memuat data",
+                        showConfirmButton: false,
+                    })
+                },
+                success: function(data) {
+                    Swal.close()
+                    let value = data.data;
+                    if (id == "") {
+                        $("#is_metode").val("tambah");
+                        $("#modal-title").html("Tambah Buku");
+                        $("#id_buku").val("").trigger("change");
+                        $("#nm_buku").val("").trigger("change");
+                    } else {
+                        $("#is_metode").val("ubah");
+                        $("#modal-title").html("Ubah Buku");
+                        $("#id_buku").val(value.id).trigger("change");
+                        $("#kd_buku").val(value.kd_buku).trigger("change");
+                        $("#judul").val(value.judul).trigger("change");
+                        $("#tahun").val(value.tahun).trigger("change");
+                        $("#tahun").val(value.tahun).trigger("change");
+                    }
+                    $("#modal-buku").modal("show");
+
+                }
+            }).fail(function(err) {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: "Gagal memuat data, silahkan refresh halaman"
+                })
+            })
+        }
+
+        function simpan_buku() {
+            let is_metode = $("#is_metode").val();
+            let id_kategori = $("#id_buku").val();
+            let nm_kategori = $("#nm_buku").val();
+            if (nm_kategori == "") {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: "Nama Kategori tidak boleh kosong"
+                })
+                $("#nm_kategori").addClass("is-invalid");
+            } else {
+
+
+                Swal.fire({
+                    title: 'Apakah anda yakin?',
+                    text: is_metode == "tambah" ? "Data akan ditambahkan" : "Data akan diubah",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonText: 'Ya, Lanjutkan!',
+                    cancelButtonText: 'Tidak, Batalkan!',
+                    reverseButtons: true
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        $.ajax({
+                            type: is_metode == "tambah" ? "POST" : "PUT",
+                            url: is_metode == "tambah" ? "{{ route('add_kategori') }}" :
+                                "{{ route('update_kategori') }}",
+                            data: {
+                                _token: "{{ csrf_token() }}",
+                                id_kategori: id_kategori,
+                                nm_kategori: nm_kategori
+                            },
+
+                            beforeSend: function() {
+                                Swal.fire({
+                                    title: 'Loading...',
+                                    text: "Sedang memuat data",
+                                    showConfirmButton: false,
+                                })
+                            },
+                            success: function(data) {
+                                Swal.close()
+                                if (data.success == true) {
+                                    Swal.fire({
+                                        icon: 'success',
+                                        title: 'Berhasil',
+                                        text: data.message,
+                                        timer: 1500,
+                                        showConfirmButton: false,
+                                        outsideClick: false
+                                    }).then((result) => {
+                                        $("#modal-kategori").modal("hide");
+                                        get_buku();
+                                    })
+                                } else {
+                                    Swal.fire({
+                                        icon: 'error',
+                                        title: 'Oops...',
+                                        text: data.message
+                                    })
+                                }
+                            }
+                        }).fail(function(err) {
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Oops...',
+                                text: "Gagal memuat data, silahkan refresh halaman"
+                            })
+                        })
+                    }
+                })
+            }
+        }
+
+        function hapus_kategori(id) {
+            Swal.fire({
+                title: 'Apakah anda yakin?',
+                text: "Data akan dihapus",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'Ya, Lanjutkan!',
+                cancelButtonText: 'Tidak, Batalkan!',
+                reverseButtons: true
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $.ajax({
+                        type: "DELETE",
+                        url: "{{ route('delete_kategori') }}",
+                        data: {
+                            _token: "{{ csrf_token() }}",
+                            id_kategori: id,
+                        },
+
+                        beforeSend: function() {
+                            Swal.fire({
+                                title: 'Loading...',
+                                text: "Sedang memuat data",
+                                showConfirmButton: false,
+                            })
+                        },
+                        success: function(data) {
+                            Swal.close()
+                            if (data.success == true) {
+                                Swal.fire({
+                                    icon: 'success',
+                                    title: 'Berhasil',
+                                    text: data.message,
+                                }).then((result) => {
+                                    if (result.isConfirmed) {
+                                        $("#modal-kategori").modal("hide");
+                                        get_buku();
+                                    }
+                                })
+                            } else {
+                                Swal.fire({
+                                    icon: 'error',
+                                    title: 'Oops...',
+                                    text: "Gagal menyimpan data, silahkan coba lagi",
+                                })
+                            }
+                        }
+                    }).fail(function(err) {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Oops...',
+                            text: "Gagal memuat data, silahkan refresh halaman"
+                        })
+                    })
+                }
+            })
+        }
     </script>
 
 </x-app-layout>
