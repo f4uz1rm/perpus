@@ -69,9 +69,9 @@
                                     <div class="d-flex justify-content-center mb-3">
                                         <h6 class="text-center">Selamat datang di Perpustakaan Miftahul'ulum </h6>
                                     </div>
-                                    <h6 class="alert alert-info">Silahkan login menggunakan
+                                    {{-- <h6 class="alert alert-info">Silahkan login menggunakan
                                         akun
-                                        yang terdaftar.</h6>
+                                        yang terdaftar.</h6> --}}
                                     <form class="forms-sample">
                                         <div class="mb-3">
                                             <label for="email" class="form-label">Email</label>

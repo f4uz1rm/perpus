@@ -10,7 +10,7 @@
                                 <div class="auth-form-wrapper px-4 py-4">
                                     <div class="d-flex justify-content-center mb-2">
                                         <img src="{{ asset('assets/images/logo-ponpes.png') }}" alt="Logo Miftahul Ulum"
-                                            width="200px">
+                                            width="100px">
                                     </div>
                                     <div class="d-flex justify-content-center mb-3">
                                         <h6 class="text-center">
