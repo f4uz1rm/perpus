@@ -328,6 +328,7 @@ class MasterController extends Controller
             $data->tahun                     = $request->input('tahun');
             $data->stok                      = $request->input('stok');
             $data->id_kategori               = $request->input('id_kategori');
+            $data->lokasi_rak               = $request->input('lokasi_rak');
             $data->save();
             return response()->json([
                 'success' => true,
@@ -345,7 +346,7 @@ class MasterController extends Controller
             $data->penerbit                  = $request->input('penerbit');
             $data->tahun                     = $request->input('tahun');
             $data->stok                      = $request->input('stok');
-            $data->id_kategori                      = $request->input('id_kategori');
+            $data->lokasi_rak                = $request->input('lokasi_rak');
             $data->update();
             return response()->json([
                 'success' => true,

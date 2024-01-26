@@ -27,6 +27,7 @@
     <!-- End plugin css for this page -->
 
     <link rel="stylesheet" href="{{ asset('assets/vendors/sweetalert2/sweetalert2.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/vendors/select2/select2.min.css') }}">
 
 
     {{-- @vite(['resources/css/app.css', 'resources/js/app.js']) --}}
@@ -83,6 +84,8 @@
     <script src="{{ asset('assets/vendors/core/core.js') }}"></script>
     <script src="{{ asset('assets/vendors/feather-icons/feather.min.js') }}"></script>
     <script src="{{ asset('assets/js/template.js') }}"></script>
+    <script src="{{ asset('assets/vendors/select2/select2.min.js') }}"></script>
+    {{-- <script src="{{ asset('assets/js/select2.js') }}"></script> --}}
 
     <!-- Plugin js for this page -->
     <script src="{{ asset('assets/vendors/datatables.net/jquery.dataTables.js') }}"></script>
