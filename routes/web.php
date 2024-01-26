@@ -34,7 +34,13 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
     Route::controller(MasterController::class)->group(function () {
+        Route::get('/list_rak', 'list_rak')->name('list_rak');
+        Route::post('/add_rak', 'add_rak')->name('add_rak');
+        Route::put('/update_rak', 'update_rak')->name('update_rak');
+        Route::delete('/delete_rak', 'delete_rak')->name('delete_rak');
+
         Route::get('/list_kelas', 'list_kelas')->name('list_kelas');
+        Route::get('/get_rak', 'get_rak')->name('get_rak');
         Route::post('/add_kelas', 'add_kelas')->name('add_kelas');
         Route::put('/update_kelas', 'update_kelas')->name('update_kelas');
         Route::delete('/delete_kelas', 'delete_kelas')->name('delete_kelas');

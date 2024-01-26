@@ -25,6 +25,28 @@
                     <div class="card">
                         <div class="card-body">
                             <div class="d-flex justify-content-between align-items-baseline">
+                                <h6 class="card-title mb-0">Total Denda Terkumpul</h6>
+                            </div>
+                            <div class="row">
+                                <div class="col-12 col-md-12 col-xl-12">
+                                    <h3 class="mb-2 mt-2">Rp. 0</h3>
+                                    {{-- <div class="d-flex align-items-baseline justify-content-center">
+                                        <p class="text-success">
+                                            <span>denda yang terkumpul sampai tanggal {{ date('d-m-y') }} </span>
+                                        </p>
+                                    </div> --}}
+                                </div>
+                                <div class="col-6 col-md-12 col-xl-7">
+                                    {{-- <div id="growthChart" class="mt-md-3 mt-xl-0"></div> --}}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 grid-margin stretch-card">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between align-items-baseline">
                                 <h6 class="card-title mb-0">Peminjaman</h6>
 
                             </div>
@@ -68,28 +90,7 @@
                     </div>
                 </div>
 
-                <div class="col-md-4 grid-margin stretch-card">
-                    <div class="card">
-                        <div class="card-body">
-                            <div class="d-flex justify-content-between align-items-baseline">
-                                <h6 class="card-title mb-0">Total Denda Terkumpul</h6>
-                            </div>
-                            <div class="row">
-                                <div class="col-12 col-md-12 col-xl-12">
-                                    <h3 class="mb-2 mt-2">Rp. 0</h3>
-                                    {{-- <div class="d-flex align-items-baseline justify-content-center">
-                                        <p class="text-success">
-                                            <span>denda yang terkumpul sampai tanggal {{ date('d-m-y') }} </span>
-                                        </p>
-                                    </div> --}}
-                                </div>
-                                <div class="col-6 col-md-12 col-xl-7">
-                                    {{-- <div id="growthChart" class="mt-md-3 mt-xl-0"></div> --}}
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+               
             </div>
         </div>
     </div>

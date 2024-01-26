@@ -49,6 +49,20 @@
             </li>
             <li class="nav-item nav-category">Master</li>
             <li class="nav-item">
+                <a href="{{ route('list_anggota') }}" class="nav-link">
+                    <i class="link-icon" data-feather="users"></i>
+                    <span class="link-title">Data Anggota</span>
+                </a>
+            </li>
+          
+            <li class="nav-item">
+                <a href="{{ route('list_pengunjung') }}" class="nav-link">
+                    <i class="link-icon" data-feather="user-check"></i>
+                    <span class="link-title">Data Pengunjung</span>
+                </a>
+            </li>
+
+            <li class="nav-item">
                 <a href="{{ route('list_kelas') }}" class="nav-link">
                     <i class="link-icon" data-feather="columns"></i>
                     <span class="link-title">Data Kelas</span>
@@ -67,19 +81,12 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a href="{{ route('list_anggota') }}" class="nav-link">
-                    <i class="link-icon" data-feather="users"></i>
-                    <span class="link-title">Data Anggota</span>
+                <a href="{{ route('list_rak') }}" class="nav-link">
+                    <i class="link-icon" data-feather="layout"></i>
+                    <span class="link-title">Data Rak Buku</span>
                 </a>
             </li>
           
-            <li class="nav-item">
-                <a href="{{ route('list_pengunjung') }}" class="nav-link">
-                    <i class="link-icon" data-feather="user-check"></i>
-                    <span class="link-title">Data Pengunjung</span>
-                </a>
-            </li>
-
 
             <li class="nav-item nav-category">Laporan</li>
             <li class="nav-item">

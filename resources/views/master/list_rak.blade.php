@@ -14,8 +14,9 @@
                     <thead>
                         <tr class="text-center">
                             <th>
-                                Kode Rak
+                                Print
                             </th>
+                      
                             <th>
                                 Nama Rak
                             </th>
@@ -27,22 +28,14 @@
                             </th>
                         </tr>
                     </thead>
-                    <tbody>
-                        <tr>
-                            <td class="text-center">KD001</td>
-                            <td class="text-center">Ilmu Pengetahuan Sosial</td>
-                            <td class="text-center">A001</td>
-                            <td class="text-center">
-                                <button class="btn btn-sm btn-danger" id="btn-delete">Hapus</button>
-                                <button class="btn btn-sm btn-success" id="btn-edit">Ubah</button>
-                            </td>
-                        </tr>
+                    <tbody id="tbody-rak">
+
                     </tbody>
                 </x-table>
             </div>
         </div>
     </div>
-    <div class="modal fade" id="modal-kelas" tabindex="-1" data-bs-backdrop="static">
+    <div class="modal fade" id="modal-rak" tabindex="-1" data-bs-backdrop="static">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
@@ -51,23 +44,28 @@
                 <div class="modal-body">
                     <form>
                         <div class="mb-3">
-                            <label for="kd_kategori" class="form-label">Kode Kelas</label>
-                            <input type="search" class="form-control" id="kd_kategori" readonly
+                            <label for="is_metode" class="form-label">Is Metode</label>
+                            <input type="search" class="form-control" id="is_metode" readonly
+                                placeholder="Otomatis Terisi">
+                        </div>
+                        <div class="mb-3">
+                            <label for="id_rak" class="form-label">ID Rak</label>
+                            <input type="search" class="form-control" id="id_rak" readonly
                                 placeholder="Otomatis Terisi">
                         </div>
                         <div class="mb-3">
                             <div class="row">
                                 <div class="col">
-                                    <label for="ketegori" class="form-label">Nama Rak</label>
-                                    <input type="text" id="" class="form-control" placeholder="Nama Rak">
+                                    <label for="nm_rak" class="form-label">Nama Rak</label>
+                                    <input type="text" id="nm_rak" class="form-control" placeholder="Nama Rak">
                                 </div>
                             </div>
                         </div>
                         <div class="mb-3">
                             <div class="row">
                                 <div class="col">
-                                    <label for="ketegori" class="form-label">Lokasi Rak</label>
-                                    <input type="text" id="" class="form-control" placeholder="Lokasi Rak">
+                                    <label for="lokasi_rak" class="form-label">Lokasi Rak</label>
+                                    <input type="text" id="lokasi_rak" class="form-control" placeholder="Lokasi Rak">
                                 </div>
                             </div>
                         </div>
@@ -77,20 +75,273 @@
                 </div>
                 <div class="modal-footer ">
                     <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Batal</button>
-                    <button type="button" class="btn btn-success">Simpan</button>
+                    <button type="button" class="btn btn-success" onclick="simpan_rak()">Simpan</button>
                 </div>
             </div>
         </div>
     </div>
 
     <script>
-        $(document).ready(function() {
-            $('table').DataTable();
-        })
-
-
         $("#btn-add").on("click", function() {
-            $("#modal-kelas").modal("show");
+            ubah_rak("");
         })
+
+        $("#nm_rak").on("keypress", function() {
+            if (event.keyCode === 13) {
+                simpan_rak();
+            }
+        })
+        get_rak()
+
+        function get_rak() {
+            $.ajax({
+                type: "GET",
+                url: "{{ route('get_rak') }}",
+
+                beforeSend: function() {
+                    $("#tbody-rak").html(`
+                    <tr>
+                        <td colspan="4" class="text-center">Loading...</td>
+                    </tr>
+                `);
+                },
+                success: function(data) {
+                    if (data.data.length > 0) {
+                        let html = "";
+                        data.data.forEach((item, index) => {
+                            html += `<tr>`;
+                            html += `<td class="text-center">`;
+                            html +=
+                                `<button class="btn btn-sm btn-primary mx-1" onclick="print_rak(${item.id})" ><i class="icon-sm" data-feather="printer"></i>
+                                    </button>`;
+                            html += `</td>`;
+                            // html += `<td class="text-center">${item.id}</td>`;
+                            html += `<td class="text-center">${item.nm_rak}</td>`;
+                            html += `<td class="text-center">${item.lokasi_rak}</td>`;
+                            html += `<td class="text-center">`;
+                            html +=
+                                `<button class="btn btn-sm btn-danger mx-1" onclick="hapus_rak(${item.id})">Hapus</button>`;
+                            html +=
+                                `<button class="btn btn-sm btn-success mx-1" onclick="ubah_rak(${item.id})" >Ubah</button>`;
+
+                            html += `</td>`;
+                            html += `</td>`;
+                        });
+                        $("#tbody-rak").html(html);
+                        if ($("#table-rak").hasClass("dataTable")) {
+                            $("#table-rak").DataTable().destroy();
+                        }
+                        $("#tbody-rak").html(html);
+                        $('table').DataTable({
+                            drawCallback: function(settings, json) {
+                                feather.replace();
+                            }
+                        });
+                    } else {
+                        $("#tbody-rak").html(`
+                        <tr>
+                            <td colspan="4" class="text-center">Tidak ada data yang ditampilkan</td>
+                        </tr>
+                    `);
+                    }
+
+
+                }
+            }).fail(function(err) {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: "Gagal memuat data, silahkan refresh halaman"
+                })
+            })
+        }
+
+        function ubah_rak(id) {
+            $.ajax({
+                type: "GET",
+                url: "{{ route('get_rak') }}",
+                data: {
+                    id_rak: id
+                },
+
+                beforeSend: function() {
+                    Swal.fire({
+                        title: 'Loading...',
+                        text: "Sedang memuat data",
+                        showConfirmButton: false,
+                    })
+                },
+                success: function(data) {
+                    Swal.close()
+                    let value = data.data;
+                    if (id == "") {
+                        $("#is_metode").val("tambah");
+                        $("#modal-rak").modal("show");
+                        $("#modal-title").html("Tambah Kelas");
+                        $("#id_rak").val("").trigger("change");
+                        $("#nm_rak").val("").trigger("change");
+                        $("#kode_rak").val("").trigger("change");
+                        $("#lokasi_rak").val("").trigger("change");
+                    } else {
+                        $("#is_metode").val("ubah");
+                        $("#modal-rak").modal("show");
+                        $("#modal-title").html("Ubah Kelas");
+                        $("#id_rak").val(value.id).trigger("change");
+                        $("#kode_rak").val(value.kd_rak).trigger("change");
+                        $("#lokasi_rak").val(value.lokasi_rak).trigger("change");
+                        $("#nm_rak").val(value.nm_rak).trigger("change");
+                    }
+                }
+            }).fail(function(err) {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: "Gagal memuat data, silahkan refresh halaman"
+                })
+            })
+        }
+
+        function simpan_rak() {
+            let is_metode = $("#is_metode").val();
+            let id_rak = $("#id_rak").val();
+            let nm_rak = $("#nm_rak").val();
+            let lokasi_rak = $("#lokasi_rak").val();
+            if (nm_rak == "") {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: "Nama Rak tidak boleh kosong"
+                })
+                $("#nm_rak").addClass("is-invalid");
+            } if (lokasi_rak == "") {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: "Lokasi Rak tidak boleh kosong"
+                })
+                $("#nm_rak").addClass("is-invalid");
+            } else {
+
+
+                Swal.fire({
+                    title: 'Apakah anda yakin?',
+                    text: is_metode == "tambah" ? "Data akan ditambahkan" : "Data akan diubah",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonText: 'Ya, Lanjutkan!',
+                    cancelButtonText: 'Tidak, Batalkan!',
+                    reverseButtons: true
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        $.ajax({
+                            type: is_metode == "tambah" ? "POST" : "PUT",
+                            url: is_metode == "tambah" ? "{{ route('add_rak') }}" :
+                                "{{ route('update_rak') }}",
+                            data: {
+                                _token: "{{ csrf_token() }}",
+                                id_rak: id_rak,
+                                nm_rak: nm_rak,
+                                lokasi_rak: lokasi_rak
+                            },
+
+                            beforeSend: function() {
+                                Swal.fire({
+                                    title: 'Loading...',
+                                    text: "Sedang memuat data",
+                                    showConfirmButton: false,
+                                })
+                            },
+                            success: function(data) {
+                                Swal.close()
+                                console.log(data)
+                                if (data.success == true) {
+                                    Swal.fire({
+                                        icon: 'success',
+                                        title: 'Berhasil',
+                                        text: data.message,
+                                        timer: 1000,
+                                        showConfirmButton: false,
+                                        outsideClick: false
+                                    }).then((result) => {
+                                        $("#modal-rak").modal("hide");
+                                        get_rak();
+                                    })
+                                } else {
+                                    Swal.fire({
+                                        icon: 'error',
+                                        title: 'Oops...',
+                                        text: data.message,
+                                    })
+                                }
+                            }
+                        }).fail(function(err) {
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Oops...',
+                                text: "Gagal memuat data, silahkan refresh halaman"
+                            })
+                        })
+                    }
+                })
+            }
+        }
+
+        function hapus_rak(id_rak) {
+            Swal.fire({
+                title: 'Apakah anda yakin?',
+                text: "Data akan dihapus",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'Ya, Lanjutkan!',
+                cancelButtonText: 'Tidak, Batalkan!',
+                reverseButtons: true
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $.ajax({
+                        type: "DELETE",
+                        url: "{{ route('delete_rak') }}",
+                        data: {
+                            _token: "{{ csrf_token() }}",
+                            id_rak: id_rak,
+                        },
+
+                        beforeSend: function() {
+                            Swal.fire({
+                                title: 'Loading...',
+                                text: "Sedang memuat data",
+                                showConfirmButton: false,
+                            })
+                        },
+                        success: function(data) {
+                            Swal.close()
+                            if (data.success == true) {
+                                Swal.fire({
+                                    icon: 'success',
+                                    title: 'Berhasil',
+                                    text: data.message,
+                                }).then((result) => {
+                                    if (result.isConfirmed) {
+                                        $("#modal-rak").modal("hide");
+                                        get_rak();
+                                    }
+                                })
+                            } else {
+                                Swal.fire({
+                                    icon: 'error',
+                                    title: 'Oops...',
+                                    text: "Gagal menyimpan data, silahkan coba lagi",
+                                })
+                            }
+                        }
+                    }).fail(function(err) {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Oops...',
+                            text: "Gagal memuat data, silahkan refresh halaman"
+                        })
+                    })
+                }
+            })
+        }
     </script>
 </x-app-layout>
