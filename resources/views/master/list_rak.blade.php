@@ -81,6 +81,34 @@
         </div>
     </div>
 
+    <div class="modal fade" id="modal-print" tabindex="-1" data-bs-backdrop="static">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modal-title-print">Print Buku</h5>
+                </div>
+                <div class="modal-body">
+                    <div class="">
+                        <div class="d-flex justify-content-center">
+                            <svg id="barcode"></svg>
+                        </div>
+                        <hr>
+                        <label for="barcode" class="form-label">Jumlah Print</label>
+                        <input type="number" class="form-control" id="jml_print" placeholder="Jumlah Print"
+                            value="1">
+
+                    </div>
+                    
+
+                </div>
+                <div class="modal-footer ">
+                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Batal</button>
+                    <button type="button" class="btn btn-success" onclick="print_barcode($('#jml_print').val())">Print</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <script>
         $("#btn-add").on("click", function() {
             ubah_rak("");
@@ -112,7 +140,7 @@
                             html += `<tr>`;
                             html += `<td class="text-center">`;
                             html +=
-                                `<button class="btn btn-sm btn-primary mx-1" onclick="print_rak(${item.id})" ><i class="icon-sm" data-feather="printer"></i>
+                                `<button class="btn btn-sm btn-primary mx-1" onclick="print_rak('${item.lokasi_rak}')" ><i class="icon-sm" data-feather="printer"></i>
                                     </button>`;
                             html += `</td>`;
                             // html += `<td class="text-center">${item.id}</td>`;
@@ -253,7 +281,6 @@
                             },
                             success: function(data) {
                                 Swal.close()
-                                console.log(data)
                                 if (data.success == true) {
                                     Swal.fire({
                                         icon: 'success',
@@ -342,6 +369,38 @@
                     })
                 }
             })
+        }
+
+        
+        function print_rak(kd_buku) {
+
+            JsBarcode("#barcode", kd_buku, {
+                format: "CODE128",
+                displayValue: true,
+                fontSize: 14,
+                width: 1,
+                height: 50
+            });
+
+            $("#modal-print").modal("show")
+        }
+
+        // Function to print multiple copies
+        function print_barcode(jml_print) {
+            if (!jml_print) {
+                // Default to one copy if not specified
+                jml_print = 1;
+            }
+
+            var printWindow = window.open('', '_blank');
+            printWindow.document.write('<html><head><title>Print</title></head><body>');
+            printWindow.document.write('<div style="text-align: left; width:100%">');
+            for (var i = 0; i < jml_print; i++) {
+                printWindow.document.write(document.getElementById("barcode").outerHTML);
+            }
+            printWindow.document.write('</div></body></html>');
+            printWindow.document.close();
+            printWindow.print();
         }
     </script>
 </x-app-layout>

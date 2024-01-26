@@ -1,5 +1,4 @@
 <x-app-layout>
-    <script src="https://cdn.jsdelivr.net/jsbarcode/3.3.20/JsBarcode.all.min.js"></script>
 
     <div class="card">
 
