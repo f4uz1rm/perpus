@@ -277,6 +277,25 @@ class MasterController extends Controller
             ];
         }
     }
+    function get_buku_bykode(Request $request)
+    {
+        $client = new Client(['timeout' => 10]); // Mengatur timeout menjadi 10 detik
+        try {
+            $response = $client->get(
+                config('app.url') . '/perpus/api/get_buku_bykode',
+                [
+                    'json' => $request->all(),
+                ]
+            );
+            return json_decode($response->getBody()->getContents(), true);
+        } catch (RequestException $e) {
+            // Tangani kesalahan timeout atau kesalahan lainnya
+            return [
+                'status' => 'error',
+                'error' => 'Koneksi terputus atau kesalahan lainnya'
+            ];
+        }
+    }
 
     function add_buku(Request $request)
     {

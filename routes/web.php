@@ -48,6 +48,7 @@ Route::middleware('auth')->group(function () {
 
         Route::get('/list_buku', 'list_buku')->name('list_buku');
         Route::get('/get_buku', 'get_buku')->name('get_buku');
+        Route::get('/get_buku_bykode', 'get_buku_bykode')->name('get_buku_bykode');
         Route::post('/add_buku', 'add_buku')->name('add_buku');
         Route::put('/update_buku', 'update_buku')->name('update_buku');
         Route::delete('/delete_buku', 'delete_buku')->name('delete_buku');

@@ -307,6 +307,18 @@ class MasterController extends Controller
             ], 200);
         }
     }
+    function get_buku_bykode(Request $request)
+    {
+        $kd_buku = $request->input('kd_buku');
+
+        if ($kd_buku) {
+            return response()->json([
+                'success' => true,
+                'message' => 'Berhasil di tampilkan',
+                'data' => m_buku::where('kd_buku', $kd_buku)->first()
+            ], 200);
+        } 
+    }
     function add_buku(Request $request)
     {
         $data = new m_buku();

@@ -39,6 +39,7 @@ Route::controller(MasterController::class)->group(function () {
     Route::delete('/delete_kategori', 'delete_kategori');
 
     Route::get('/get_buku', 'get_buku');
+    Route::get('/get_buku_bykode', 'get_buku_bykode');
     Route::post('/add_buku', 'add_buku');
     Route::put('/update_buku', 'update_buku');
     Route::delete('/delete_buku', 'delete_buku');
