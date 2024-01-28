@@ -48,4 +48,6 @@ Route::controller(MasterController::class)->group(function () {
     Route::post('/add_rak', 'add_rak');
     Route::put('/update_rak', 'update_rak');
     Route::delete('/delete_rak', 'delete_rak');
+    
+    Route::get('/count_dashboard', 'count_dashboard');
 });

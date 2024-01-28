@@ -430,6 +430,25 @@ class MasterController extends Controller
             ];
         }
     }
+    function count_dashboard(Request $request)
+    {
+        $client = new Client(['timeout' => 10]); // Mengatur timeout menjadi 10 detik
+        try {
+            $response = $client->get(
+                config('app.url') . '/perpus/api/count_dashboard',
+                [
+                    'json' => $request->all(),
+                ]
+            );
+            return json_decode($response->getBody()->getContents(), true);
+        } catch (RequestException $e) {
+            // Tangani kesalahan timeout atau kesalahan lainnya
+            return [
+                'status' => 'error',
+                'error' => 'Koneksi terputus atau kesalahan lainnya'
+            ];
+        }
+    }
 
     function view_pengunjung(): View
     {

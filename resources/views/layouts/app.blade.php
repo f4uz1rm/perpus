@@ -23,12 +23,17 @@
     <link rel="stylesheet" href="{{ asset('assets/css/demo1/style.css') }}">
     <link rel="shortcut icon" href="{{ asset('assets/images/logo-ponpes.png') }}" />
     <!-- Plugin css for this page -->
+    
     <script src="{{ asset('assets/js/jquery.js') }}"></script>
     <!-- End plugin css for this page -->
-
+    
     <link rel="stylesheet" href="{{ asset('assets/vendors/sweetalert2/sweetalert2.min.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/vendors/select2/select2.min.css') }}">
+    
+    <link rel="stylesheet" href="{{ asset('assets/vendors/bootstrap-datepicker/bootstrap-datepicker.min.css') }}">
+    <script src="{{ asset('assets/vendors/bootstrap-datepicker/bootstrap-datepicker.min.js') }}"></script>
     <script src="https://cdn.jsdelivr.net/jsbarcode/3.3.20/JsBarcode.all.min.js"></script>
+    <script src="{{ asset('assets/js/moment.js') }}"></script>
 
 
     {{-- @vite(['resources/css/app.css', 'resources/js/app.js']) --}}
@@ -80,7 +85,6 @@
 
         </div>
     </div>
-
     <script src="{{ asset('assets/vendors/sweetalert2/sweetalert2.min.js') }}"></script>
     <script src="{{ asset('assets/vendors/core/core.js') }}"></script>
     <script src="{{ asset('assets/vendors/feather-icons/feather.min.js') }}"></script>
@@ -92,6 +96,7 @@
     <script src="{{ asset('assets/vendors/datatables.net/jquery.dataTables.js') }}"></script>
     <script src="{{ asset('assets/vendors/datatables.net-bs5/dataTables.bootstrap5.js') }}"></script>
     <script src="{{ asset('assets/js/data-table.js') }}"></script>
+    <script src="{{ asset('assets/js/datepicker.js') }}"></script>
 </body>
 
 </html>

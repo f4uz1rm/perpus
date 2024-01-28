@@ -105,7 +105,7 @@
                             </div>
                             <div class="row">
                                 <div class="col-6 col-md-12 col-xl-5">
-                                    <h3 class="mb-2 mt-2">0</h3>
+                                    <h3 class="mb-2 mt-2" id="total_buku">0</h3>
                                 </div>
                             </div>
                         </div>
@@ -120,7 +120,7 @@
                             </div>
                             <div class="row">
                                 <div class="col-12 col-md-12 col-xl-12">
-                                    <h3 class="mb-2 mt-2">0</h3>
+                                    <h3 class="mb-2 mt-2" id="total_pengunjung">0</h3>
                                     {{-- <div class="d-flex align-items-baseline">
                                         <p class="text-danger">
                                             <span>-2.8%</span>
@@ -154,3 +154,23 @@
         </div>
     </div>
 </x-app-layout>
+
+<script>
+    $.ajax({
+        url: "{{ route('count_dashboard') }}",
+        type: "GET",
+        dataType: "JSON",
+        success: function(data) {
+            $('#total_buku').html(data.total_buku);
+            $('#total_pengunjung').html(data.total_pengunjung);
+        },
+        error: function(error) {
+            console.log(error);
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: 'Terjadi Kesalahan!',
+            })
+        }
+    });
+</script>

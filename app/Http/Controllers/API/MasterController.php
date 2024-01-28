@@ -17,8 +17,8 @@ class MasterController extends Controller
     function get_pengunjung(Request $request)
     {
         $pengunjung = m_pengunjung::join('m_kelas', 'm_pengunjung.id_kelas', '=', 'm_kelas.id')
-                              ->select('m_pengunjung.nm_lengkap', 'm_pengunjung.tujuan', 'm_pengunjung.tgl_kunjungan', 'm_kelas.nm_kelas')
-                              ->get();
+            ->select('m_pengunjung.nm_lengkap', 'm_pengunjung.tujuan', 'm_pengunjung.tgl_kunjungan', 'm_kelas.nm_kelas')
+            ->get();
         return response()->json([
             'success' => true,
             'message' => 'Berhasil di tampilkan',
@@ -49,13 +49,17 @@ class MasterController extends Controller
             return response()->json([
                 'success' => true,
                 'message' => 'Berhasil di tampilkan',
-                'data' => m_anggota::where('id', $id_anggota)->first()
+                'data' => DB::table("m_anggota")->join("m_kelas", "m_anggota.id_kelas", "=", "m_kelas.id")
+                    ->select("m_anggota.id", "m_anggota.nm_lengkap", "m_anggota.status", "m_anggota.jns_kelamin", "m_anggota.masa_aktif","m_anggota.nisn", "m_kelas.nm_kelas", "m_kelas.id  as id_kelas")->where('m_anggota.id', $id_anggota)->first()
             ], 200);
         } else {
+            $list_anggota = DB::table("m_anggota")->join("m_kelas", "m_anggota.id_kelas", "=", "m_kelas.id")
+                ->select("m_anggota.id", "m_anggota.nm_lengkap", "m_anggota.status", "m_anggota.jns_kelamin", "m_anggota.masa_aktif", "m_kelas.nm_kelas")
+                ->get();
             return response()->json([
                 'success' => true,
                 'message' => 'Berhasil di tampilkan',
-                'data' => m_anggota::all()
+                'data' => $list_anggota
             ], 200);
         }
     }
@@ -80,6 +84,7 @@ class MasterController extends Controller
             $data->jns_kelamin          = $request->input('jns_kelamin');
             $data->id_kelas             = $request->input('id_kelas');
             $data->status               = $request->input('status');
+            $data->masa_aktif               = $request->input('masa_aktif');
             $data->save();
             return response()->json([
                 'success' => true,
@@ -97,6 +102,7 @@ class MasterController extends Controller
             $data->jns_kelamin          = $request->input('jns_kelamin');
             $data->id_kelas             = $request->input('id_kelas');
             $data->status               = $request->input('status');
+            $data->masa_aktif               = $request->input('masa_aktif');
             $data->update();
             return response()->json([
                 'success' => true,
@@ -299,7 +305,7 @@ class MasterController extends Controller
             $data->select("m_buku.*", "m_kategori.nm_kategori", "m_rak.nm_rak", "m_rak.lokasi_rak as lok_rak");
             $hasil = $data->get();
 
-       
+
             return response()->json([
                 'success' => true,
                 'message' => 'Berhasil di tampilkan',
@@ -317,7 +323,7 @@ class MasterController extends Controller
                 'message' => 'Berhasil di tampilkan',
                 'data' => m_buku::where('kd_buku', $kd_buku)->first()
             ], 200);
-        } 
+        }
     }
     function add_buku(Request $request)
     {
@@ -471,5 +477,19 @@ class MasterController extends Controller
                 'data' => $data
             ], 200);
         }
+    }
+
+
+    function count_dashboard()
+    {
+        $total_pengunjung = m_pengunjung::count();
+        $total_buku = m_buku::count();
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Berhasil di tampilkan',
+            'total_buku' => $total_buku,
+            'total_pengunjung' => $total_pengunjung
+        ], 200);
     }
 }

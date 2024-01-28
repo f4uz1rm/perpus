@@ -26,6 +26,7 @@ Route::controller(MasterController::class)->group(function () {
     Route::get('/view_pengunjung', 'view_pengunjung')->name('view_pengunjung');
     Route::post('/tambah_pengunjung', 'tambah_pengunjung')->name('tambah_pengunjung');
     Route::get('/get_kelas', 'get_kelas')->name('get_kelas');
+
 });
 
 Route::middleware('auth')->group(function () {
@@ -34,6 +35,7 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
     Route::controller(MasterController::class)->group(function () {
+        Route::get('/count_dashboard', 'count_dashboard')->name('count_dashboard');
         Route::get('/list_rak', 'list_rak')->name('list_rak');
         Route::post('/add_rak', 'add_rak')->name('add_rak');
         Route::put('/update_rak', 'update_rak')->name('update_rak');
@@ -53,7 +55,7 @@ Route::middleware('auth')->group(function () {
         Route::put('/update_buku', 'update_buku')->name('update_buku');
         Route::delete('/delete_buku', 'delete_buku')->name('delete_buku');
 
-
+        Route::get('/get_anggota', 'get_anggota')->name('get_anggota');
         Route::get('/list_anggota', 'list_anggota')->name('list_anggota');
         Route::post('/add_anggota', 'add_anggota')->name('add_anggota');
         Route::put('/update_anggota', 'update_anggota')->name('update_anggota');
