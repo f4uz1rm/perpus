@@ -20,7 +20,7 @@
                                 Nama Kelas
                             </th>
                             <th>
-                                #
+                                Aksi
                             </th>
                         </tr>
                     </thead>
@@ -112,7 +112,9 @@
                             $("#table-kelas").DataTable().destroy();
                         }
                         $("#tbody-kelas").html(html);
-                        $('table').DataTable();
+                        $('table').DataTable({
+                            responsive: true,
+                        });
                     } else {
                         $("#tbody-kelas").html(`
                         <tr>

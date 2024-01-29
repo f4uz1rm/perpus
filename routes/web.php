@@ -18,6 +18,10 @@ use Illuminate\Support\Facades\Route;
 
 
 
+Route::get('/dashboard', function () {
+    return view('dashboard');
+})->middleware(['auth', 'verified'])->name('dashboard');
+
 Route::get('/', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
@@ -70,6 +74,7 @@ Route::middleware('auth')->group(function () {
 
         Route::get('/list_pengunjung', 'list_pengunjung')->name('list_pengunjung');
         Route::get('/get_pengunjung', 'get_pengunjung')->name('get_pengunjung');
+        Route::post('/import_buku', 'import_buku')->name('import_buku');
     });
 
     Route::controller(TransaksiController::class)->group(function () {

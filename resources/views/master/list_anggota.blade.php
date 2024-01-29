@@ -12,9 +12,7 @@
                 <x-table id="table-anggota">
                     <thead>
                         <tr class="text-center">
-                            <th>
-                                Print
-                            </th>
+                        
                             <th>
                                 Kode Anggota
                             </th>
@@ -169,10 +167,6 @@
                     let html = "";
                     data.data.forEach((item, index) => {
                         html += `<tr>`;
-                        html += `<td class="text-center">`;
-                        html +=
-                            `<button class="btn btn-sm btn-primary mx-1" onclick="print_anggota('${item.id}')" ><i class="icon-sm" data-feather="printer"></i></button>`;
-                        html += `</td>`;
                         html += `<td class="text-center">${item.id}</td>`;
                         html += `<td class="text-wrap">${item.nm_lengkap}</td>`;
                         html +=
@@ -186,6 +180,8 @@
                             `<button class="btn btn-sm btn-danger mx-1" onclick="hapus_anggota('${item.id}')">Hapus</button>`;
                         html +=
                             `<button class="btn btn-sm btn-success mx-1" onclick="ubah_anggota('${item.id}')" >Ubah</button>`;
+                            html +=
+                            `<button class="btn btn-sm btn-primary mx-1" onclick="print_anggota('${item.id}')" >Print</button>`;
                         html += `</td>`;
                         html += `</tr>`;
                     });
@@ -193,7 +189,9 @@
                     if ($("#table-anggota").hasClass("dataTable")) {
                         $("#table-anggota").DataTable().destroy();
                     }
-                    $('table').DataTable();
+                    $('table').DataTable({
+                        responsive: true,
+                    });
                 } else {
                     $("#tbody-anggota").html(`
                         <tr>

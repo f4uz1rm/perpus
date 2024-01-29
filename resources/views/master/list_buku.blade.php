@@ -6,7 +6,12 @@
             <div class="">
                 Data Buku
             </div>
-            <x-btn-add />
+            <div class="">
+                {{-- <button class="btn btn-warning" id="btn-import" data-bs-target="#modal-import" data-bs-toggle="modal">
+                    <i class="icon-sm" data-feather="upload"></i>
+                    Import Buku</button> --}}
+                <x-btn-add />
+            </div>
             {{-- <button class="btn btn-sm btn-success" data-bs-toggle="modal" data-bs-target=".btn-add">
                 <i class="icon-sm mr-2" data-feather="plus"></i> Tambah Data
             </button> --}}
@@ -16,9 +21,7 @@
                 <x-table id="table-buku">
                     <thead>
                         <tr class="text-center">
-                            <th>
-                                Print
-                            </th>
+
                             <th>
                                 Kode Buku
                             </th>
@@ -142,12 +145,35 @@
                             value="1">
 
                     </div>
-                    
+
 
                 </div>
                 <div class="modal-footer ">
                     <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Batal</button>
-                    <button type="button" class="btn btn-success" onclick="print_barcode($('#jml_print').val())">Print</button>
+                    <button type="button" class="btn btn-success"
+                        onclick="print_barcode($('#jml_print').val())">Print</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="modal-import" tabindex="-1" data-bs-backdrop="static">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modal-title-print">Import Buku</h5>
+                </div>
+                <div class="modal-body">
+
+                    <form class="">
+                        <input type="file">
+                    </form>
+                  
+
+
+                </div>
+                <div class="modal-footer ">
+                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Batal</button>
+                    <button type="button" class="btn btn-success" onclick="import_buku()">Import </button>
                 </div>
             </div>
         </div>
@@ -241,10 +267,7 @@
                         let html = "";
                         data.data.forEach((item, index) => {
                             html += `<tr>`;
-                            html += `<td class="text-center">`;
-                            html +=
-                                `<button class="btn btn-sm btn-primary mx-1" onclick="print_buku('${item.kd_buku}')" ><i class="icon-sm" data-feather="printer"></i></button>`;
-                            html += `</td>`;
+
                             html += `<td class="text-center">${item.kd_buku}</td>`;
                             html += `<td class="text-wrap">${item.judul}</td>`;
                             html += `<td class="text-center">${item.tahun}</td>`;
@@ -257,6 +280,8 @@
                                 `<button class="btn btn-sm btn-danger mx-1" onclick="hapus_buku(${item.id})">Hapus</button>`;
                             html +=
                                 `<button class="btn btn-sm btn-success mx-1" onclick="ubah_buku(${item.id})" >Ubah</button>`;
+                            html +=
+                                `<button class="btn btn-sm btn-primary mx-1" onclick="print_buku('${item.kd_buku}')" >Print</button>`;
                             html += `</td>`;
                             html += `</tr>`;
                         });
@@ -266,6 +291,10 @@
                         }
                         $("#tbody-buku").html(html);
                         $('table').DataTable({
+                            responsive: true,
+                            // rowReorder: {
+                            //     selector: 'td:nth-child(2)'
+                            // },
                             drawCallback: function() {
                                 feather.replace();
                             },

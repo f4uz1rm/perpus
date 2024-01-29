@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Imports\Buku;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\RequestException;
+use Maatwebsite\Excel\Facades\Excel;
 
 class MasterController extends Controller
 {
@@ -454,4 +456,10 @@ class MasterController extends Controller
     {
         return view('master.view_pengunjung');
     }
+
+    function import_buku(){
+        Excel::import(new Buku, 'users.xlsx');
+    }
+
+    
 }

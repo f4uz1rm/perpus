@@ -15,7 +15,7 @@
             <li class="nav-item">
                 <a href="{{ route('dashboard') }}" class="nav-link">
                     <i class="link-icon" data-feather="box"></i>
-                    <span class="link-title">Dashboard</span>
+                    <span class="link-title">Dashboard </span>
                 </a>
             </li>
             <li class="nav-item nav-category">Transaksi</li>
@@ -23,7 +23,7 @@
                 <a class="nav-link" data-bs-toggle="collapse" href="#transaksi" role="button" aria-expanded="false"
                     aria-controls="transaksi">
                     <i class="link-icon" data-feather="mail"></i>
-                    <span class="link-title">Transaksi</span>
+                    <span class="link-title">Transaksi <span class="badge bg-primary text-light">Dev</span></span>
                     <i class="link-arrow" data-feather="chevron-down"></i>
                 </a>
                 <div class="collapse" id="transaksi">
@@ -44,14 +44,14 @@
             <li class="nav-item">
                 <a href="{{ route('list_jadwalkunjungan') }}" class="nav-link">
                     <i class="link-icon" data-feather="calendar"></i>
-                    <span class="link-title">Jadwal Kunjungan</span>
+                    <span class="link-title">Jadwal Kunjungan <span class="badge bg-primary text-light">Dev</span></span>
                 </a>
             </li>
             <li class="nav-item nav-category">Master</li>
             <li class="nav-item">
                 <a href="{{ route('list_anggota') }}" class="nav-link">
                     <i class="link-icon" data-feather="users"></i>
-                    <span class="link-title">Data Anggota</span>
+                    <span class="link-title">Data Anggota <span class="badge bg-primary text-light">Dev</span></span>
                 </a>
             </li>
           
@@ -88,7 +88,7 @@
             </li>
           
 
-            <li class="nav-item nav-category">Laporan</li>
+            <li class="nav-item nav-category">Laporan <span class="badge bg-primary text-light">Dev</span></li>
             <li class="nav-item">
                 <a class="nav-link" data-bs-toggle="collapse" href="#laporan" role="button" aria-expanded="false"
                     aria-controls="laporan">

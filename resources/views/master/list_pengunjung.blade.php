@@ -23,7 +23,7 @@
                                 Kelas
                             </th>
                             <th>
-                                Tujuan Ke Pespustakaan
+                                Tujuan
                             </th>
 
                         </tr>
@@ -113,7 +113,9 @@
                     if ($("#table-pengunjung").hasClass("dataTable")) {
                         $("#table-pengunjung").DataTable().destroy();
                     }
-                    $('table').DataTable();
+                    $('table').DataTable({
+                        responsive: true,
+                    });
                 } else {
                     $("#tbody-pengunjung").html(`
                         <tr>

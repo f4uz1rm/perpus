@@ -13,9 +13,7 @@
                 <x-table id="table-rak">
                     <thead>
                         <tr class="text-center">
-                            <th>
-                                Print
-                            </th>
+                          
                       
                             <th>
                                 Nama Rak
@@ -24,7 +22,7 @@
                                 Lokasi Rak
                             </th>
                             <th>
-                                #
+                                Aksi
                             </th>
                         </tr>
                     </thead>
@@ -138,11 +136,7 @@
                         let html = "";
                         data.data.forEach((item, index) => {
                             html += `<tr>`;
-                            html += `<td class="text-center">`;
-                            html +=
-                                `<button class="btn btn-sm btn-primary mx-1" onclick="print_rak('${item.lokasi_rak}')" ><i class="icon-sm" data-feather="printer"></i>
-                                    </button>`;
-                            html += `</td>`;
+                         
                             // html += `<td class="text-center">${item.id}</td>`;
                             html += `<td class="text-center">${item.nm_rak}</td>`;
                             html += `<td class="text-center">${item.lokasi_rak}</td>`;
@@ -151,7 +145,9 @@
                                 `<button class="btn btn-sm btn-danger mx-1" onclick="hapus_rak(${item.id})">Hapus</button>`;
                             html +=
                                 `<button class="btn btn-sm btn-success mx-1" onclick="ubah_rak(${item.id})" >Ubah</button>`;
-
+                                html +=
+                                `<button class="btn btn-sm btn-primary mx-1" onclick="print_rak('${item.lokasi_rak}')" >Print
+                                    </button>`
                             html += `</td>`;
                             html += `</td>`;
                         });
@@ -161,6 +157,7 @@
                         }
                         $("#tbody-rak").html(html);
                         $('table').DataTable({
+                            responsive: true,
                             drawCallback: function(settings, json) {
                                 feather.replace();
                             }

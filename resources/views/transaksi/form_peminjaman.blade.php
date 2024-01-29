@@ -63,9 +63,10 @@
                 <label for="kd_buku" class="form-label">Kode Buku</label>
                 <div class="input-group">
                     <input type="search" class="form-control" id="kd_buku" placeholder="Masukan Kode Buku">
-                    <span class="input-group-text">
-                        <i class="icon-sm" data-feather="search"></i>
+                    <span class="input-group-text" id="btn-camera">
+                        <i class="icon-sm" data-feather="camera" ></i>
                     </span>
+                  
                 </div>
             </div>
             <div class=" mb-2 d-flex justify-content-between">
@@ -76,31 +77,7 @@
 
             </div>
             <div class="" id="list_buku">
-                {{-- @for ($i = 0; $i < 1; $i++)
-                    <div class="row ">
-                        <div class="col-sm-8">
-                            <div class="row mb-3">
-                                <label for="exampleInputUsername2" class="col-sm-2 col-form-label">Judul Buku</label>
-                                <div class="col-sm">
-                                    <div class="input-group">
-                                        <span class="input-group-text">Kode Buku</span>
-                                        <input type="text" class="form-control" id="exampleInputUsername2"
-                                            placeholder="Judul Buku" readonly>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-sm">
-                            <div class="input-group">
-                                <input type="number" class="form-control" value="1">
-                                <span class="input-group-text ">
-                                    <i class="icon-sm mr-2 text-danger" data-feather="trash"></i>
-                                    Hapus
-                                </span>
-                            </div>
-                        </div>
-                    </div>
-                @endfor --}}
+            
             </div>
 
 
@@ -172,26 +149,22 @@
                         // Jika belum ada, tambahkan elemen baru
                         let html = `
                         <div class="row list_buku_pinjam" data-kd-buku="${item.kd_buku}">
-                        <div class="col-sm-8">
+                        <div class="col-sm">
                             <div class="row mb-3">
-                            <label for="exampleInputUsername2" class="col-sm-2 col-form-label">Judul Buku</label>
                             <div class="col-sm">
                                 <div class="input-group">
                                 <span class="input-group-text" id="kd_buku">${item.kd_buku}</span>
                                 <input type="text" class="form-control" id="judul_buku" value="${item.judul}" placeholder="Judul Buku" readonly>
-                                </div>
-                                
-                            </div>
-                            </div>
-                        </div>
-                        <div class="col-sm">
-                            <div class="input-group">
-                            <input type="number" class="form-control quantity" value="1">
-                            <span class="input-group-text delete-book" data-kd-buku="${item.kd_buku}">
+                               <input type="number" class="form-control quantity" value="1">
+                               <span class="input-group-text delete-book" data-kd-buku="${item.kd_buku}">
                                 <i class="icon-sm mr-2 text-danger" data-feather="trash"></i> Hapus
                             </span>
+                                
+                                </div>
+                            </div>
                             </div>
                         </div>
+                       
                         </div>
                     `;
                         list_buku.append(html);

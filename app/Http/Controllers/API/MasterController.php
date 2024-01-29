@@ -339,7 +339,7 @@ class MasterController extends Controller
             $last_id = m_buku::select('kd_buku')->max('kd_buku');
             $kd_buku   = substr($last_id, 5);
             $kd_buku  =  (int)$kd_buku + 1;
-            $data->kd_buku               = "BKPP-" . sprintf("%03d", $kd_buku);
+            $data->kd_buku               = "BKMU-" . sprintf("%03d", $kd_buku);
             $data->judul                     = $request->input('judul');
             $data->penulis                   = $request->input('penulis');
             $data->penerbit                  = $request->input('penerbit');

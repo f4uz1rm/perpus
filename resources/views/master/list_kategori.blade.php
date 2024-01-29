@@ -20,7 +20,7 @@
                                 Nama Kategori
                             </th>
                             <th>
-                                #
+                                Aksi
                             </th>
                         </tr>
                     </thead>
@@ -114,7 +114,9 @@
                             $("#table-kategori").DataTable().destroy();
                         }
                         $("#tbody-kategori").html(html);
-                        $('table').DataTable();
+                        $('table').DataTable({
+                            responsive: true,
+                        });
                     } else {
                         $("#tbody-kategori").html(`
                         <tr>
