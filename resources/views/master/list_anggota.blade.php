@@ -168,7 +168,7 @@
                 `);
                 },
                 success: function(data) {
-                    if (data.data.length > 0) {
+                    if (data.data.length != 0) {
                         let html = "";
                         data.data.forEach((item, index) => {
                             html += `<tr>`;
