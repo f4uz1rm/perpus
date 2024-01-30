@@ -109,16 +109,17 @@
             </div>
         </div>
     </div>
+   
     <div class="modal fade" id="modal-print" tabindex="-1" data-bs-backdrop="static">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="modal-title-print">Print Buku</h5>
+                    <h5 class="modal-title" id="modal-title-print">Print Anggota</h5>
                 </div>
                 <div class="modal-body">
                     <div class="">
                         <div class="d-flex justify-content-center">
-                            <div id="kartu-anggota"></div>
+                                <div id="kartu-anggota"></div>
                         </div>
                     </div>
 
@@ -129,11 +130,14 @@
                 <div class="modal-footer ">
                     <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Batal</button>
                     <button type="button" class="btn btn-success"
-                        onclick="print_kartu()">Print</button>
+                        onclick="print_kartu()">Download Kartu</button>
                 </div>
             </div>
         </div>
     </div>
+
+    <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
+
     <script>
         $(document).ready(function() {
             get_kelas();
@@ -446,10 +450,11 @@
             var cardHTML = `
             <div class="card border" id="card-anggota">
                 <div class="card-body">
-                    <h5 class="card-title">Kode Anggota:<br> ${id_anggota}</h5>
+                    <div class="card-title d-flex justify-content-evenly">  <img src="{{ asset('assets/images/logo-ponpes.png')}}" width="50px"><div class="my-auto mx-auto">Kartu Anggota Perpus</div></div>
                     <hr>
                     <div class="card-text ">Nama Lengkap:<br><div class="h6"> ${nm_lengkap}</div></div>
                     <div class="card-text">Kelas: ${kelas}</div>
+                    <div class="card-text">Kode Anggota: ${id_anggota}</div>
                     <svg id="barcode"></svg>
                     <div class="card-text text-center">Masa Aktif: ${moment(masa_aktif,"YYYY-MM-DD").format("DD-MM-YYYY")}</div>
                 </div>
@@ -471,13 +476,12 @@
         // Function to print multiple copies
        
         function print_kartu() {
-            var cardContent = $("#card-anggota").clone();
+            var cardContent = $("#kartu-anggota").clone();
 
             // Create a new window to contain only the cloned content
             var printWindow = window.open('','_BLANK');
             printWindow.document.write('<html><head><title>Print</title>');
-            printWindow.document.write('<html><head><title>Print</title>');
-            printWindow.document.write('<link rel="stylesheet" type="text/css" href="../../assets/css/demo1/style.css">');
+            printWindow.document.write('<link rel="stylesheet" type="text/css" href="{{asset('assets/css/demo1/style.css')}}">');
 
 
             // Include your external CSS file in the new window
