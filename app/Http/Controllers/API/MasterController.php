@@ -85,6 +85,8 @@ class MasterController extends Controller
             $data->id_kelas             = $request->input('id_kelas');
             $data->status               = $request->input('status');
             $data->masa_aktif               = $request->input('masa_aktif');
+            $data->nisn               = $request->input('nisn');
+            $data->update();
             $data->save();
             return response()->json([
                 'success' => true,
@@ -103,6 +105,7 @@ class MasterController extends Controller
             $data->id_kelas             = $request->input('id_kelas');
             $data->status               = $request->input('status');
             $data->masa_aktif               = $request->input('masa_aktif');
+            $data->nisn               = $request->input('nisn');
             $data->update();
             return response()->json([
                 'success' => true,

@@ -138,7 +138,7 @@
                             html += `<tr>`;
                          
                             // html += `<td class="text-center">${item.id}</td>`;
-                            html += `<td class="text-center">${item.nm_rak}</td>`;
+                            html += `<td class="text-wrap">${item.nm_rak}</td>`;
                             html += `<td class="text-center">${item.lokasi_rak}</td>`;
                             html += `<td class="text-center">`;
                             html +=

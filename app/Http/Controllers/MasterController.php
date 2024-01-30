@@ -258,6 +258,76 @@ class MasterController extends Controller
             ];
         }
     }
+    function add_anggota(Request $request)
+    {
+
+        // return $request->all();
+        $client = new Client(['timeout' => 10]); // Mengatur timeout menjadi 10 detik
+        try {
+            $response = $client->post(
+                config('app.url') . '/perpus/api/add_anggota',
+                [
+                    'json' => $request->all(),
+                ]
+            );
+            return json_decode($response->getBody()->getContents(), true);
+        } catch (RequestException $e) {
+            // Tangani kesalahan timeout atau kesalahan lainnya
+            return [
+                'status' => 'error',
+                'error' => 'Koneksi terputus atau kesalahan lainnya',
+                'message' => $e->getMessage(),
+            ];
+        }
+    }
+    function update_anggota(Request $request)
+    {
+        $data = [
+            'id_anggota' => $request->id_anggota,
+            'status' => $request->status,
+            'nm_lengkap' => $request->nm_lengkap,
+            'nisn' => $request->nisn,
+            'jns_kelamin' => $request->jns_kelamin,
+            'id_kelas' => $request->id_kelas,
+            'masa_aktif' => $request->masa_aktif,
+        ];
+        $client = new Client(['timeout' => 10]); // Mengatur timeout menjadi 10 detik
+        try {
+            $response = $client->put(
+                config('app.url') . '/perpus/api/update_anggota',
+                [
+                    'json' => $data
+                ]
+            );
+            return json_decode($response->getBody()->getContents(), true);
+        } catch (RequestException $e) {
+            // Tangani kesalahan timeout atau kesalahan lainnya
+            return [
+                'status' => 'error',
+                'error' => 'Koneksi terputus atau kesalahan lainnya',
+                'message' => $e->getMessage(),
+            ];
+        }
+    }
+    function delete_anggota(Request $request)
+    {
+        $client = new Client(['timeout' => 10]); // Mengatur timeout menjadi 10 detik
+        try {
+            $response = $client->delete(
+                config('app.url') . '/perpus/api/delete_anggota',
+                [
+                    'json' => $request->all(),
+                ]
+            );
+            return json_decode($response->getBody()->getContents(), true);
+        } catch (RequestException $e) {
+            // Tangani kesalahan timeout atau kesalahan lainnya
+            return [
+                'status' => 'error',
+                'error' => 'Koneksi terputus atau kesalahan lainnya'
+            ];
+        }
+    }
 
 
     function get_buku(Request $request)

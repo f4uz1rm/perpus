@@ -12,7 +12,7 @@
                 <x-table id="table-anggota">
                     <thead>
                         <tr class="text-center">
-                        
+
                             <th>
                                 Kode Anggota
                             </th>
@@ -50,7 +50,7 @@
                 </div>
                 <div class="modal-body">
                     <form>
-                        <div class="mb-3">
+                        <div class="mb-3" hidden>
                             <label for="is_metode" class="form-label">Is Metode</label>
                             <input type="search" class="form-control" id="is_metode" readonly
                                 placeholder="Otomatis Terisi">
@@ -78,7 +78,7 @@
                         </div>
                         <div class="mb-3">
                             <label for="jns_kelamin" class="form-label">Jenis Kelamin</label>
-                            <select class="form-control" id="">
+                            <select class="form-control" id="jns_kelamin">
                                 <option value="L">Laki-Laki</option>
                                 <option value="P">Perempuan</option>
                             </select>
@@ -118,21 +118,18 @@
                 <div class="modal-body">
                     <div class="">
                         <div class="d-flex justify-content-center">
-                            <svg id="barcode"></svg>
+                            <div id="kartu-anggota"></div>
                         </div>
-                        <hr>
-                        <label for="barcode" class="form-label">Jumlah Print</label>
-                        <input type="number" class="form-control" id="jml_print" placeholder="Jumlah Print"
-                            value="1">
-
                     </div>
+
+                    <div id="print-preview-container" style="display: none;"></div>
 
 
                 </div>
                 <div class="modal-footer ">
                     <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Batal</button>
                     <button type="button" class="btn btn-success"
-                        onclick="print_barcode($('#jml_print').val())">Print</button>
+                        onclick="print_kartu()">Print</button>
                 </div>
             </div>
         </div>
@@ -140,6 +137,7 @@
     <script>
         $(document).ready(function() {
             get_kelas();
+            get_anggota()
 
         })
         $(".datepicker").datepicker({
@@ -152,61 +150,66 @@
             ubah_anggota("");
         })
 
-        $.ajax({
-            metode: "GET",
-            url: "{{ route('get_anggota') }}",
-            beforeSend: function() {
-                $("#tbody-anggota").html(`
+
+
+        function get_anggota() {
+            $.ajax({
+                metode: "GET",
+                url: "{{ route('get_anggota') }}",
+                beforeSend: function() {
+                    $("#tbody-anggota").html(`
                     <tr>
                         <td colspan="8" class="text-center">Loading...</td>
                     </tr>
                 `);
-            },
-            success: function(data) {
-                if (data.data.length > 0) {
-                    let html = "";
-                    data.data.forEach((item, index) => {
-                        html += `<tr>`;
-                        html += `<td class="text-center">${item.id}</td>`;
-                        html += `<td class="text-wrap">${item.nm_lengkap}</td>`;
-                        html +=
-                            `<td class="text-center">${(item.jns_kelamin=="L"?"Laki-Laki":"Perempuan")}</td>`;
-                        html += `<td class="text-center">${item.nm_kelas}</td>`;
-                        html +=
-                            `<td class="text-center">${moment(item.masa_aktif,'YYYY-MM-DD').format("DD-MM-YYYY")}</td>`;
-                        html += `<td class='text-center'>`;
-
-                        html +=
-                            `<button class="btn btn-sm btn-danger mx-1" onclick="hapus_anggota('${item.id}')">Hapus</button>`;
-                        html +=
-                            `<button class="btn btn-sm btn-success mx-1" onclick="ubah_anggota('${item.id}')" >Ubah</button>`;
+                },
+                success: function(data) {
+                    if (data.data.length > 0) {
+                        let html = "";
+                        data.data.forEach((item, index) => {
+                            html += `<tr>`;
+                            html += `<td class="text-center">${item.id}</td>`;
+                            html += `<td class="text-wrap">${item.nm_lengkap}</td>`;
                             html +=
-                            `<button class="btn btn-sm btn-primary mx-1" onclick="print_anggota('${item.id}')" >Print</button>`;
-                        html += `</td>`;
-                        html += `</tr>`;
-                    });
-                    $("#tbody-anggota").html(html);
-                    if ($("#table-anggota").hasClass("dataTable")) {
-                        $("#table-anggota").DataTable().destroy();
-                    }
-                    $('table').DataTable({
-                        responsive: true,
-                    });
-                } else {
-                    $("#tbody-anggota").html(`
+                                `<td class="text-center">${(item.jns_kelamin=="L"?"Laki-Laki":"Perempuan")}</td>`;
+                            html += `<td class="text-center">${item.nm_kelas}</td>`;
+                            html +=
+                                `<td class="text-center">${moment(item.masa_aktif,'YYYY-MM-DD').format("DD-MM-YYYY")}</td>`;
+                            html += `<td class='text-center'>`;
+
+                            html +=
+                                `<button class="btn btn-sm btn-danger mx-1" onclick="hapus_anggota('${item.id}')">Hapus</button>`;
+                            html +=
+                                `<button class="btn btn-sm btn-success mx-1" onclick="ubah_anggota('${item.id}')" >Ubah</button>`;
+                            html +=
+                                `<button class="btn btn-sm btn-primary mx-1" onclick="print_anggota('${item.id}','${item.nm_lengkap}','${item.nm_kelas}','${item.masa_aktif}')" >Print</button>`;
+                            html += `</td>`;
+                            html += `</tr>`;
+                        });
+                        $("#tbody-anggota").html(html);
+                        if ($("#table-anggota").hasClass("dataTable")) {
+                            $("#table-anggota").DataTable().destroy();
+                        }
+                        $("#tbody-anggota").html(html);
+                        $('table').DataTable({
+                            responsive: true,
+                        });
+                    } else {
+                        $("#tbody-anggota").html(`
                         <tr>
                             <td colspan="8" class="text-center">Tidak ada data yang ditampilkan</td>
                         </tr>
                     `);
+                    }
                 }
-            }
-        }).fail(function(err) {
-            Swal.fire({
-                icon: 'error',
-                title: 'Oops...',
-                text: "Gagal memuat data, silahkan refresh halaman"
+            }).fail(function(err) {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: "Gagal memuat data, silahkan refresh halaman"
+                })
             })
-        })
+        }
     </script>
 
     <script>
@@ -236,7 +239,7 @@
                         $("#status").val("").trigger("change");
                         $("#nisn").val("").trigger("change");
                         $("#nm_lengkap").val("").trigger("change");
-                        $("#jns_kelamin").val("").trigger("change");
+                        $("#jns_kelamin").val("L").trigger("change");
                         $("#kelas").val("").trigger("change");
                         $("#masa_aktif").val("").trigger("change");
                     } else {
@@ -274,7 +277,28 @@
             let kelas = $("#kelas").val()
             let masa_aktif = $("#masa_aktif").val()
 
-            if (status == "") {
+            if (masa_aktif == "") {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: "Masa Aktif tidak boleh kosong"
+                })
+                $("#masa_aktif").addClass("is-invalid");
+            }else if (kelas == "") {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: "Kelas tidak boleh kosong"
+                })
+                $("#kelas").addClass("is-invalid");
+            }else if (jns_kelamin == "") {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: "Jenis Kelamin tidak boleh kosong"
+                })
+                $("#jns_kelamin").addClass("is-invalid");
+            } else if (status == "") {
                 Swal.fire({
                     icon: 'error',
                     title: 'Oops...',
@@ -303,19 +327,17 @@
                     if (result.isConfirmed) {
                         $.ajax({
                             type: is_metode == "tambah" ? "POST" : "PUT",
-                            url: is_metode == "tambah" ? "{{ route('add_buku') }}" :
-                                "{{ route('update_buku') }}",
+                            url: is_metode == "tambah" ? "{{ route('add_anggota') }}" :
+                                "{{ route('update_anggota') }}",
                             data: {
                                 _token: "{{ csrf_token() }}",
-                                id_buku: id_buku,
-                                kd_buku: kd_buku,
-                                judul: judul,
-                                penulis: penulis,
-                                penerbit: penerbit,
-                                tahun: tahun,
-                                stok: stok,
-                                id_kategori: id_kategori,
-                                lokasi_rak: lokasi_rak,
+                                "id_anggota": id_anggota,
+                                "nm_lengkap": nm_lengkap,
+                                "jns_kelamin": jns_kelamin,
+                                "status": status,
+                                "nisn": nisn,
+                                "id_kelas": kelas,
+                                "masa_aktif": moment(masa_aktif, 'DD-MM-YYYY').format("YYYY-MM-DD"),
                             },
 
                             beforeSend: function() {
@@ -338,7 +360,7 @@
                                         outsideClick: false
                                     }).then((result) => {
                                         $("#modal-anggota").modal("hide");
-                                        get_buku();
+                                        get_anggota();
                                     })
                                 } else {
                                     Swal.fire({
@@ -377,7 +399,7 @@
                         url: "{{ route('delete_anggota') }}",
                         data: {
                             _token: "{{ csrf_token() }}",
-                            id_kategori: id,
+                            id_anggota: id,
                         },
 
                         beforeSend: function() {
@@ -397,7 +419,7 @@
                                 }).then((result) => {
                                     if (result.isConfirmed) {
                                         $("#modal-anggota").modal("hide");
-                                        get_buku();
+                                        get_anggota();
                                     }
                                 })
                             } else {
@@ -420,35 +442,63 @@
         }
 
 
-        function print_anggota(id_anggota) {
-            JsBarcode("#barcode", id_anggota, {
-                format: "CODE128",
-                displayValue: true,
-                fontSize: 14,
-                width: 1,
-                height: 50
-            });
-            $("#modal-print").modal("show")
+        function print_anggota(id_anggota,nm_lengkap,kelas,masa_aktif) {
+            var cardHTML = `
+            <div class="card border" id="card-anggota">
+                <div class="card-body">
+                    <h5 class="card-title">Kode Anggota:<br> ${id_anggota}</h5>
+                    <hr>
+                    <div class="card-text ">Nama Lengkap:<br><div class="h6"> ${nm_lengkap}</div></div>
+                    <div class="card-text">Kelas: ${kelas}</div>
+                    <svg id="barcode"></svg>
+                    <div class="card-text text-center">Masa Aktif: ${moment(masa_aktif,"YYYY-MM-DD").format("DD-MM-YYYY")}</div>
+                </div>
+            </div>
+        `;
+        $("#kartu-anggota").html(cardHTML);
+
+        JsBarcode("#barcode", id_anggota, {
+            format: "CODE128",
+            displayValue: false
+        });
+
+        // Set the HTML content to the member card container
+        $("#modal-print").modal("show")
+
+        
         }
 
         // Function to print multiple copies
-        function print_barcode(jml_print) {
-            console.log(jml_print)
-            if (!jml_print) {
-                // Default to one copy if not specified
-                jml_print = 1;
-            }
+       
+        function print_kartu() {
+            var cardContent = $("#card-anggota").clone();
 
-            var printWindow = window.open('', '_blank');
-            printWindow.document.write('<html><head><title>Print</title></head><body>');
-            printWindow.document.write('<div style="text-align: left; width:100%">');
-            for (var i = 0; i < jml_print; i++) {
-                printWindow.document.write(document.getElementById("barcode").outerHTML);
-            }
-            printWindow.document.write('</div></body></html>');
+            // Create a new window to contain only the cloned content
+            var printWindow = window.open('','_BLANK');
+            printWindow.document.write('<html><head><title>Print</title>');
+            printWindow.document.write('<html><head><title>Print</title>');
+            printWindow.document.write('<link rel="stylesheet" type="text/css" href="../../assets/css/demo1/style.css">');
+
+
+            // Include your external CSS file in the new window
+            printWindow.document.write('</head><body>');
+            printWindow.document.write('<div class="border">');
+            printWindow.document.write(cardContent[0].outerHTML);
+            printWindow.document.write('</div>');
+
+            // Append the cloned content to the new window
+            printWindow.document.write('</body></html>');
+
+            // Close the document to ensure it's ready for printing
             printWindow.document.close();
+
+            // Trigger the print dialog
             printWindow.print();
+
+            // Close the new window after printing
+            printWindow.close();
         }
+
     </script>
 
     <script>
