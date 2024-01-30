@@ -484,12 +484,14 @@ class MasterController extends Controller
     {
         $total_pengunjung = m_pengunjung::count();
         $total_buku = m_buku::count();
+        $total_anggota = m_anggota::count();
 
         return response()->json([
             'success' => true,
             'message' => 'Berhasil di tampilkan',
             'total_buku' => $total_buku,
-            'total_pengunjung' => $total_pengunjung
+            'total_pengunjung' => $total_pengunjung,
+            'total_anggota' => $total_anggota,
         ], 200);
     }
 }

@@ -143,7 +143,7 @@
                             </div>
                             <div class="row">
                                 <div class="col-6 col-md-12 col-xl-5">
-                                    <h3 class="mb-2 mt-2">0</h3>
+                                    <h3 class="mb-2 mt-2" id="total_anggota">0</h3>
                                 </div>
                             </div>
                         </div>
@@ -160,9 +160,15 @@
         url: "{{ route('count_dashboard') }}",
         type: "GET",
         dataType: "JSON",
+        beforeSend: function() {
+            $('#total_buku').html('Loading...');
+            $('#total_pengunjung').html('Loading...');
+            $('#total_anggota').html('Loading...');
+        },
         success: function(data) {
             $('#total_buku').html(data.total_buku);
             $('#total_pengunjung').html(data.total_pengunjung);
+            $('#total_anggota').html(data.total_anggota);
         },
         error: function(error) {
             console.log(error);

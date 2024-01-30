@@ -100,7 +100,7 @@
                         data.data.forEach((item, index) => {
                             html += `<tr>`;
                             html += `<td class="text-center">${item.id}</td>`;
-                            html += `<td class="text-center">${item.nm_kategori}</td>`;
+                            html += `<td class="text-wrap">${item.nm_kategori}</td>`;
                             html += `<td class="text-center">`;
                             html +=
                                 `<button class="btn btn-sm btn-danger mx-1" onclick="hapus_kategori(${item.id})">Hapus</button>`;

@@ -272,8 +272,8 @@
                             html += `<td class="text-wrap">${item.judul}</td>`;
                             html += `<td class="text-center">${item.tahun}</td>`;
                             html += `<td class="text-center">${item.stok}</td>`;
-                            html += `<td class="text-center">${item.penulis}</td>`;
-                            html += `<td class="text-center">${item.penerbit}</td>`;
+                            html += `<td class="text-wrap">${item.penulis}</td>`;
+                            html += `<td class="text-wrap">${item.penerbit}</td>`;
                             html += `<td class="text-center">${item.lok_rak}</td>`;
                             html += `<td class="text-center">`;
                             html +=
