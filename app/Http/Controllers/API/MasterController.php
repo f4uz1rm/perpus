@@ -331,32 +331,23 @@ class MasterController extends Controller
     function add_buku(Request $request)
     {
         $data = new m_buku();
-        $get_buku = m_buku::select("judul")->where("judul", $request->input('judul'))->first();
-
-        if ($get_buku) {
-            return response()->json([
-                'success' => false,
-                'message' => 'Nama sudah tersedia / silahkan gunakan yang lain',
-            ], 200);
-        } else {
-            $last_id = m_buku::select('kd_buku')->max('kd_buku');
-            $kd_buku   = substr($last_id, 5);
-            $kd_buku  =  (int)$kd_buku + 1;
-            $data->kd_buku               = "BKMU-" . sprintf("%03d", $kd_buku);
-            $data->judul                     = $request->input('judul');
-            $data->penulis                   = $request->input('penulis');
-            $data->penerbit                  = $request->input('penerbit');
-            $data->tahun                     = $request->input('tahun');
-            $data->stok                      = $request->input('stok');
-            $data->id_kategori               = $request->input('id_kategori');
-            $data->lokasi_rak               = $request->input('lokasi_rak');
-            $data->save();
-            return response()->json([
-                'success' => true,
-                'message' => 'Berhasil di tambahkan',
-                'data' => $data
-            ], 200);
-        }
+        $last_id = m_buku::select('kd_buku')->max('kd_buku');
+        $kd_buku   = substr($last_id, 5);
+        $kd_buku  =  (int)$kd_buku + 1;
+        $data->kd_buku               = "BKMU-" . sprintf("%03d", $kd_buku);
+        $data->judul                     = $request->input('judul');
+        $data->penulis                   = $request->input('penulis');
+        $data->penerbit                  = $request->input('penerbit');
+        $data->tahun                     = $request->input('tahun');
+        $data->stok                      = $request->input('stok');
+        $data->id_kategori               = $request->input('id_kategori');
+        $data->lokasi_rak               = $request->input('lokasi_rak');
+        $data->save();
+        return response()->json([
+            'success' => true,
+            'message' => 'Berhasil di tambahkan',
+            'data' => $data
+        ], 200);
     }
     function update_buku(Request $request)
     {
