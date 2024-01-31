@@ -1,4 +1,6 @@
+
 <x-app-layout>
+
 
     <div class="card">
 
@@ -10,6 +12,24 @@
                 {{-- <button class="btn btn-warning" id="btn-import" data-bs-target="#modal-import" data-bs-toggle="modal">
                     <i class="icon-sm" data-feather="upload"></i>
                     Import Buku</button> --}}
+             
+
+
+                <button class="btn btn-warning dropdown-toggle" type="button" id="dropdown-export"
+                    data-bs-toggle="dropdown" aria-haspopup="true" onclick="" aria-expanded="false">
+                    Ekspor ke
+                </button>
+                <ul class="dropdown-menu px-2 py-3" aria-labelledby="dropdownMenuButton">
+                    <li>
+                        <a id="btn-excel-buku" class="dropdown-item border-radius-md" href="javascript:;">
+                            <i class="fa fa-file-excel-o mx-2" aria-hidden="true"></i>Excel</a>
+                    </li>
+                    <li>
+                        <a id="btn-pdf-buku" class="dropdown-item border-radius-md" href="javascript:;">
+                            <i class="fa fa-file-pdf-o mx-2" aria-hidden="true"></i>PDF</a>
+                    </li>
+
+                </ul>
                 <x-btn-add />
             </div>
             {{-- <button class="btn btn-sm btn-success" data-bs-toggle="modal" data-bs-target=".btn-add">
@@ -31,14 +51,15 @@
                             <th>
                                 Tahun Buku
                             </th>
-                            <th>
-                                Jumlah
-                            </th>
+                          
                             <th>
                                 Penulis
                             </th>
                             <th>
                                 Penerbit
+                            </th>
+                            <th>
+                                Jumlah
                             </th>
                             <th>
                                 Lokasi Rak
@@ -228,7 +249,7 @@
                     $("#lokasi_rak").html(`<option value="" selected>Loading...</option>`);
                 },
                 success: function(data) {
-                    if (data.data.length > 0) {
+                    if (data.data.length !="0") {
                         let html = "";
                         html += `<option value="">Pilih Lokasi Rak</option>`;
                         data.data.forEach((item, index) => {
@@ -271,9 +292,9 @@
                             html += `<td class="text-center">${item.kd_buku}</td>`;
                             html += `<td class="text-wrap">${item.judul}</td>`;
                             html += `<td class="text-center">${item.tahun}</td>`;
-                            html += `<td class="text-center">${item.stok}</td>`;
                             html += `<td class="text-wrap">${item.penulis}</td>`;
                             html += `<td class="text-wrap">${item.penerbit}</td>`;
+                            html += `<td class="text-center">${item.stok}</td>`;
                             html += `<td class="text-center">${item.lok_rak}</td>`;
                             html += `<td class="text-center">`;
                             html +=
@@ -290,7 +311,8 @@
                             $("#table-buku").DataTable().destroy();
                         }
                         $("#tbody-buku").html(html);
-                        $('table').DataTable({
+                        let nama_table = "BUKU";
+                        let table_buku = $('table').DataTable({
                             responsive: true,
                             // rowReorder: {
                             //     selector: 'td:nth-child(2)'
@@ -298,6 +320,80 @@
                             drawCallback: function() {
                                 feather.replace();
                             },
+                            buttons: [
+                         
+                                //EXPORT EXCEL
+                                {
+                                    extend: 'excelHtml5',
+                                    oriented: 'potrait',
+                                    pageSize: 'A4',
+                                    autoFilter: true,
+                                    sheetName: 'Data_Buku',
+                                    exportOptions: {
+                                        columns: [0, 1,2,3,4,5,6 ]
+
+                                    },
+                                    filename: "Export " + nama_table + " - {{ date('Y-m-d') }}",
+                                    title: 'INFORMASI MASTER ' + nama_table +
+                                        ' - MIFTAHUL ULUM',
+                                    messageTop: 'Created Date : {{ date_create('now', timezone_open('Asia/Jakarta'))->format('Y-m-d H:i:s') }}',
+                                    // messageBottom: "Bandung, <?= date('d-m-Y') ?> \r\n\r\r Bagian {{ session('outlet') }}",
+                                    // messageBottom : function (x) { 
+                                    //     var sheet = x.xl.worksheets['sheet1.xml'];
+                                    //     $('row c[r^="A2"]', sheet).attr('s', '52');
+                                    //     $('[r] t', sheet).text('Created Date : {{ date_create('now', timezone_open('Asia/Jakarta'))->format('Y-m-d H:i:s') }}');
+                                    //  },
+                                    // customize: function(xlsx) {
+                                    //     var sheet = xlsx.xl.worksheets['sheet1.xml'];
+                                    //     $('[r=A2] t', sheet).text(
+                                    //         'Created Date : {{ date_create('now', timezone_open('Asia/Jakarta'))->format('Y-m-d H:i:s') }}'
+                                    //         );
+                                    //     $('row c[r^="A1"]', sheet).attr('s',
+                                    //     '50'); //https://datatables.net/reference/button/excelHtml5
+                                    //     $('row c[r^="A2"]', sheet).attr('s', '50');
+                                    //     $('row:last c', sheet).attr('s', '52');
+
+                                    // },
+                                },
+                                //EXPORT PDF
+                                {
+                                    extend: 'pdf',
+                                    oriented: 'potrait',
+                                    pageSize: 'A4',
+                                    title: '',
+                                    download: 'open',
+                                    exportOptions: {
+                                        columns: [0, 1,2,3,4,5,6 ]
+
+                                    },
+                                    customize: function(doc) {
+                                        doc.content.unshift([{
+                                                text: 'INFORMASI DATA MASTER BUKU',
+                                                style: 'font-size: 15px;'
+                                            },
+                                            {
+                                                text: nama_table,
+                                                style: 'font-size: 15px;'
+                                            },
+                                            {
+                                                text: "Created Date : {{ date_create('now', timezone_open('Asia/Jakarta'))->format('Y-m-d H:i:s') }}",
+                                                margin: [0, 0, 0, 10]
+                                            },
+
+                                        ]);
+                                
+                                    }
+
+                                },
+                            ],
+                        });
+
+                        $("#btn-excel-buku").on("click", function() {
+                            table_buku.button('.buttons-excel').trigger();
+                        });
+
+                        $("#btn-pdf-buku").on("click", function() {
+                            table_buku.button('.buttons-pdf').trigger();
                         });
                     } else {
                         $("#tbody-buku").html(`
