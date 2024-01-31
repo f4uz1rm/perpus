@@ -62,9 +62,11 @@
                                 Judul
                             </th>
                             <th>
+                                Semester
+                            </th>
+                            <th>
                                 Tahun Buku
                             </th>
-
                             <th>
                                 Penulis
                             </th>
@@ -129,6 +131,20 @@
                         <div class="mb-3">
                             <label for="judul" class="form-label">Judul Buku</label>
                             <input type="search" class="form-control" id="judul" placeholder="Judul Buku">
+                        </div>
+                        <div class="mb-3">
+                            <label for="semester" class="form-label">Semester</label>
+                            <select name="" id="semester" class="form-control">
+                                <option value="" selected>Pilih Semester</option>
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                                <option value="4">4</option>
+                                <option value="5">5</option>
+                                <option value="6">6</option>
+                                <option value="7">7</option>
+                                <option value="8">8</option>
+                            </select>
                         </div>
                         <div class="mb-3">
                             <label for="tahun" class="form-label">Tahun </label>
@@ -304,6 +320,7 @@
 
                             html += `<td class="text-center">${item.kd_buku}</td>`;
                             html += `<td class="text-wrap">${item.judul}</td>`;
+                            html += `<td class="text-center">${item.semester}</td>`;
                             html += `<td class="text-center">${item.tahun}</td>`;
                             html += `<td class="text-wrap">${item.penulis}</td>`;
                             html += `<td class="text-wrap">${item.penerbit}</td>`;
@@ -343,7 +360,7 @@
                                     autoFilter: true,
                                     sheetName: 'Data_Buku',
                                     exportOptions: {
-                                        columns: [0, 1, 2, 3, 4, 5, 6]
+                                        columns: [0, 1, 2, 3, 4, 5, 6,7]
 
                                     },
                                     filename: "Export " + nama_table + " - {{ date('Y-m-d') }}",
@@ -377,7 +394,7 @@
                                     download: 'download',
                                     filename: "Export " + nama_table + " - {{ date('Y-m-d') }}",
                                     exportOptions: {
-                                        columns: [0, 1, 2, 3, 4, 5, 6]
+                                        columns: [0, 1, 2, 3, 4, 5, 6,7]
 
                                     },
                                     customize: function(doc) {
@@ -450,6 +467,7 @@
                         $("#id_buku").val("").trigger("change");
                         $("#kd_buku").val("").trigger("change");
                         $("#nm_buku").val("").trigger("change");
+                        $("#semester").val("").trigger("change");
                         $("#penulis").val("").trigger("change");
                         $("#penerbit").val("").trigger("change");
                         $("#stok").val("").trigger("change");
@@ -462,6 +480,7 @@
                         $("#modal-title").html("Ubah Buku");
                         $("#id_buku").val(value.id).trigger("change");
                         $("#kd_buku").val(value.kd_buku).trigger("change");
+                        $("#semester").val(value.semester).trigger("change");
                         $("#judul").val(value.judul).trigger("change");
                         $("#penulis").val(value.penulis).trigger("change");
                         $("#penerbit").val(value.penerbit).trigger("change");
@@ -493,8 +512,16 @@
             let stok = $("#stok").val();
             let id_kategori = $("#id_kategori").val();
             let lokasi_rak = $("#lokasi_rak").val();
+            let semester = $("#semester").val();
 
-            if (id_kategori == "") {
+            if (semester == "") {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: "Semester tidak boleh kosong"
+                })
+                $("#semester").addClass("is-invalid");
+            }else if (id_kategori == "") {
                 Swal.fire({
                     icon: 'error',
                     title: 'Oops...',
@@ -515,13 +542,6 @@
                     text: "Stok tidak boleh kosong"
                 })
                 $("#stok").addClass("is-invalid");
-            } else if (id_kategori == "") {
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Oops...',
-                    text: "Kategori tidak boleh kosong"
-                })
-                $("#id_kategori").addClass("is-invalid");
             } else if (lokasi_rak == "") {
                 Swal.fire({
                     icon: 'error',
@@ -556,6 +576,7 @@
                                 tahun: tahun,
                                 stok: stok,
                                 id_kategori: id_kategori,
+                                semester: semester,
                                 lokasi_rak: lokasi_rak,
                             },
 
