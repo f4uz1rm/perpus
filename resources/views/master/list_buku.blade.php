@@ -167,7 +167,7 @@
                     <form class="">
                         <input type="file">
                     </form>
-                  
+
 
 
                 </div>
@@ -394,32 +394,28 @@
                     text: "Kategori tidak boleh kosong"
                 })
                 $("#nm_kategori").addClass("is-invalid");
-            }
-            if (judul == "") {
+            } else if (judul == "") {
                 Swal.fire({
                     icon: 'error',
                     title: 'Oops...',
                     text: "Judul tidak boleh kosong"
                 })
                 $("#judul").addClass("is-invalid");
-            }
-            if (stok == "") {
+            } else if (stok == "") {
                 Swal.fire({
                     icon: 'error',
                     title: 'Oops...',
                     text: "Stok tidak boleh kosong"
                 })
                 $("#stok").addClass("is-invalid");
-            }
-            if (id_kategori == "") {
+            } else if (id_kategori == "") {
                 Swal.fire({
                     icon: 'error',
                     title: 'Oops...',
                     text: "Kategori tidak boleh kosong"
                 })
                 $("#id_kategori").addClass("is-invalid");
-            }
-            if (lokasi_rak == "") {
+            } else if (lokasi_rak == "") {
                 Swal.fire({
                     icon: 'error',
                     title: 'Oops...',
