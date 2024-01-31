@@ -1,20 +1,12 @@
-
 <x-app-layout>
-
 
     <div class="card">
 
-        <div class="card-header card-title d-flex justify-content-between">
+        {{-- <div class="card-header card-title d-flex justify-content-between">
             <div class="">
                 Data Buku
             </div>
-            <div class="">
-                {{-- <button class="btn btn-warning" id="btn-import" data-bs-target="#modal-import" data-bs-toggle="modal">
-                    <i class="icon-sm" data-feather="upload"></i>
-                    Import Buku</button> --}}
-             
-
-
+            <div class="d flex justify-self-stretch">
                 <button class="btn btn-warning dropdown-toggle" type="button" id="dropdown-export"
                     data-bs-toggle="dropdown" aria-haspopup="true" onclick="" aria-expanded="false">
                     Ekspor ke
@@ -32,9 +24,30 @@
                 </ul>
                 <x-btn-add />
             </div>
-            {{-- <button class="btn btn-sm btn-success" data-bs-toggle="modal" data-bs-target=".btn-add">
-                <i class="icon-sm mr-2" data-feather="plus"></i> Tambah Data
-            </button> --}}
+        </div> --}}
+        <div class="card-header card-title row">
+            <div class="col-sm">
+                Data Buku
+
+            </div>
+            <div class="col-sm d-flex justify-content-end">
+                <button class="btn btn-warning dropdown-toggle mx-1" type="button" id="dropdown-export"
+                    data-bs-toggle="dropdown" aria-haspopup="true" onclick="" aria-expanded="false">
+                    Ekspor ke
+                </button>
+                <ul class="dropdown-menu px-2 py-3" aria-labelledby="dropdownMenuButton">
+                    <li>
+                        <a id="btn-excel-buku" class="dropdown-item border-radius-md" href="javascript:;">
+                            <i class="fa fa-file-excel-o mx-2" aria-hidden="true"></i>Excel</a>
+                    </li>
+                    <li>
+                        <a id="btn-pdf-buku" class="dropdown-item border-radius-md" href="javascript:;">
+                            <i class="fa fa-file-pdf-o mx-2" aria-hidden="true"></i>PDF</a>
+                    </li>
+
+                </ul>
+                <x-btn-add class="mx-1" />
+            </div>
         </div>
         <div class="card-body py-1">
             <div class="table-responsive">
@@ -51,7 +64,7 @@
                             <th>
                                 Tahun Buku
                             </th>
-                          
+
                             <th>
                                 Penulis
                             </th>
@@ -249,7 +262,7 @@
                     $("#lokasi_rak").html(`<option value="" selected>Loading...</option>`);
                 },
                 success: function(data) {
-                    if (data.data.length !="0") {
+                    if (data.data.length != "0") {
                         let html = "";
                         html += `<option value="">Pilih Lokasi Rak</option>`;
                         data.data.forEach((item, index) => {
@@ -321,7 +334,7 @@
                                 feather.replace();
                             },
                             buttons: [
-                         
+
                                 //EXPORT EXCEL
                                 {
                                     extend: 'excelHtml5',
@@ -330,7 +343,7 @@
                                     autoFilter: true,
                                     sheetName: 'Data_Buku',
                                     exportOptions: {
-                                        columns: [0, 1,2,3,4,5,6 ]
+                                        columns: [0, 1, 2, 3, 4, 5, 6]
 
                                     },
                                     filename: "Export " + nama_table + " - {{ date('Y-m-d') }}",
@@ -361,9 +374,10 @@
                                     oriented: 'potrait',
                                     pageSize: 'A4',
                                     title: '',
-                                    download: 'open',
+                                    download: 'download',
+                                    filename: "Export " + nama_table + " - {{ date('Y-m-d') }}",
                                     exportOptions: {
-                                        columns: [0, 1,2,3,4,5,6 ]
+                                        columns: [0, 1, 2, 3, 4, 5, 6]
 
                                     },
                                     customize: function(doc) {
@@ -371,17 +385,14 @@
                                                 text: 'INFORMASI DATA MASTER BUKU',
                                                 style: 'font-size: 15px;'
                                             },
-                                            {
-                                                text: nama_table,
-                                                style: 'font-size: 15px;'
-                                            },
+                                           
                                             {
                                                 text: "Created Date : {{ date_create('now', timezone_open('Asia/Jakarta'))->format('Y-m-d H:i:s') }}",
                                                 margin: [0, 0, 0, 10]
                                             },
 
                                         ]);
-                                
+
                                     }
 
                                 },
