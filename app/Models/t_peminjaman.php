@@ -9,5 +9,6 @@ class t_peminjaman extends Model
 {
     use HasFactory;
     protected $table = 't_peminjaman';
+    protected $table_detail = 't_peminjaman_detail';
 
 }

@@ -7,15 +7,14 @@
                 <div class="col-sm-10">
 
                     <div class="row mb-3">
-                        <label for="exampleInputUsername2" class="col-sm-3 col-form-label">Nama Peminjam</label>
+                        <label for="search_kd_anggota" class="col-sm-3 col-form-label">Nama Peminjam</label>
                         <div class="col-sm">
                             <div class="input-group">
+                                <input type="search" class="form-control" id="search_kd_anggota"
+                                    placeholder="Masukna Kode Anggota">
 
-                                <select name="" id="" class="form-control">
-                                    <option value="">Pilih Anggota</option>
-                                </select>
                                 <span class="input-group-text">
-                                    <label for="" class="my-auto">KODE</label>
+                                    <i class="icon-sm" data-feather="camera"></i>
                                 </span>
                             </div>
 
@@ -26,32 +25,73 @@
                         </div>
                     </div>
                     <div class="row mb-3">
-                        <label for="exampleInputUsername2" class="col-sm-3 col-form-label">Tanggal Pinjam</label>
+                        <label for="kd_anggota" class="col-sm-3 col-form-label">Kode Anggota</label>
                         <div class="col-sm">
                             <div class="input-group">
-                                <input type="text" class="form-control" placeholder="DD-MM-YYYY">
-                                <span class="input-group-text">
-                                    <i class="icon-sm" data-feather="calendar"></i>
-                                </span>
+                                <input type="text" class="form-control" id="kd_anggota" placeholder="Kode Anggota"
+                                    readonly>
                             </div>
                         </div>
                     </div>
                     <div class="row mb-3">
-                        <label for="exampleInputUsername2" class="col-sm-3 col-form-label">Tanggal Kembali</label>
+                        <label for="kd_anggota" class="col-sm-3 col-form-label">Nama Peminjam</label>
                         <div class="col-sm">
                             <div class="input-group">
-                                <input type="text" class="form-control" placeholder="DD-MM-YYYY">
-                                <span class="input-group-text">
-                                    <i class="icon-sm" data-feather="calendar"></i>
-                                </span>
+                                <input type="text" class="form-control" id="nm_peminjam" placeholder="Nama Anggota"
+                                    readonly>
                             </div>
                         </div>
                     </div>
                     <div class="row mb-3">
-                        <label for="exampleInputUsername2" class="col-sm-3 col-form-label">Keterangan Lain</label>
+                        <label for="kd_anggota" class="col-sm-3 col-form-label">Kelas</label>
                         <div class="col-sm">
                             <div class="input-group">
-                                <input type="text" class="form-control" placeholder="Keterangan Lain">
+                                <input type="text" class="form-control" id="nm_kelas" placeholder="Kelas" readonly>
+                                <span class="input-group-text" id="id_kelas">
+
+                                </span>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <label for="kd_anggota" class="col-sm-3 col-form-label">Masa Aktif</label>
+                        <div class="col-sm">
+                            <div class="input-group">
+                                <input type="text" class="form-control" id="masa_aktif" placeholder="Masa Aktif"
+                                    readonly>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <label for="tgl_pinjam" class="col-sm-3 col-form-label">Tanggal Pinjam</label>
+                        <div class="col-sm">
+                            <div class="input-group">
+                                <input type="date" id="tgl_pinjam" class="form-control" placeholder="DD-MM-YYYY">
+                                {{-- <span class="input-group-text">
+                                    <i class="icon-sm" data-feather="calendar"></i>
+                                </span> --}}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <label for="tgl_kembali" class="col-sm-3 col-form-label">Tanggal Kembali</label>
+                        <div class="col-sm">
+                            <div class="input-group">
+                                <input type="date" id="tgl_kembali" class="form-control" placeholder="DD-MM-YYYY">
+                                {{-- <span class="input-group-text">
+                                    <i class="icon-sm" data-feather="calendar"></i>
+                                </span> --}}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <label for="keterangan" class="col-sm-3 col-form-label">Keterangan Lain</label>
+                        <div class="col-sm">
+                            <div class="input-group">
+                                <input type="text" id="keterangan" class="form-control"
+                                    placeholder="Keterangan Lain">
                             </div>
                         </div>
                     </div>
@@ -64,9 +104,9 @@
                 <div class="input-group">
                     <input type="search" class="form-control" id="kd_buku" placeholder="Masukan Kode Buku">
                     <span class="input-group-text" id="btn-camera">
-                        <i class="icon-sm" data-feather="camera" ></i>
+                        <i class="icon-sm" data-feather="camera"></i>
                     </span>
-                  
+
                 </div>
             </div>
             <div class=" mb-2 d-flex justify-content-between">
@@ -77,7 +117,7 @@
 
             </div>
             <div class="" id="list_buku">
-            
+
             </div>
 
 
@@ -97,6 +137,84 @@
     $("#kd_buku").on("change", function() {
         get_buku_bykode(this.value)
     })
+    $("#search_kd_anggota").on("change", function() {
+        get_anggota_bykode(this.value)
+    })
+
+    $(document).ready(function() {
+        $("#search_kd_anggota").focus();
+    })
+
+    function get_anggota_bykode(kd_anggota) {
+        $.ajax({
+            type: "GET",
+            url: "{{ route('get_anggota') }}",
+            data: {
+                id_anggota: kd_anggota
+            },
+            beforeSend: function() {
+                $("#nm_peminjam").val("Loading...");
+                $("#kelas").val("Loading...");
+                $("#jns_kelamin").val("Loading...");
+                $("#nisn").val("Loading...");
+                Swal.fire({
+                    title: 'Loading',
+                    html: 'Mohon Tunggu Sebentar',
+                    didOpen: () => {
+                        Swal.showLoading()
+                    },
+                    allowOutsideClick: false,
+                    allowEscapeKey: false,
+                    allowEnterKey: false,
+                })
+            },
+
+            success: function(data) {
+                let item = data.data;
+                Swal.close();
+                if (item == null) {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Oops...',
+                        text: "Anggota Tidak Ditemukan",
+                        showConfirmButton: false,
+                        timer: 1000
+                    })
+                    $("#search_kd_anggota").focus();
+                    $("#search_kd_anggota").val("");
+
+                    $("#search_kd_anggota").val("");
+                    $("#kd_anggota").val("");
+                    $("#nm_peminjam").val("");
+                    $("#nm_kelas").val("");
+                    $("#id_kelas").html("");
+                    $("#jns_kelamin").val("");
+                    $("#nisn").val("");
+                    $("#tgl_pinjam").val("");
+                    $("#tgl_kembali").val("");
+                    $("#masa_aktif").val("");
+                } else {
+                    $("#kd_buku").focus();
+                    $("#search_kd_anggota").val("");
+                    $("#kd_anggota").val(kd_anggota);
+                    $("#nm_peminjam").val(item.nm_lengkap);
+                    $("#nm_kelas").val(item.nm_kelas);
+                    $("#id_kelas").html(item.id_kelas);
+                    $("#jns_kelamin").val(item.jns_kelamin);
+                    $("#nisn").val(item.nisn);
+                    $("#masa_aktif").val(moment(item.masa_aktif, "YYYY-MM-DD").format("DD-MM-YYYY"));
+                    $("#tgl_pinjam").val("{{ date('Y-m-d') }}");
+                    $("#tgl_kembali").val("{{ date('Y-m-d', strtotime('+3 days')) }}");
+                }
+            }
+        }).fail(function(err) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: "Terjadi Kesalahan",
+            })
+        })
+    }
 
     function get_buku_bykode(kd_buku) {
         $.ajax({
@@ -203,7 +321,6 @@
         let tgl_pinjam = $("#tgl_pinjam").val();
         let tgl_kembali = $("#tgl_kembali").val();
         let keterangan = $("#keterangan").val();
-        let kd_transaksi = $("#kd_transaksi").val();
 
         list_buku.find(".list_buku_pinjam").each(function() {
             let kdBuku = $(this).data("kd-buku");
@@ -214,68 +331,79 @@
                 jumlah: jumlahBuku,
             });
         });
-        Swal.fire({
-            title: 'Simpan Data',
-            text: "Apakah anda yakin ingin menyimpan data ini?",
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonText: 'Ya, Simpan Data!',
-            cancelButtonText: 'Batal',
-            reverseButtons: true
-        }).then((result) => {
-            if (result.isConfirmed) {
-                $.ajax({
-                    type: "POST",
-                    data: {
-                        kd_transaksi: kd_transaksi,
-                        kd_anggota: kd_anggota,
-                        tgl_pinjam: tgl_pinjam,
-                        tgl_kembali: tgl_kembali,
-                        keterangan: keterangan,
-                        buku: bukuArray
-                    },
-                    beforeSend: function() {
-                        Swal.fire({
-                            title: 'Loading',
-                            html: 'Mohon Tunggu Sebentar',
-                            didOpen: () => {
-                                Swal.showLoading()
-                            },
-                            allowOutsideClick: false,
-                            allowEscapeKey: false,
-                            allowEnterKey: false,
-                        })
-                    },
 
-                    success: function(data) {
-                        Swal.close();
-                        if (data.status == "success") {
+        if (kd_anggota == "") {
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: "Kode Anggota Tidak Boleh Kosong",
+            })
+            return;
+        } else {
+            Swal.fire({
+                title: 'Simpan Data',
+                text: "Apakah anda yakin ingin menyimpan data ini?",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'Ya, Simpan Data!',
+                cancelButtonText: 'Batal',
+                reverseButtons: true
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $.ajax({
+                        type: "POST",
+                        url: "{{ route('simpan_peminjaman') }}",
+                        data: {
+                            kd_anggota: kd_anggota,
+                            tgl_pinjam: tgl_pinjam,
+                            tgl_kembali: tgl_kembali,
+                            keterangan: keterangan,
+                            buku: bukuArray
+                        },
+                        beforeSend: function() {
                             Swal.fire({
-                                icon: 'success',
-                                title: 'Berhasil',
-                                text: data.message,
-                                showConfirmButton: false,
-                                timer: 1000
-                            }).then((result) => {
-                                window.location.href = "{{ route('list_peminjaman') }}";
+                                title: 'Loading',
+                                html: 'Mohon Tunggu Sebentar',
+                                didOpen: () => {
+                                    Swal.showLoading()
+                                },
+                                allowOutsideClick: false,
+                                allowEscapeKey: false,
+                                allowEnterKey: false,
                             })
-                        } else {
-                            Swal.fire({
-                                icon: 'error',
-                                title: 'Oops...',
-                                text: data.message,
-                            })
+                        },
+
+                        success: function(data) {
+                            Swal.close();
+                            if (data.status == "success") {
+                                Swal.fire({
+                                    icon: 'success',
+                                    title: 'Berhasil',
+                                    text: data.message,
+                                    showConfirmButton: false,
+                                    timer: 1000
+                                }).then((result) => {
+                                    window.location.href = "{{ route('list_peminjaman') }}";
+                                })
+                            } else {
+                                Swal.fire({
+                                    icon: 'error',
+                                    title: 'Oops...',
+                                    text: data.message,
+                                })
+                            }
                         }
-                    }
-                }).fail(function(err) {
-                    Swal.fire({
-                        icon: 'error',
-                        title: 'Oops...',
-                        text: "Terjadi Kesalahan",
+                    }).fail(function(err) {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Oops...',
+                            text: "Terjadi Kesalahan",
+                        })
                     })
-                })
-            }
-        })
+                }
+            })
+        }
+
 
     }
 </script>

@@ -51,7 +51,7 @@
             <li class="nav-item">
                 <a href="{{ route('list_anggota') }}" class="nav-link">
                     <i class="link-icon" data-feather="users"></i>
-                    <span class="link-title">Data Anggota <span class="badge bg-primary text-light">Dev</span></span>
+                    <span class="link-title">Data Anggota </span>
                 </a>
             </li>
           

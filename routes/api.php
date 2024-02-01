@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\API\MasterController;
+use App\Http\Controllers\API\TransaksiController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -19,6 +20,9 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
+Route::controller(TransaksiController::class)->group(function () {
+    Route::post('/add_peminjaman', 'add_peminjaman');
+});
 Route::controller(MasterController::class)->group(function () {
     Route::get('/get_pengunjung', 'get_pengunjung');
     Route::post('/add_pengunjung', 'add_pengunjung');
