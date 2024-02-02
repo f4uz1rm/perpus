@@ -113,7 +113,7 @@
                 `);
                 },
                 success: function(data) {
-                    if (data.data.length == "0") {
+                    if (data.data == null) {
                         $("#tbody-jadwalkunjungan").html(`
                         <tr>
                             <td colspan="5" class="text-center">Tidak ada data yang ditampilkan</td>
@@ -155,14 +155,7 @@
                             });
 
                         });
-                        var calendarEl = document.getElementById('full-calender');
-                        calendar = new FullCalendar.Calendar(calendarEl, {
-                            initialView: 'dayGridMonth',
-                            locale: 'id',
-                        });
-                        calendar.addEventSource(event);
-
-                        calendar.render();
+                        
 
                         $("#tbody-jadwalkunjungan").html(html);
                         if ($("#table-jadwalkunjungan").hasClass("dataTable")) {
@@ -218,6 +211,15 @@
                                 },
                             ],
                         });
+
+                        var calendarEl = document.getElementById('full-calender');
+                        calendar = new FullCalendar.Calendar(calendarEl, {
+                            initialView: 'dayGridMonth',
+                            locale: 'id',
+                        });
+                        calendar.addEventSource(event);
+
+                        calendar.render();
                         $("#btn-excel-jadwal-kunjungan").on("click", function() {
                             table_jadwalkunjungan.button('.buttons-excel').trigger();
                         });
