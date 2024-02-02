@@ -639,7 +639,7 @@
                         url: "{{ route('delete_kategori') }}",
                         data: {
                             _token: "{{ csrf_token() }}",
-                            id_kategori: id,
+                            id_buku: id,
                         },
 
                         beforeSend: function() {

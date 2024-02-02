@@ -205,7 +205,7 @@
                                 },
                                 customize: function(doc) {
                                     doc.content.unshift([{
-                                            text: 'INFORMASI DATA MASTER BUKU',
+                                            text: 'INFORMASI DATA MASTER PENGUNJUNG',
                                             style: 'font-size: 15px;'
                                         },
 
