@@ -5,7 +5,7 @@ namespace App\Http\Controllers\API;
 use App\Http\Controllers\Controller;
 use App\Models\t_peminjaman;
 use App\Models\t_jadwalkunjungan;
-
+use App\Models\t_peminjaman_detail;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -28,6 +28,31 @@ class TransaksiController extends Controller
         //     'message' => 'Berhasil di tambahkan',
         //     'data' => $data
         // ], 200);
+    }
+
+    function get_peminjaman(Request $request)
+    {
+        if ($request->input('id_peminjaman') != null) {
+            $data = t_peminjaman::where('id', $request->input('id_peminjaman'))->get();
+        } else {
+            $data = t_peminjaman::leftJoin('m_kelas', 'm_kelas.id', '=', 't_peminjaman.id_kelas')
+                ->leftJoin('m_anggota', 'm_anggota.id', '=', 't_peminjaman.id_anggota')
+                ->select('t_peminjaman.*', 'm_kelas.nm_kelas', 'm_anggota.nm_lengkap')
+                ->get()->toArray();
+
+            $list_buku = t_peminjaman_detail::select("kd_buku", "qty")->where('id', $data[0]['id'])->get();
+            
+            $data["list_buku"] = [];
+
+            foreach ($list_buku as $value) {
+                $data["list_buku"][] = $value;
+            }
+        }
+        return response()->json([
+            'success'   => true,
+            'message'   => 'Data peminjaman',
+            'data'      => $data,
+        ], 200);
     }
 
 
