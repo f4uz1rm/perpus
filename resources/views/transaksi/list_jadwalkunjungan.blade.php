@@ -280,8 +280,16 @@
                     $("#tgl_kunjungan").val("{{ date('Y-m-d') }}");
                     $("#id_kelas").val("");
                     $("#keterangan").val("");
+                    Swal.fire({
+                        title: 'Loading...',
+                        html: 'Mohon tunggu sebentar',
+                        didOpen: () => {
+                            Swal.showLoading()
+                        },
+                    })
                 },
                 success: function(data) {
+                    Swal.close();
                     console.log(data)
                     if (id == "") {
                         $("#modal-jadwalkunjungan").modal("show");
