@@ -8,7 +8,7 @@
 
             </div>
             <div class="col-sm d-flex justify-content-end">
-                <select class="form-select" id="bulan">
+                {{-- <select class="form-select" id="bulan">
                     <option value="" selected>Semua Bulan</option>
                     <option value="01">Januari</option>
                     <option value="02">Februari</option>
@@ -31,7 +31,7 @@
                             <option value="{{ $i }}">{{ $i }}</option>
                         @endif
                     @endfor
-                </select>
+                </select> --}}
                 <button class="btn btn-warning dropdown-toggle mx-1" type="button" id="dropdown-export"
                     data-bs-toggle="dropdown" aria-haspopup="true" onclick="" aria-expanded="false">
                     Ekspor ke
@@ -229,17 +229,15 @@
                         table_pengunjung.button('.buttons-pdf').trigger();
                     });
 
-                    $("#bulan").on("change", function() {
-                        // table_pengunjung.column(0).search($(this).val()).draw();
-                        // 2024-01-27 09:00:25
-                        let  bulan =   this.value.substring(0, 2)  ;
-                        table_pengunjung.columns(0).search(bulan).draw();
-                        console.log(bulan);
-                    })
-                    $("#tahun").on("change", function() {
-                       let  tahun =   this.value.substring(2, 4)  ;
-                        table_pengunjung.columns(0).search(tahun).draw();
-                    })
+                    // $("#bulan").on("change", function() {
+                    //     let  bulan =   this.value.substring(0, 2)  ;
+                    //     table_pengunjung.columns(0).search(bulan).draw();
+                    //     console.log(bulan);
+                    // })
+                    // $("#tahun").on("change", function() {
+                    //    let  tahun =   this.value.substring(2, 4)  ;
+                    //     table_pengunjung.columns(0).search(tahun).draw();
+                    // })
                 } else {
                     $("#tbody-pengunjung").html(`
                         <tr>
