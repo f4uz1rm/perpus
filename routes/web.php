@@ -85,6 +85,7 @@ Route::middleware('auth')->group(function () {
         Route::get('/form_pengembalian', 'form_pengembalian')->name('form_pengembalian');
         Route::get('/list_denda', 'list_denda')->name('list_denda');
 
+        Route::get('/get_jadwalkunjungan', 'get_jadwalkunjungan')->name('get_jadwalkunjungan');
         Route::get('/list_jadwalkunjungan', 'list_jadwalkunjungan')->name('list_jadwalkunjungan');
         Route::post('/add_jadwalkunjungan', 'add_jadwalkunjungan')->name('add_jadwalkunjungan');
         Route::put('/update_jadwalkunjungan', 'update_jadwalkunjungan')->name('update_jadwalkunjungan');

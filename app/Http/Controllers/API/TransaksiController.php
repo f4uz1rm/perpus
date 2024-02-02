@@ -7,6 +7,7 @@ use App\Models\t_peminjaman;
 use App\Models\t_jadwalkunjungan;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class TransaksiController extends Controller
 {
@@ -35,39 +36,39 @@ class TransaksiController extends Controller
         if ($request->input('id_kunjungan') != null) {
             $data = t_jadwalkunjungan::where('id', $request->input('id_kunjungan'))->get();
         } else {
-            $data = t_jadwalkunjungan::all();
+            $data = t_jadwalkunjungan::leftJoin('m_kelas', 'm_kelas.id', '=', 't_jadwalkunjungan.id_kelas')
+                ->select('t_jadwalkunjungan.*', 'm_kelas.nm_kelas')
+                ->get();
         }
         return response()->json([
-            'success' => true,
-            'message' => 'Data jadwal kunjungan',
-            'data' => $data
+            'success'   => true,
+            'message'   => 'Data jadwal kunjungan',
+            'data'      => $data
         ], 200);
     }
 
     function add_jadwalkunjungan(Request $request)
     {
         $data = new t_jadwalkunjungan();
-        $data->nm_lengkap         = $request->input('nm_lengkap');
-        $data->tgl_kunjungan      = $request->input('tgl_kunjungan');
-        $data->kelas              = $request->input('kelas');
-        $data->keterangan              = $request->input('keterangan');
-        $data->nm_petugas              = $request->input('nm_petugas');
+        $data->tgl_kunjungan            = $request->input('tgl_kunjungan');
+        $data->id_kelas                 = $request->input('id_kelas');
+        $data->keterangan               = $request->input('keterangan');
+        $data->nm_petugas               = $request->input('nm_petugas');
         $data->save();
         return response()->json([
-            'success' => true,
-            'message' => 'Berhasil di tambahkan',
-            'data' => $data
+            'success'   => true,
+            'message'   => 'Berhasil di tambahkan',
+            'data'      => $data
         ], 200);
     }
     function update_jadwalkunjungan(Request $request)
     {
         $data = t_jadwalkunjungan::find($request->input('id_kunjungan'));
         if ($data) {
-            $data->nm_lengkap         = $request->input('nm_lengkap');
-            $data->tgl_kunjungan      = $request->input('tgl_kunjungan');
-            $data->kelas              = $request->input('kelas');
-            $data->keterangan         = $request->input('keterangan');
-            $data->nm_petugas         = $request->input('nm_petugas');
+            $data->tgl_kunjungan            = $request->input('tgl_kunjungan');
+            $data->id_kelas                 = $request->input('id_kelas');
+            $data->keterangan               = $request->input('keterangan');
+            $data->nm_petugas               = $request->input('nm_petugas');
             $data->update();
             return response()->json([
                 'success' => true,
@@ -82,7 +83,7 @@ class TransaksiController extends Controller
         }
     }
 
-    function detele_jadwalkunjungan(Request $request)
+    function delete_jadwalkunjungan(Request $request)
     {
         $data = t_jadwalkunjungan::find($request->input('id_kunjungan'));
 
