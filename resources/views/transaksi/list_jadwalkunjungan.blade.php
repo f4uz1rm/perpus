@@ -2,7 +2,11 @@
     <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.10/index.global.min.js'></script>
     <div class="row">
         <div class="col-md">
-            <div id="full-calender"></div>
+            <div class="card">
+                <div class="card-body">
+                    <div id="full-calender"></div>
+                </div>
+            </div>
         </div>
         <div class="col-md">
             <div class="card">
@@ -41,6 +45,7 @@
         var calendarEl = document.getElementById('full-calender');
         var calendar = new FullCalendar.Calendar(calendarEl, {
           initialView: 'dayGridMonth'
+          locale: 'id',
         });
         calendar.render();
       });
