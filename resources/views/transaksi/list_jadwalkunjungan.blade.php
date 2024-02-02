@@ -338,6 +338,15 @@
                         type: id_kunjungan == "" ? "POST" : "PUT",
                         url: id_kunjungan == "" ? "{{ route('add_jadwalkunjungan') }}" :
                             "{{ route('update_jadwalkunjungan') }}",
+                        beforeSend: function() {
+                            Swal.fire({
+                                title: 'Loading...',
+                                html: 'Mohon tunggu sebentar',
+                                didOpen: () => {
+                                    Swal.showLoading()
+                                },
+                            })
+                        },
                         data: {
                             _token: "{{ csrf_token() }}",
                             id_kunjungan: id_kunjungan,
@@ -347,6 +356,7 @@
                             nm_petugas: "{{ Auth::user()->name }}"
                         },
                         success: function(data) {
+                            Swal.close();
                             if (data.success == true) {
                                 Swal.fire(
                                     'Berhasil!',
@@ -394,7 +404,17 @@
                             _token: "{{ csrf_token() }}",
                             id_kunjungan: id_kunjungan
                         },
+                        beforeSend: function() {
+                            Swal.fire({
+                                title: 'Loading...',
+                                html: 'Mohon tunggu sebentar',
+                                didOpen: () => {
+                                    Swal.showLoading()
+                                },
+                            })
+                        },
                         success: function(data) {
+                            Swal.close();
                             if (data.success == true) {
                                 Swal.fire(
                                     'Berhasil!',
