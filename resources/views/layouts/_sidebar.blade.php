@@ -44,7 +44,7 @@
             <li class="nav-item">
                 <a href="{{ route('list_jadwalkunjungan') }}" class="nav-link">
                     <i class="link-icon" data-feather="calendar"></i>
-                    <span class="link-title">Jadwal Kunjungan <span class="badge bg-primary text-light">Dev</span></span>
+                    <span class="link-title">Jadwal Kunjungan</span>
                 </a>
             </li>
             <li class="nav-item nav-category">Master</li>

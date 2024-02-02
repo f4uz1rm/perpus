@@ -71,7 +71,7 @@
                     <div class="row mb-3">
                         <label for="id_kelas" class="col-sm-3 col-form-label">Keterangan</label>
                         <div class="col-sm-9">
-                            <input type="text" name="" id="keterangan" class="form-control">
+                            <input type="text" placeholder="Keterangan" id="keterangan" class="form-control">
                         </div>
                     </div>
                 </div>
