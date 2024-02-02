@@ -135,7 +135,8 @@
                         let html = "";
                         data.data.forEach((item, index) => {
                             html += `<tr>`;
-                            html += `<td class="text-center">${item.tgl_kunjungan}</td>`;
+                            html +=
+                                `<td class="text-center">${moment(item.tgl_kunjungan,"YYYY-MM-DD").format("DD-MM-YYYY")}</td>`;
                             html += `<td class="text-center">${item.nm_kelas}</td>`;
                             html += `<td class="text-wrap">${item.keterangan}</td>`;
                             html += `<td class="text-center">`;
@@ -282,6 +283,7 @@
                     $("#keterangan").val("");
                     Swal.fire({
                         title: 'Loading...',
+                        allowOutsideClick: false,
                         html: 'Mohon tunggu sebentar',
                         didOpen: () => {
                             Swal.showLoading()
@@ -290,7 +292,6 @@
                 },
                 success: function(data) {
                     Swal.close();
-                    console.log(data)
                     if (id == "") {
                         $("#modal-jadwalkunjungan").modal("show");
                         $("#modal-jadwalkunjunganLabel").html("Tambah Data Jadwal Kunjungan");
@@ -340,6 +341,8 @@
                             "{{ route('update_jadwalkunjungan') }}",
                         beforeSend: function() {
                             Swal.fire({
+                                allowOutsideClick: false,
+
                                 title: 'Loading...',
                                 html: 'Mohon tunggu sebentar',
                                 didOpen: () => {
@@ -402,10 +405,12 @@
                         url: "{{ route('delete_jadwalkunjungan') }}",
                         data: {
                             _token: "{{ csrf_token() }}",
-                            id_kunjungan: id_kunjungan
+                            id_kunjungan: id_kunjungan,
+
                         },
                         beforeSend: function() {
                             Swal.fire({
+                                allowOutsideClick: false,
                                 title: 'Loading...',
                                 html: 'Mohon tunggu sebentar',
                                 didOpen: () => {
