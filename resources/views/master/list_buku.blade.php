@@ -682,7 +682,6 @@
 
 
         function print_buku(kd_buku) {
-            console.log(kd_buku)
 
             JsBarcode("#barcode", kd_buku, {
                 format: "CODE128",
