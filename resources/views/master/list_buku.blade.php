@@ -635,13 +635,12 @@
             }).then((result) => {
                 if (result.isConfirmed) {
                     $.ajax({
-                        type: "DELETE",
-                        url: "{{ route('delete_kategori') }}",
-                        data: {
-                            _token: "{{ csrf_token() }}",
-                            id_buku: id,
-                        },
-
+                        type    : "DELETE",
+                        url     : "{{ route('delete_buku') }}",
+                        data    : {
+                                    _token: "{{ csrf_token() }}",
+                                    id_buku: id,
+                                    },
                         beforeSend: function() {
                             Swal.fire({
                                 title: 'Loading...',
@@ -683,7 +682,6 @@
 
 
         function print_buku(kd_buku) {
-            console.log(kd_buku)
 
             JsBarcode("#barcode", kd_buku, {
                 format: "CODE128",

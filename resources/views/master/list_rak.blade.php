@@ -41,7 +41,7 @@
                 </div>
                 <div class="modal-body">
                     <form>
-                        <div class="mb-3">
+                        <div class="mb-3" hidden>
                             <label for="is_metode" class="form-label">Is Metode</label>
                             <input type="search" class="form-control" id="is_metode" readonly
                                 placeholder="Otomatis Terisi">
