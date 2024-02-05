@@ -161,6 +161,7 @@
                         if ($("#table-jadwalkunjungan").hasClass("dataTable")) {
                             $("#table-jadwalkunjungan").DataTable().destroy();
                         }
+                        $("#tbody-jadwalkunjungan").html(html);
                         let nama_table = "JADWAL KUNJUNGAN";
                         let table_pengunjung = $('#table-jadwalkunjungan').DataTable({
                             responsive: true,
