@@ -70,7 +70,9 @@ class MasterController extends Controller
         $data = new m_anggota();
         $get_nmlengkap = m_anggota::select("nm_lengkap")->where("nm_lengkap", $request->input('nm_lengkap'))->first();
 
-        if ($get_nmlengkap) {
+        $get_nisn = m_anggota::select("nisn")->where("nisn", $request->input('nisn'))->first();
+
+        if ($get_nmlengkap && $get_nisn) {
             return response()->json([
                 'success' => false,
                 'message' => 'Nama sudah tersedia / silahkan gunakan yang lain',
@@ -84,8 +86,7 @@ class MasterController extends Controller
             $data->jns_kelamin          = $request->input('jns_kelamin');
             $data->id_kelas             = $request->input('id_kelas');
             $data->status               = $request->input('status');
-            $data->masa_aktif               = $request->input('masa_aktif');
-            $data->nisn               = $request->input('nisn');
+            $data->nisn                 = $request->input('nisn');
             $data->update();
             $data->save();
             return response()->json([
@@ -104,8 +105,7 @@ class MasterController extends Controller
             $data->jns_kelamin          = $request->input('jns_kelamin');
             $data->id_kelas             = $request->input('id_kelas');
             $data->status               = $request->input('status');
-            $data->masa_aktif               = $request->input('masa_aktif');
-            $data->nisn               = $request->input('nisn');
+            $data->nisn                 = $request->input('nisn');
             $data->update();
             return response()->json([
                 'success' => true,

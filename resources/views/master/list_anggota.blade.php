@@ -89,17 +89,7 @@
                                 <option value="" selected>Pilih Kelas</option>
                             </select>
                         </div>
-
-                        <div class="mb-3">
-                            <label for="masa_aktif" class="form-label">Masa Aktif Sampai</label>
-                            <div class="input-group">
-                                <input class="form-control text-center datepicker" type="text" id="masa_aktif"
-                                    placeholder="DD-MM-YYYY" readonly>
-                                <span class="input-group-text" onclick="$('#masa_aktif').focus()">
-                                    <i class="icon-sm" data-feather="calendar"></i>
-                                </span>
-                            </div>
-                        </div>
+                        
                     </form>
                 </div>
                 <div class="modal-footer ">
@@ -279,7 +269,6 @@
             let nm_lengkap = $("#nm_lengkap").val()
             let jns_kelamin = $("#jns_kelamin").val()
             let kelas = $("#kelas").val()
-            let masa_aktif = $("#masa_aktif").val()
 
             if (masa_aktif == "") {
                 Swal.fire({
