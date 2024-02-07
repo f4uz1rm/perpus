@@ -50,11 +50,11 @@ class MasterController extends Controller
                 'success' => true,
                 'message' => 'Berhasil di tampilkan',
                 'data' => DB::table("m_anggota")->join("m_kelas", "m_anggota.id_kelas", "=", "m_kelas.id")
-                    ->select("m_anggota.id", "m_anggota.nm_lengkap", "m_anggota.status", "m_anggota.jns_kelamin", "m_anggota.masa_aktif","m_anggota.nisn", "m_kelas.nm_kelas", "m_kelas.id  as id_kelas")->where('m_anggota.id', $id_anggota)->first()
+                    ->select("m_anggota.id", "m_anggota.nm_lengkap", "m_anggota.status", "m_anggota.jns_kelamin","m_anggota.nisn", "m_kelas.nm_kelas", "m_kelas.id  as id_kelas")->where('m_anggota.id', $id_anggota)->first()
             ], 200);
         } else {
             $list_anggota = DB::table("m_anggota")->join("m_kelas", "m_anggota.id_kelas", "=", "m_kelas.id")
-                ->select("m_anggota.id", "m_anggota.nm_lengkap", "m_anggota.status", "m_anggota.jns_kelamin", "m_anggota.masa_aktif", "m_kelas.nm_kelas")
+                ->select("m_anggota.id", "m_anggota.nm_lengkap", "m_anggota.status", "m_anggota.jns_kelamin", "m_kelas.nm_kelas")
                 ->get();
             return response()->json([
                 'success' => true,

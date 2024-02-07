@@ -158,6 +158,7 @@
                 `);
                 },
                 success: function(data) {
+                    console.log(data)
                     if (data.data.length != 0) {
                         let html = "";
                         data.data.forEach((item, index) => {
