@@ -271,14 +271,7 @@
             let jns_kelamin = $("#jns_kelamin").val()
             let kelas = $("#kelas").val()
 
-            if (masa_aktif == "") {
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Oops...',
-                    text: "Masa Aktif tidak boleh kosong"
-                })
-                $("#masa_aktif").addClass("is-invalid");
-            }else if (kelas == "") {
+             if (kelas == "") {
                 Swal.fire({
                     icon: 'error',
                     title: 'Oops...',
