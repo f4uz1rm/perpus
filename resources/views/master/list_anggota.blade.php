@@ -25,9 +25,6 @@
                             <th>
                                 Kelas
                             </th>
-                            <th>
-                                Masa Aktif Anggota
-                            </th>
 
                             <th>
                                 Aksi
@@ -168,8 +165,6 @@
                             html +=
                                 `<td class="text-center">${(item.jns_kelamin=="L"?"Laki-Laki":"Perempuan")}</td>`;
                             html += `<td class="text-center">${item.nm_kelas}</td>`;
-                            html +=
-                                `<td class="text-center">${moment(item.masa_aktif,'YYYY-MM-DD').format("DD-MM-YYYY")}</td>`;
                             html += `<td class='text-center'>`;
 
                             html +=
@@ -177,7 +172,7 @@
                             html +=
                                 `<button class="btn btn-sm btn-success mx-1" onclick="ubah_anggota('${item.id}')" >Ubah</button>`;
                             html +=
-                                `<button class="btn btn-sm btn-primary mx-1" onclick="print_anggota('${item.id}','${item.nm_lengkap}','${item.nm_kelas}','${item.masa_aktif}')" >Print</button>`;
+                                `<button class="btn btn-sm btn-primary mx-1" onclick="print_anggota('${item.id}','${item.nm_lengkap}','${item.nm_kelas}')" >Print</button>`;
                             html += `</td>`;
                             html += `</tr>`;
                         });
@@ -236,7 +231,6 @@
                         $("#nm_lengkap").val("").trigger("change");
                         $("#jns_kelamin").val("L").trigger("change");
                         $("#kelas").val("").trigger("change");
-                        $("#masa_aktif").val("").trigger("change");
                     } else {
                         $("#is_metode").val("ubah");
                         $("#modal-title").html("Ubah Anggota");
@@ -246,9 +240,7 @@
                         $("#nm_lengkap").val(value.nm_lengkap).trigger("change");
                         $("#jns_kelamin").val(value.jns_kelamin).trigger("change");
                         $("#kelas").val(value.id_kelas).trigger("change");
-                        $("#masa_aktif").val(moment(value.masa_aktif, 'YYYY-MM-DD').format("DD-MM-YYYY"))
-                            .trigger("change");
-                        // $("#masa_aktif").datepicker("setDate",moment(value.masa_aktif,'YYYY-MM-DD').format("DD-MM-YYYY"));
+                        
                     }
                     $("#modal-anggota").modal("show");
 
@@ -324,7 +316,6 @@
                                 "status": status,
                                 "nisn": nisn,
                                 "id_kelas": kelas,
-                                "masa_aktif": moment(masa_aktif, 'DD-MM-YYYY').format("YYYY-MM-DD"),
                             },
 
                             beforeSend: function() {
@@ -429,7 +420,7 @@
         }
 
 
-        function print_anggota(id_anggota,nm_lengkap,kelas,masa_aktif) {
+        function print_anggota(id_anggota,nm_lengkap,kelas) {
             var cardHTML = `
             <div class="card border" id="card-anggota">
                 <div class="card-body">
@@ -439,7 +430,6 @@
                     <div class="card-text">Kelas: ${kelas}</div>
                     <div class="card-text">Kode Anggota: ${id_anggota}</div>
                     <svg id="barcode"></svg>
-                    <div class="card-text text-center">Masa Aktif: ${moment(masa_aktif,"YYYY-MM-DD").format("DD-MM-YYYY")}</div>
                 </div>
             </div>
         `;
