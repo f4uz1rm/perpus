@@ -22,6 +22,8 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::controller(TransaksiController::class)->group(function () {
     Route::post('/add_peminjaman', 'add_peminjaman');
+    Route::post('/add_pengembalian', 'add_pengembalian');
+
     Route::get('/get_peminjaman', 'get_peminjaman')->name('get_peminjaman');
     Route::get('/get_jadwalkunjungan', 'get_jadwalkunjungan');
     Route::post('/add_jadwalkunjungan', 'add_jadwalkunjungan');

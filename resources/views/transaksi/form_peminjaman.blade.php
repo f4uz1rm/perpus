@@ -306,7 +306,7 @@
                         title: 'Berhasil',
                         text: item.nm_lengkap,
                         showConfirmButton: false,
-                        timer: 2000
+                        timer: 1500
                     }).then((result) => {
                         $("#keterangan").focus();
                     })

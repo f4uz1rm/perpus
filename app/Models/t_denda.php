@@ -5,8 +5,9 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class t_pengembalian extends Model
+class t_denda extends Model
 {
     use HasFactory;
-    protected $table = 't_pengembalian';
+
+    protected $table = 't_denda';
 }

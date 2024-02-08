@@ -3,11 +3,14 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
+use App\Models\t_denda;
 use App\Models\t_peminjaman;
 use App\Models\t_jadwalkunjungan;
 use App\Models\t_peminjaman_detail;
+use App\Models\t_pengembalian;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class TransaksiController extends Controller
 {
@@ -37,22 +40,57 @@ class TransaksiController extends Controller
     }
 
 
+
+
     function add_pengembalian(Request $request)
     {
-        $data = t_peminjaman::find($request->input('id_peminjaman'));
-        if ($data) {
-            $data->tgl_kembali = $request->input('tgl_kembali');
-            $data->status = 1;
-            $data->update();
+        $get_peminjaman = t_peminjaman::where('id_anggota', $request->input('id_anggota'))->get();
+        $get_peminjaman_detail = t_peminjaman_detail::where('id', $get_peminjaman[0]->id)->get();
+
+        if ($get_peminjaman && $get_peminjaman_detail) {
+
+            DB::table('t_log_peminjaman')->insert([
+                'id_kelas' => $get_peminjaman[0]->id_kelas,
+                'tgl_pinjam' => $get_peminjaman[0]->tgl_pinjam,
+                'tgl_kembali' => $get_peminjaman[0]->tgl_kembali,
+                'id_anggota' => $get_peminjaman[0]->id_anggota,
+                'id_petugas' => $get_peminjaman[0]->id_petugas,
+                'created_at' => $get_peminjaman[0]->created_at,
+                'updated_at' => $get_peminjaman[0]->updated_at
+            ]);
+
+            $t_pengembalian = new t_pengembalian();
+            $t_pengembalian->id_pinjam = $get_peminjaman[0]->id;
+            $t_pengembalian->id_anggota = $get_peminjaman[0]->id_anggota;
+            $t_pengembalian->keterangan = $request->input('keterangan');
+            $t_pengembalian->tgl_kembali = $request->input('tgl_kembali');
+            $t_pengembalian->denda = $request->input('denda');
+            $t_pengembalian->id_petugas = $request->input('id_petugas');
+            $t_pengembalian->save();
+
+
+            $t_denda = new t_denda();
+            if ($request->input('denda') == !"" || $request->input('denda') == !null) {
+                $t_denda->id_anggota = $get_peminjaman[0]->id_anggota;
+                $t_denda->id_pinjam = $get_peminjaman[0]->id;
+                $t_denda->denda = $request->input('denda');
+                $t_denda->save();
+            }
+
+            t_peminjaman::find($get_peminjaman[0]->id)->delete();
+            t_peminjaman_detail::where('id', $get_peminjaman[0]->id)->delete();
+
             return response()->json([
                 'success' => true,
-                'message' => 'Berhasil di update',
-                'data' => $data
+                'message' => 'Berhasil di tambahkan',
+                'denda' => $t_denda->count(),
+                'data' => $t_pengembalian
             ], 200);
+
         } else {
             return response()->json([
                 'success' => false,
-                'message' => 'Gagal di update',
+                'message' => 'Gagal di hapus',
             ], 200);
         }
     }

@@ -10,6 +10,8 @@ use App\Models\m_kelas;
 use App\Models\m_kategori;
 use App\Models\m_buku;
 use App\Models\m_rak;
+use App\Models\t_peminjaman;
+use App\Models\t_pengembalian;
 use Illuminate\Support\Facades\DB;
 
 class MasterController extends Controller
@@ -481,6 +483,9 @@ class MasterController extends Controller
         $total_pengunjung = m_pengunjung::count();
         $total_buku = m_buku::count();
         $total_anggota = m_anggota::count();
+        $total_peminjam = t_peminjaman::count();
+        $t_pengembalian = t_pengembalian::count();
+        $t_denda = t_pengembalian::sum('denda');
 
         return response()->json([
             'success' => true,
@@ -488,6 +493,9 @@ class MasterController extends Controller
             'total_buku' => $total_buku,
             'total_pengunjung' => $total_pengunjung,
             'total_anggota' => $total_anggota,
+            'total_peminjam' => $total_peminjam,
+            'total_pengembalian' => $t_pengembalian,
+            'total_denda' => $t_denda
         ], 200);
     }
 }
