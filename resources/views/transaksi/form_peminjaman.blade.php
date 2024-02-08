@@ -3,6 +3,7 @@
         <div class="card-header card-title">Tambah Peminjaman Buku</div>
         <div class="card-body py-1">
             <div class="h6 mb-2">Detail Peminjam</div>
+
             <div class="row ">
                 <div class="col-sm-10">
 
@@ -13,7 +14,7 @@
                                 <input type="search" class="form-control" id="search_kd_anggota"
                                     placeholder="Masukna Kode Anggota">
 
-                                <span class="input-group-text">
+                                <span class="input-group-text" id="btn-camera">
                                     <i class="icon-sm" data-feather="camera"></i>
                                 </span>
                             </div>
@@ -28,7 +29,7 @@
                         <label for="kd_anggota" class="col-sm-3 col-form-label">Kode Anggota</label>
                         <div class="col-sm">
                             <div class="input-group">
-                                <input type="text" class="form-control" id="kd_anggota" placeholder="Kode Anggota"
+                                <input type="text" class="form-control" id="kd_anggota" placeholder="Kode Anggota" tabindex="1"
                                     readonly>
                             </div>
                         </div>
@@ -54,16 +55,7 @@
 
                         </div>
                     </div>
-                    <div class="row mb-3">
-                        <label for="kd_anggota" class="col-sm-3 col-form-label">Masa Aktif</label>
-                        <div class="col-sm">
-                            <div class="input-group">
-                                <input type="text" class="form-control" id="masa_aktif" placeholder="Masa Aktif"
-                                    readonly>
-                            </div>
 
-                        </div>
-                    </div>
                     <div class="row mb-3">
                         <label for="tgl_pinjam" class="col-sm-3 col-form-label">Tanggal Pinjam</label>
                         <div class="col-sm">
@@ -90,7 +82,7 @@
                         <label for="keterangan" class="col-sm-3 col-form-label">Keterangan Lain</label>
                         <div class="col-sm">
                             <div class="input-group">
-                                <input type="text" id="keterangan" class="form-control"
+                                <input type="text" id="keterangan" class="form-control" tabindex="2"
                                     placeholder="Keterangan Lain">
                             </div>
                         </div>
@@ -102,7 +94,7 @@
             <div class="mb-3">
                 <label for="kd_buku" class="form-label">Kode Buku</label>
                 <div class="input-group">
-                    <input type="search" class="form-control" id="kd_buku" placeholder="Masukan Kode Buku">
+                    <input type="search" class="form-control" id="kd_buku" placeholder="Masukan Kode Buku" tabindex="3">
                     <span class="input-group-text" id="btn-camera">
                         <i class="icon-sm" data-feather="camera"></i>
                     </span>
@@ -131,6 +123,122 @@
         </div>
     </div>
 </x-app-layout>
+<!-- Modal Camera -->
+<div class="modal fade" id="modalCamera" tabindex="-1" aria-labelledby="modalCameraLabel" aria-hidden="true"
+    data-backdrop="static">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalCameraLabel">Scan Barcode</h5>
+                <button type="button" data-feather="x" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div style="width: 500px" id="reader"></div>
+
+            </div>
+            <footer>
+                <div class="modal-footer">
+
+                </div>
+            </footer>
+        </div>
+    </div>
+</div>
+</div>
+
+<!-- CDN Jsbarcode -->
+{{-- <script src="https://unpkg.com/html5-qrcode" type="text/javascript"></script> --}}
+<script src="{{ asset('assets/js/html5-qrcode.min.js') }}" type="text/javascript"></script>
+<!-- End Modal Camera -->
+<script>
+    var html5QrcodeScanner = new Html5Qrcode("reader");
+    var cameraId = "";
+    var isFrontCamera = false;
+
+    function getCameras() {
+        Html5Qrcode.getCameras().then(devices => {
+            isFrontCamera = false;
+            Html5Qrcode.getCameras().then(devices => {
+                if (devices && devices.length) {
+                    cameraId = devices[devices.length - 1].id;
+                    updateScanner(cameraId);
+                }
+            }).catch(err => {
+                console.log(err);
+            });
+        }).catch(err => {
+            console.log(err);
+        });
+    }
+
+    function updateScanner(newCameraId) {
+        if (html5QrcodeScanner.isScanning) {
+            html5QrcodeScanner.stop().then(ignore => {
+                startScanner(newCameraId);
+            }).catch(err => {
+                console.log(err);
+            });
+        } else {
+            startScanner(newCameraId);
+        }
+    }
+
+    function startScanner(cameraId) {
+
+        const backCamera = {
+            facingMode: {
+                exact: "environment"
+            }
+        };
+
+        html5QrcodeScanner.start(
+                cameraId, {
+                    facingMode: {
+                        exact: "environment"
+                    },
+                    fps: 10,
+                    qrbox: 150,
+                    aspectRatio: 1.0,
+                    disableFlip: false,
+                },
+                qrCodeMessage => {
+
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Berhasil',
+                        text: 'Kode QR berhasil di scan',
+                        timer: 2000,
+                    }).then((result) => {})
+                    getCameras();
+
+
+                    html5QrcodeScanner.stop().then(ignore => {
+                        // Scanner berhenti
+                    }).catch(err => {
+                        console.error(err);
+                    });
+                },
+                errorMessage => {
+                    console.error(errorMessage);
+                })
+            .catch(err => {
+                console.log(err);
+            });
+    }
+</script>
+
+
+<script>
+    $("#btn-camera").on("click", function() {
+        $("#modalCamera").modal("show");
+        getCameras();
+    })
+</script>
+
+
+
+
+
 
 
 <script>
@@ -192,9 +300,16 @@
                     $("#nisn").val("");
                     $("#tgl_pinjam").val("");
                     $("#tgl_kembali").val("");
-                    $("#masa_aktif").val("");
                 } else {
-                    $("#kd_buku").focus();
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Berhasil',
+                        text: item.nm_lengkap,
+                        showConfirmButton: false,
+                        timer: 2000
+                    }).then((result) => {
+                        $("#keterangan").focus();
+                    })
                     $("#search_kd_anggota").val("");
                     $("#kd_anggota").val(kd_anggota);
                     $("#nm_peminjam").val(item.nm_lengkap);
@@ -202,7 +317,6 @@
                     $("#id_kelas").html(item.id_kelas);
                     $("#jns_kelamin").val(item.jns_kelamin);
                     $("#nisn").val(item.nisn);
-                    $("#masa_aktif").val(moment(item.masa_aktif, "YYYY-MM-DD").format("DD-MM-YYYY"));
                     $("#tgl_pinjam").val("{{ date('Y-m-d') }}");
                     $("#tgl_kembali").val("{{ date('Y-m-d', strtotime('+3 days')) }}");
                 }
@@ -328,11 +442,18 @@
 
             bukuArray.push({
                 kd_buku: kdBuku,
-                jumlah: jumlahBuku,
+                qty: jumlahBuku,
             });
         });
 
-        if (kd_anggota == "") {
+        if (bukuArray.length == 0) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: "Daftar Buku Tidak Boleh Kosong",
+            })
+            return;
+        } else if (kd_anggota == "") {
             Swal.fire({
                 icon: 'error',
                 title: 'Oops...',
@@ -354,11 +475,14 @@
                         type: "POST",
                         url: "{{ route('simpan_peminjaman') }}",
                         data: {
-                            kd_anggota: kd_anggota,
+                            _token: "{{ csrf_token() }}",
+                            id_kelas: $("#id_kelas").text(),
+                            id_anggota: kd_anggota,
                             tgl_pinjam: tgl_pinjam,
                             tgl_kembali: tgl_kembali,
                             keterangan: keterangan,
-                            buku: bukuArray
+                            id_petugas: "{{ Auth::user()->id }}",
+                            id_buku: bukuArray
                         },
                         beforeSend: function() {
                             Swal.fire({
@@ -374,8 +498,9 @@
                         },
 
                         success: function(data) {
+                            console.log(data);
                             Swal.close();
-                            if (data.status == "success") {
+                            if (data.success == true) {
                                 Swal.fire({
                                     icon: 'success',
                                     title: 'Berhasil',
@@ -383,7 +508,8 @@
                                     showConfirmButton: false,
                                     timer: 1000
                                 }).then((result) => {
-                                    window.location.href = "{{ route('list_peminjaman') }}";
+                                    window.location.href =
+                                        "{{ route('list_peminjaman') }}";
                                 })
                             } else {
                                 Swal.fire({

@@ -66,7 +66,7 @@
                         </div>
                         <div class="mb-3">
                             <label for="nisn" class="form-label">NISN ( Nomer Induk Siswa Nasional )</label>
-                            <input type="search" class="form-control" id="nisn"
+                            <input type="number" class="form-control" id="nisn"
                                 placeholder="Masukan NISN Jika tersedia">
                         </div>
                         <div class="mb-3">
@@ -314,7 +314,7 @@
                                 "nm_lengkap": nm_lengkap,
                                 "jns_kelamin": jns_kelamin,
                                 "status": status,
-                                "nisn": nisn,
+                                nisn: nisn,
                                 "id_kelas": kelas,
                             },
 

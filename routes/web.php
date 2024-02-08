@@ -79,6 +79,7 @@ Route::middleware('auth')->group(function () {
 
     Route::controller(TransaksiController::class)->group(function () {
         Route::post('/simpan_peminjaman', 'simpan_peminjaman')->name('simpan_peminjaman');
+        Route::get('/get_peminjaman', 'get_peminjaman')->name('get_peminjaman');
         Route::get('/list_peminjaman', 'list_peminjaman')->name('list_peminjaman');
         Route::get('/form_peminjaman', 'form_peminjaman')->name('form_peminjaman');
         Route::get('/list_pengembalian', 'list_pengembalian')->name('list_pengembalian');

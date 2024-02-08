@@ -32,9 +32,32 @@ class TransaksiController extends Controller
     function simpan_peminjaman(Request $request)
     {
         $client = new Client(['timeout' => 10]); // Mengatur timeout menjadi 10 detik
+
+        // return $request->all();
         try {
-            $response = $client->delete(
+            $response = $client->post(
                 config('app.url') . '/perpus/api/add_peminjaman',
+                [
+                    'json' => $request->all(),
+                ]
+            );
+            return json_decode($response->getBody()->getContents(), true);
+        } catch (RequestException $e) {
+            // Tangani kesalahan timeout atau kesalahan lainnya
+            return [
+                "message" => $e->getMessage(),  
+                'status' => 'error',
+                'error' => 'Koneksi terputus atau kesalahan lainnya'
+            ];
+        }
+    }
+
+    function get_peminjaman(Request $request)
+    {
+        $client = new Client(['timeout' => 10]); // Mengatur timeout menjadi 10 detik
+        try {
+            $response = $client->get(
+                config('app.url') . '/perpus/api/get_peminjaman',
                 [
                     'json' => $request->all(),
                 ]

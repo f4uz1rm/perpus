@@ -19,16 +19,44 @@ class TransaksiController extends Controller
         $data->tgl_kembali        = $request->input('tgl_kembali');
         $data->id_anggota         = $request->input('id_anggota');
         $data->id_petugas         = $request->input('id_petugas');
-        // $data->id_buku            = $request->input('id_buku');
-
-        return $data;
-        // $data->save();
-        // return response()->json([
-        //     'success' => true,
-        //     'message' => 'Berhasil di tambahkan',
-        //     'data' => $data
-        // ], 200);
+        $id_buku                  = $request->input('id_buku');
+        $data->save();
+        foreach ($id_buku as $value) {
+            $detail = new t_peminjaman_detail();
+            $detail->id = $data->id;
+            $detail->kd_buku = $value['kd_buku'];
+            $detail->qty = $value['qty'];
+            $detail->timestamps = false;
+            $detail->save();
+        }
+        return response()->json([
+            'success' => true,
+            'message' => 'Berhasil di tambahkan',
+            'id' => $data->id
+        ], 200);
     }
+
+
+    function add_pengembalian(Request $request)
+    {
+        $data = t_peminjaman::find($request->input('id_peminjaman'));
+        if ($data) {
+            $data->tgl_kembali = $request->input('tgl_kembali');
+            $data->status = 1;
+            $data->update();
+            return response()->json([
+                'success' => true,
+                'message' => 'Berhasil di update',
+                'data' => $data
+            ], 200);
+        } else {
+            return response()->json([
+                'success' => false,
+                'message' => 'Gagal di update',
+            ], 200);
+        }
+    }
+
 
     function get_peminjaman(Request $request)
     {
@@ -39,14 +67,6 @@ class TransaksiController extends Controller
                 ->leftJoin('m_anggota', 'm_anggota.id', '=', 't_peminjaman.id_anggota')
                 ->select('t_peminjaman.*', 'm_kelas.nm_kelas', 'm_anggota.nm_lengkap')
                 ->get()->toArray();
-
-            $list_buku = t_peminjaman_detail::select("kd_buku", "qty")->where('id', $data[0]['id'])->get();
-            
-            $data["list_buku"] = [];
-
-            foreach ($list_buku as $value) {
-                $data["list_buku"][] = $value;
-            }
         }
         return response()->json([
             'success'   => true,
