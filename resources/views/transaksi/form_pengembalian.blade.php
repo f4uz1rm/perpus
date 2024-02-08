@@ -188,6 +188,87 @@
     </div>
 
     <script>
+
+        $("#")
+
+
+function get_anggota_bykode(kd_anggota) {
+        $.ajax({
+            type: "GET",
+            url: "{{ route('get_anggota') }}",
+            data: {
+                id_anggota: kd_anggota
+            },
+            beforeSend: function() {
+                $("#nm_peminjam").val("Loading...");
+                $("#kelas").val("Loading...");
+                $("#jns_kelamin").val("Loading...");
+                $("#nisn").val("Loading...");
+                Swal.fire({
+                    title: 'Loading',
+                    html: 'Mohon Tunggu Sebentar',
+                    didOpen: () => {
+                        Swal.showLoading()
+                    },
+                    allowOutsideClick: false,
+                    allowEscapeKey: false,
+                    allowEnterKey: false,
+                })
+            },
+
+            success: function(data) {
+                let item = data.data;
+                Swal.close();
+                if (item == null) {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Oops...',
+                        text: "Anggota Tidak Ditemukan",
+                        showConfirmButton: false,
+                        timer: 1000
+                    })
+                    $("#search_kd_anggota").focus();
+                    $("#search_kd_anggota").val("");
+
+                    $("#search_kd_anggota").val("");
+                    $("#kd_anggota").val("");
+                    $("#nm_peminjam").val("");
+                    $("#nm_kelas").val("");
+                    $("#id_kelas").html("");
+                    $("#jns_kelamin").val("");
+                    $("#nisn").val("");
+                    $("#tgl_pinjam").val("");
+                    $("#tgl_kembali").val("");
+                } else {
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Berhasil',
+                        text: item.nm_lengkap,
+                        showConfirmButton: false,
+                        timer: 1500
+                    }).then((result) => {
+                        $("#keterangan").focus();
+                    })
+                    $("#search_kd_anggota").val("");
+                    $("#kd_anggota").val(kd_anggota);
+                    $("#nm_peminjam").val(item.nm_lengkap);
+                    $("#nm_kelas").val(item.nm_kelas);
+                    $("#id_kelas").html(item.id_kelas);
+                    $("#jns_kelamin").val(item.jns_kelamin);
+                    $("#nisn").val(item.nisn);
+                    $("#tgl_pinjam").val("{{ date('Y-m-d') }}");
+                    $("#tgl_kembali").val("{{ date('Y-m-d', strtotime('+3 days')) }}");
+                }
+            }
+        }).fail(function(err) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: "Terjadi Kesalahan",
+            })
+        })
+    }
+
         $(document).ready(function() {
                 $('#denda').on('keyup', function() {
                     var denda = $('#denda').val();

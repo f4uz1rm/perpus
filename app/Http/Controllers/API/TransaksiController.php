@@ -86,7 +86,6 @@ class TransaksiController extends Controller
                 'denda' => $t_denda->count(),
                 'data' => $t_pengembalian
             ], 200);
-
         } else {
             return response()->json([
                 'success' => false,
@@ -111,6 +110,30 @@ class TransaksiController extends Controller
             'message'   => 'Data peminjaman',
             'data'      => $data,
         ], 200);
+    }
+    function get_pengembalian(Request $request)
+    {
+        if ($request->input('id_anggota') != "") {
+            $get_peminjaman = t_peminjaman::leftJoin('m_kelas', 'm_kelas.id', '=', 't_peminjaman.id_kelas')
+                ->leftJoin('m_anggota', 'm_anggota.id', '=', 't_peminjaman.id_anggota')
+                ->select('t_peminjaman.*', 'm_kelas.nm_kelas', 'm_anggota.nm_lengkap')
+                ->get();
+            $list_pengembalian["peminjam"] = $get_peminjaman;
+            $list_pengembalian["buku"] = t_peminjaman_detail::where('id', $get_peminjaman[0]['id'])->get();
+            return response()->json([
+                'success'   => true,
+                'data'      => $list_pengembalian,
+            ], 200);
+        } else {
+            $t_pengembalian = t_pengembalian::leftJoin('m_anggota', 'm_anggota.id', '=', 't_pengembalian.id_anggota')
+            ->select('t_pengembalian.*', 'm_anggota.nm_lengkap','m_anggota.id_kelas')
+            ->get();
+            return response()->json([
+                'success'   => true,
+                'message'   => 'Data peminjaman',
+                'data'      => $t_pengembalian,
+            ], 200);
+        }
     }
 
 

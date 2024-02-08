@@ -25,6 +25,7 @@ Route::controller(TransaksiController::class)->group(function () {
     Route::post('/add_pengembalian', 'add_pengembalian');
 
     Route::get('/get_peminjaman', 'get_peminjaman')->name('get_peminjaman');
+    Route::get('/get_pengembalian', 'get_pengembalian')->name('get_pengembalian');
     Route::get('/get_jadwalkunjungan', 'get_jadwalkunjungan');
     Route::post('/add_jadwalkunjungan', 'add_jadwalkunjungan');
     Route::put('/update_jadwalkunjungan', 'update_jadwalkunjungan');

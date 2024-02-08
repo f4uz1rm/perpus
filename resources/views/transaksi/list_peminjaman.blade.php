@@ -41,9 +41,7 @@
 
     <script>
         $(document).ready(function() {
-            $('table').DataTable({
-                responsive: true
-            });
+    
             get_peminjaman()
         })
     </script>

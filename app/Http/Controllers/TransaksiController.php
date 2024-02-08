@@ -71,6 +71,45 @@ class TransaksiController extends Controller
             ];
         }
     }
+    function get_pengembalian(Request $request)
+    {
+        $client = new Client(['timeout' => 10]); // Mengatur timeout menjadi 10 detik
+        try {
+            $response = $client->get(
+                config('app.url') . '/perpus/api/get_pengembalian',
+                [
+                    'json' => $request->all(),
+                ]
+            );
+            return json_decode($response->getBody()->getContents(), true);
+        } catch (RequestException $e) {
+            // Tangani kesalahan timeout atau kesalahan lainnya
+            return [
+                'status' => 'error',
+                'error' => 'Koneksi terputus atau kesalahan lainnya'
+            ];
+        }
+    }
+
+    function simpan_pengembalian(Request $request)
+    {
+        $client = new Client(['timeout' => 10]); // Mengatur timeout menjadi 10 detik
+        try {
+            $response = $client->post(
+                config('app.url') . '/perpus/api/add_pengembalian',
+                [
+                    'json' => $request->all(),
+                ]
+            );
+            return json_decode($response->getBody()->getContents(), true);
+        } catch (RequestException $e) {
+            // Tangani kesalahan timeout atau kesalahan lainnya
+            return [
+                'status' => 'error',
+                'error' => 'Koneksi terputus atau kesalahan lainnya'
+            ];
+        }
+    }
 
     function get_jadwalkunjungan(Request $request)
     {
