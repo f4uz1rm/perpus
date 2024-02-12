@@ -484,8 +484,8 @@ class MasterController extends Controller
         $total_buku = m_buku::count();
         $total_anggota = m_anggota::count();
         $total_peminjam = t_peminjaman::count();
-        $t_pengembalian = t_pengembalian::count();
-        $t_denda = t_pengembalian::sum('denda');
+        $total_pengembalian = t_pengembalian::count();
+        $total_denta = t_pengembalian::sum('denda');
 
         return response()->json([
             'success' => true,
@@ -494,8 +494,8 @@ class MasterController extends Controller
             'total_pengunjung' => $total_pengunjung,
             'total_anggota' => $total_anggota,
             'total_peminjam' => $total_peminjam,
-            'total_pengembalian' => $t_pengembalian,
-            'total_denda' => $t_denda
+            'total_pengembalian' => $total_pengembalian,
+            'total_denda' => $total_denta
         ], 200);
     }
 }

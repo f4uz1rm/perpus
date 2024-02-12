@@ -75,7 +75,7 @@
                             </div>
                             <div class="row">
                                 <div class="col-12 col-md-12 col-xl-12">
-                                    <h3 class="mb-2 mt-2">0</h3>
+                                    <h3 class="mb-2 mt-2" id="total_pengembalian">0</h3>
                                     {{-- <div class="d-flex align-items-baseline justify-content-center">
                                         <p class="text-success">
                                             <span>denda yang terkumpul sampai tanggal {{ date('d-m-y') }} </span>
@@ -165,13 +165,16 @@
             $('#total_pengunjung').html('Loading...');
             $('#total_anggota').html('Loading...');
             $('#total_peminjam').html('Loading...');
+            $('#total_pengembalian').html('Loading...');
+            $('#total_denda').html('Loading...');
         },
         success: function(data) {
             $('#total_buku').html(data.total_buku);
             $('#total_pengunjung').html(data.total_pengunjung);
             $('#total_anggota').html(data.total_anggota);
             $('#total_peminjam').html(data.total_peminjam);
-            
+            $('#total_pengembalian').html(data.total_pengembalian)
+            $('#total_denda').html(data.total_denda)
         },
         error: function(error) {
             console.log(error);

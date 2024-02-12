@@ -6,27 +6,18 @@
             <div class="row ">
                 <div class="col-sm-10">
                     <div class="row mb-3">
-                        <label for="kd_transaksi" class="col-sm-3 col-form-label">Kode Transaksi</label>
+                        <label for="id_anggota" class="col-sm-3 col-form-label">Kode Anggota</label>
                         <div class="col-sm">
                             <div class="input-group">
-                                <input type="text" name="" id="kd_transaksi" class="form-control">
+                                <input type="text" class="form-control" id="id_anggota" placeholder="Kode Anggota">
                                 <span class="input-group-text">
-                                    <i class="icon-sm" data-feather="camera"></i>
+                                    <i class="icon-sm" data-feather="search"></i>
                                 </span>
                             </div>
                         </div>
                     </div>
                     <div class="row mb-3">
-                        <label for="kd_anggota" class="col-sm-3 col-form-label">Kode Anggota</label>
-                        <div class="col-sm">
-                            <div class="input-group">
-                                <input type="text" class="form-control" id="kd_anggota" placeholder="Kode Anggota"
-                                    readonly>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row mb-3">
-                        <label for="kd_anggota" class="col-sm-3 col-form-label">Nama Peminjam</label>
+                        <label for="nm_peminjam" class="col-sm-3 col-form-label">Nama Peminjam</label>
                         <div class="col-sm">
                             <div class="input-group">
                                 <input type="text" class="form-control" id="nm_peminjam" placeholder="Nama Anggota"
@@ -35,11 +26,11 @@
                         </div>
                     </div>
                     <div class="row mb-3">
-                        <label for="kd_anggota" class="col-sm-3 col-form-label">Kelas</label>
+                        <label for="kelas" class="col-sm-3 col-form-label">Kelas</label>
                         <div class="col-sm">
                             <div class="input-group">
                                 <input type="text" class="form-control" id="nm_kelas" placeholder="Kelas" readonly>
-                                <span class="input-group-text" id="id_kelas">
+                                <span class="input-group-text" id="kelas">
 
                                 </span>
                             </div>
@@ -47,11 +38,11 @@
                         </div>
                     </div>
                     <div class="row mb-3">
-                        <label for="exampleInputUsername2" class="col-sm-3 col-form-label">Keterangan Lain</label>
+                        <label for="keterangan" class="col-sm-3 col-form-label">Keterangan</label>
                         <div class="col-sm">
                             <div class="input-group">
-                                <textarea type="text" class="form-control" placeholder="Keterangan Lain"
-                                    readonly> </textarea>
+                                <input id="keterangan" type="text" class="form-control" placeholder="Keterangan"
+                                    readonly> </input>
                             </div>
                         </div>
                     </div>
@@ -66,7 +57,7 @@
                     Buku yang dipinjam
                 </label>
             </div>
-            <div class="">
+            <div class="" id="list_buku">
                 @for ($i = 0; $i < 5; $i++) <div class="row ">
                     <div class="col-sm">
                         <div class="row mb-3">
@@ -85,7 +76,6 @@
             </div>
             @endfor
         </div>
-
         <hr>
         <div class="alert alert-info ">
             <i class="icon-sm" data-feather="info"></i>
@@ -172,6 +162,9 @@
                             </span>
                             <input type="text" class="form-control" placeholder="Petugas"
                                 value="{{ Auth::user()->name }}" readonly>
+                            <span class="input-group-text" id="id_petugas">
+                                {{ Auth::user()->id }}
+                            </span>
                         </div>
                     </div>
                 </div>
@@ -187,23 +180,19 @@
         </div>
     </div>
 
-    <script>
-
-        $("#")
-
-
-function get_anggota_bykode(kd_anggota) {
+<script>
+    function get_peminjam(kd_anggota) {
         $.ajax({
             type: "GET",
-            url: "{{ route('get_anggota') }}",
+            url: "{{ route('get_peminjam') }}",
             data: {
                 id_anggota: kd_anggota
             },
             beforeSend: function() {
                 $("#nm_peminjam").val("Loading...");
                 $("#kelas").val("Loading...");
-                $("#jns_kelamin").val("Loading...");
-                $("#nisn").val("Loading...");
+                $("#keterangan").val("Loading...");
+                $("#list_buku").html("")
                 Swal.fire({
                     title: 'Loading',
                     html: 'Mohon Tunggu Sebentar',
@@ -218,46 +207,30 @@ function get_anggota_bykode(kd_anggota) {
 
             success: function(data) {
                 let item = data.data;
-                Swal.close();
-                if (item == null) {
-                    Swal.fire({
-                        icon: 'error',
-                        title: 'Oops...',
-                        text: "Anggota Tidak Ditemukan",
-                        showConfirmButton: false,
-                        timer: 1000
-                    })
-                    $("#search_kd_anggota").focus();
-                    $("#search_kd_anggota").val("");
+                Swa.close()
 
-                    $("#search_kd_anggota").val("");
-                    $("#kd_anggota").val("");
-                    $("#nm_peminjam").val("");
-                    $("#nm_kelas").val("");
-                    $("#id_kelas").html("");
-                    $("#jns_kelamin").val("");
-                    $("#nisn").val("");
-                    $("#tgl_pinjam").val("");
-                    $("#tgl_kembali").val("");
-                } else {
+                if (item.length ==0){
                     Swal.fire({
-                        icon: 'success',
-                        title: 'Berhasil',
-                        text: item.nm_lengkap,
-                        showConfirmButton: false,
-                        timer: 1500
-                    }).then((result) => {
-                        $("#keterangan").focus();
+                        icon : "error",
+                        text : "Data Anggota Tidak di temukan!"
                     })
-                    $("#search_kd_anggota").val("");
-                    $("#kd_anggota").val(kd_anggota);
-                    $("#nm_peminjam").val(item.nm_lengkap);
-                    $("#nm_kelas").val(item.nm_kelas);
-                    $("#id_kelas").html(item.id_kelas);
-                    $("#jns_kelamin").val(item.jns_kelamin);
-                    $("#nisn").val(item.nisn);
-                    $("#tgl_pinjam").val("{{ date('Y-m-d') }}");
-                    $("#tgl_kembali").val("{{ date('Y-m-d', strtotime('+3 days')) }}");
+                }else{
+                    $("#nm_peminjam").val(item.nm_peminjam);
+                    $("#kelas").val(item.kelas);
+                    $("#keterangan").val(item.keterangan);
+                    $("#tgl_pinjam").val(item.tgl_pinjam);
+                    $("#tgl_kembali").val(item.tgl_kembali);
+                    var tglKembali = item.tgl_kembali;
+                    var tglKembaliObj = new Date(tglKembali);
+                    var today = new Date();
+                    if (tglKembaliObj > today) {
+                        var hariIni = today.getDay();
+                        var selisihHari = Math.floor((tglKembaliObj - today) / (1000 * 60 * 60 * 24));
+                        var denda = selisihHari * 1000;
+                        if (hariIni !== 0 && hariIni !== 6) {
+                            $("#denda").val(denda);
+                        } 
+                    }
                 }
             }
         }).fail(function(err) {
@@ -269,21 +242,63 @@ function get_anggota_bykode(kd_anggota) {
         })
     }
 
-        $(document).ready(function() {
-                $('#denda').on('keyup', function() {
-                    var denda = $('#denda').val();
-                    var diskon = $('#diskon').val();
-                    var total = denda - diskon;
-                    $('#total').val(total.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1."));
-                });
-                $('#diskon').on('keyup', function() {
-                    var denda = $('#denda').val();
-                    var diskon = $('#diskon').val();
-                    var total = denda - diskon;
-                    $('#total').val(total.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1."));
-                });
-
+    $(document).ready(function() {
+            $('#denda').on('keyup', function() {
+                var denda = $('#denda').val();
+                var diskon = $('#diskon').val();
+                var total = denda - diskon;
+                $('#total').val(total.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1."));
             });
+            $('#diskon').on('keyup', function() {
+                var denda = $('#denda').val();
+                var diskon = $('#diskon').val();
+                var total = denda - diskon;
+                $('#total').val(total.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1."));
+            });
+
+    });
+
+    function simpan_pengembalian(){
+
+        let id_anggota          = $("#id_anggota").val()
+        let denda               = &("#denda").val()
+        let tgl_pengembalian    = $("#tgl_pengembalian").val()
+
+        $.ajax({
+            type : "POST",
+            data : {
+                id_anggota       : id_anggota,
+                id_petugas       : id_petugas,
+                tgl_pengembalian : tgl_pengembalian,
+                denda            : denda, 
+            },
+            beforeSend : function(){
+                console.log("Loading...")
+            },success : function(data){
+                if (data.success==true){
+                    Swal.fire({
+                        icon    : "success",
+                        title   : "Berhasil Tersimpan"
+                        text    : "Data berhasil tersimpan!"
+                    })
+                    window.assign("{{ route('list_peminjaman') }}")
+                }else{
+                    Swal.fire({
+                        icon : "error",
+                        title : "Gagal Tersimpan"
+                        text : "Terjadi kesalahan dalam proses menyimpan"
+                    })
+                }
+            }
+        }).fail(function(err){
+            Swal.fire({
+                icon : "error",
+                title : "Terjadi Kesalahan",
+                text : "Terjadi kesalahan, Harap check kembali dalam proses meyimpan"
+            })
+        })
+
+    }
     </script>
 
 
