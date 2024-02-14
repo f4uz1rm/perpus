@@ -30,14 +30,14 @@
                         <div class="col-sm">
                             <div class="input-group">
                                 <input type="text" class="form-control" id="nm_kelas" placeholder="Kelas" readonly>
-                                <span class="input-group-text" id="kelas">
+                                <span class="input-group-text" id="id_kelas">
 
                                 </span>
                             </div>
 
                         </div>
                     </div>
-                    <div class="row mb-3">
+                    {{-- <div class="row mb-3">
                         <label for="keterangan" class="col-sm-3 col-form-label">Keterangan</label>
                         <div class="col-sm">
                             <div class="input-group">
@@ -45,7 +45,7 @@
                                     readonly> </input>
                             </div>
                         </div>
-                    </div>
+                    </div> --}}
                 </div>
 
             </div>
@@ -58,248 +58,270 @@
                 </label>
             </div>
             <div class="" id="list_buku">
-                @for ($i = 0; $i < 5; $i++) <div class="row ">
-                    <div class="col-sm">
-                        <div class="row mb-3">
-                            <div class="col-sm">
-                                <div class="input-group">
-                                    <span class="input-group-text">Kode Buku</span>
-                                    <input type="text" class="form-control" id="judul" placeholder="Judul Buku"
-                                        readonly>
-                                    <span class="input-group-text ">
-                                        Qty
-                                    </span>
+                @for ($i = 0; $i < 5; $i++)
+                    <div class="row ">
+                        <div class="col-sm">
+                            <div class="row mb-3">
+                                <div class="col-sm">
+                                    <div class="input-group">
+                                        <span class="input-group-text">Kode Buku</span>
+                                        <input type="text" class="form-control" id="judul"
+                                            placeholder="Judul Buku" readonly>
+                                        <span class="input-group-text ">
+                                            Qty
+                                        </span>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
+                @endfor
             </div>
-            @endfor
-        </div>
-        <hr>
-        <div class="alert alert-info ">
-            <i class="icon-sm" data-feather="info"></i>
-            <span class="ml-2">Denda keterlambatan buku Rp.<span>1.000</span> / Hari</span>
-        </div>
-        <div class="d-flex justify-content-end">
-            <div class="">
-                <div class="row mb-3">
-                    <label for="tgl_pinjam" class="col-sm-3 col-form-label">Tanggal Pinjam</label>
-                    <div class="col-sm">
-                        <div class="input-group">
-                            <input type="text" id="tgl_pinjam" class="form-control text-center" placeholder="DD-MM-YYYY"
-                                readonly>
-                            <span class="input-group-text ">
-                                s/d
-                            </span>
-                            <input type="text" id="tgl_kembali" class="form-control text-center"
-                                placeholder="DD-MM-YYYY" readonly>
+            <hr>
+            <div class="alert alert-info ">
+                <i class="icon-sm" data-feather="info"></i>
+                <span class="ml-2">Denda keterlambatan buku Rp.<span>1.000</span> / Hari</span>
+            </div>
+            <div class="d-flex justify-content-end">
+                <div class="">
+                    <div class="row mb-3">
+                        <label for="tgl_pinjam" class="col-sm-3 col-form-label">Tanggal Pinjam</label>
+                        <div class="col-sm">
+                            <div class="input-group">
+                                <input type="text" id="tgl_pinjam" class="form-control text-center"
+                                    placeholder="DD-MM-YYYY" readonly>
+                                <span class="input-group-text ">
+                                    s/d
+                                </span>
+                                <input type="text" id="tgl_kembali" class="form-control text-center"
+                                    placeholder="DD-MM-YYYY" readonly>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="row mb-3">
-                    <label for="tgl_pengembalian" class="col-sm-3 col-form-label">Tanggal Pengembalian</label>
-                    <div class="col-sm">
-                        <div class="input-group">
-                            <input type="text" class="form-control text-center" placeholder="DD-MM-YYYY"
-                                value="{{ date('d-m-Y') }}" readonly>
-                            <span class="iput-group-text">
-                                <i class="icon-sm" data-feather="calendar"></i>
-                            </span>
+                    <div class="row mb-3">
+                        <label for="tgl_pengembalian" class="col-sm-3 col-form-label">Tanggal Pengembalian</label>
+                        <div class="col-sm">
+                            <div class="input-group">
+                                <input type="text" class="form-control text-center" placeholder="DD-MM-YYYY"
+                                    value="{{ date('d-m-Y') }}" readonly>
+                                <span class="input-group-text">
+                                    <i class="icon-sm" data-feather="calendar"></i>
+                                </span>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="row mb-3">
-                    <label for="exampleInputUsername2" class="col-sm-3 col-form-label">Keterlambatan</label>
-                    <div class="col-sm">
-                        <div class="input-group">
-                            <input type="text" class="form-control" placeholder="0" value="0" readonly>
-                            <span class="input-group-text ">
-                                Hari
-                            </span>
+                    <div class="row mb-3">
+                        <label for="keterlambatan" class="col-sm-3 col-form-label">Keterlambatan</label>
+                        <div class="col-sm">
+                            <div class="input-group">
+                                <input type="text" class="form-control" placeholder="0" value="0" readonly id="keterlambatan">
+                                <span class="input-group-text ">
+                                    Hari
+                                </span>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="row mb-3">
-                    <label for="denda" class="col-sm-3 col-form-label">Denda</label>
-                    <div class="col-sm">
-                        <div class="input-group">
-                            <span class="input-group-text ">
-                                Rp
-                            </span>
-                            <input type="number" class="form-control" placeholder="Denda" value="0" id="denda">
+                    <div class="row mb-3">
+                        <label for="denda" class="col-sm-3 col-form-label">Denda</label>
+                        <div class="col-sm">
+                            <div class="input-group">
+                                <span class="input-group-text ">
+                                    Rp
+                                </span>
+                                <input type="number" class="form-control" placeholder="Denda" value="0"
+                                    id="denda">
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="row mb-3">
-                    <label for="diskon" class="col-sm-3 col-form-label">Diskon</label>
-                    <div class="col-sm">
-                        <div class="input-group">
-                            <span class="input-group-text ">
-                                Rp
-                            </span>
-                            <input type="number" class="form-control" placeholder="" value="0" id="diskon">
+                    <div class="row mb-3">
+                        <label for="diskon" class="col-sm-3 col-form-label">Diskon</label>
+                        <div class="col-sm">
+                            <div class="input-group">
+                                <span class="input-group-text ">
+                                    Rp
+                                </span>
+                                <input type="number" class="form-control" placeholder="" value="0"
+                                    id="diskon">
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="row mb-3">
-                    <label for="total_bayar" class="col-sm-3 col-form-label">Total Bayar</label>
-                    <div class="col-sm">
-                        <div class="input-group">
-                            <span class="input-group-text ">
-                                Rp
-                            </span>
-                            <input type="text" class="form-control" placeholder="" value="0" id="total" readonly>
+                    <div class="row mb-3">
+                        <label for="total_bayar" class="col-sm-3 col-form-label">Total Bayar</label>
+                        <div class="col-sm">
+                            <div class="input-group">
+                                <span class="input-group-text ">
+                                    Rp
+                                </span>
+                                <input type="text" class="form-control" placeholder="" value="0"
+                                    id="total" readonly>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="row mb-3">
-                    <label for="id_petugas" class="col-sm-3 col-form-label">Petugas</label>
-                    <div class="col-sm">
-                        <div class="input-group">
-                            <span class="input-group-text ">
-                                <i class="icon-sm" data-feather="user"></i>
-                            </span>
-                            <input type="text" class="form-control" placeholder="Petugas"
-                                value="{{ Auth::user()->name }}" readonly>
-                            <span class="input-group-text" id="id_petugas">
-                                {{ Auth::user()->id }}
-                            </span>
+                    <div class="row mb-3">
+                        <label for="id_petugas" class="col-sm-3 col-form-label">Petugas</label>
+                        <div class="col-sm">
+                            <div class="input-group">
+                                <span class="input-group-text ">
+                                    <i class="icon-sm" data-feather="user"></i>
+                                </span>
+                                <input type="text" class="form-control" placeholder="Petugas"
+                                    value="{{ Auth::user()->name }}" readonly>
+                                <span class="input-group-text" id="id_petugas">
+                                    {{ Auth::user()->id }}
+                                </span>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
+            <div class="card-footer d-flex justify-content-between">
+                <a class="btn btn-sm btn-danger" type="button" href="{{ route('list_peminjaman') }}">
+                    <i class="icon-sm" data-feather="chevron-left"></i>
+                    Batal</a>
+                <button class="btn btn-sm btn-success">
+                    <i class="icon-sm" data-feather="save"></i>
+                    Simpan Data</button>
+            </div>
         </div>
-        <div class="card-footer d-flex justify-content-between">
-            <a class="btn btn-sm btn-danger" type="button" href="{{ route('list_peminjaman') }}">
-                <i class="icon-sm" data-feather="chevron-left"></i>
-                Batal</a>
-            <button class="btn btn-sm btn-success">
-                <i class="icon-sm" data-feather="save"></i>
-                Simpan Data</button>
-        </div>
-    </div>
 
-<script>
-    function get_peminjam(kd_anggota) {
-        $.ajax({
-            type: "GET",
-            url: "{{ route('get_peminjam') }}",
-            data: {
-                id_anggota: kd_anggota
-            },
-            beforeSend: function() {
-                $("#nm_peminjam").val("Loading...");
-                $("#kelas").val("Loading...");
-                $("#keterangan").val("Loading...");
-                $("#list_buku").html("")
-                Swal.fire({
-                    title: 'Loading',
-                    html: 'Mohon Tunggu Sebentar',
-                    didOpen: () => {
-                        Swal.showLoading()
+        <script>
+            $("#id_anggota").on("change", function() {
+                    get_peminjam($(this).val());
+            });
+            $("#id_anggota").on("keypress", function() {
+                if (event.keyCode === 13) {
+                    get_peminjam($(this).val());
+                }
+            });
+
+            function get_peminjam(kd_anggota) {
+                $.ajax({
+                    type: "GET",
+                    url: "{{ route('get_pengembalian') }}",
+                    data: {
+                        id_anggota: kd_anggota
                     },
-                    allowOutsideClick: false,
-                    allowEscapeKey: false,
-                    allowEnterKey: false,
-                })
-            },
+                    beforeSend: function() {
+                        $("#nm_peminjam").val("Loading...");
+                        $("#kelas").val("Loading...");
+                        // $("#keterangan").val("Loading...");
+                        $("#list_buku").html("")
+                        Swal.fire({
+                            title: 'Loading',
+                            html: 'Mohon Tunggu Sebentar',
+                            didOpen: () => {
+                                Swal.showLoading()
+                            },
+                            allowOutsideClick: false,
+                            allowEscapeKey: false,
+                            allowEnterKey: false,
+                        })
+                    },
 
-            success: function(data) {
-                let item = data.data;
-                Swa.close()
+                    success: function(data) {
+                        console.log(data)
+                        let item = data.data;
+                        Swal.close()
 
-                if (item.length ==0){
-                    Swal.fire({
-                        icon : "error",
-                        text : "Data Anggota Tidak di temukan!"
-                    })
-                }else{
-                    $("#nm_peminjam").val(item.nm_peminjam);
-                    $("#kelas").val(item.kelas);
-                    $("#keterangan").val(item.keterangan);
-                    $("#tgl_pinjam").val(item.tgl_pinjam);
-                    $("#tgl_kembali").val(item.tgl_kembali);
-                    var tglKembali = item.tgl_kembali;
-                    var tglKembaliObj = new Date(tglKembali);
-                    var today = new Date();
-                    if (tglKembaliObj > today) {
-                        var hariIni = today.getDay();
-                        var selisihHari = Math.floor((tglKembaliObj - today) / (1000 * 60 * 60 * 24));
-                        var denda = selisihHari * 1000;
-                        if (hariIni !== 0 && hariIni !== 6) {
-                            $("#denda").val(denda);
-                        } 
+                        if (item.length == 0) {
+                            Swal.fire({
+                                icon: "error",
+                                text: "Data Anggota Tidak di temukan!"
+                            })
+                        } else {
+                            console.log(item.peminjam)
+                            $.each(item.peminjam, function(index, value) {
+                                $("#nm_peminjam").val(value.nm_lengkap);
+                                $("#nm_kelas").val(value.nm_kelas);
+                                $("#id_kelas").html(value.id_kelas);
+                                $("#tgl_pinjam").val(moment(value.tgl_pinjam,"YYYY-MM-DD").format("DD-MM-YYYY"));
+                                $("#tgl_kembali").val(moment(value.tgl_kembali,"YYYY-MM-DD").format("DD-MM-YYYY"));
+                                var tglKembali = value.tgl_kembali;
+                                var tglKembaliObj = new Date(tglKembali);
+                                $("#list_buku").html("")
+                                var today = new Date();
+                                console.log(tglKembaliObj, today)
+                                if (tglKembaliObj !== today) {
+                                    var hariIni = today.getDay();
+                                    var selisihHari = Math.floor((today - tglKembaliObj) / (1000 * 60 * 60 *
+                                        24));
+                                    var denda = selisihHari * 1000;
+                                    $("#keterlambatan").val(selisihHari);
+                                    if (hariIni !== 0 && hariIni !== 6) {
+                                        $("#denda").val(denda);
+                                    }
+                                }
+                            });
+                        }
                     }
-                }
-            }
-        }).fail(function(err) {
-            Swal.fire({
-                icon: 'error',
-                title: 'Oops...',
-                text: "Terjadi Kesalahan",
-            })
-        })
-    }
-
-    $(document).ready(function() {
-            $('#denda').on('keyup', function() {
-                var denda = $('#denda').val();
-                var diskon = $('#diskon').val();
-                var total = denda - diskon;
-                $('#total').val(total.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1."));
-            });
-            $('#diskon').on('keyup', function() {
-                var denda = $('#denda').val();
-                var diskon = $('#diskon').val();
-                var total = denda - diskon;
-                $('#total').val(total.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1."));
-            });
-
-    });
-
-    function simpan_pengembalian(){
-
-        let id_anggota          = $("#id_anggota").val()
-        let denda               = &("#denda").val()
-        let tgl_pengembalian    = $("#tgl_pengembalian").val()
-
-        $.ajax({
-            type : "POST",
-            data : {
-                id_anggota       : id_anggota,
-                id_petugas       : id_petugas,
-                tgl_pengembalian : tgl_pengembalian,
-                denda            : denda, 
-            },
-            beforeSend : function(){
-                console.log("Loading...")
-            },success : function(data){
-                if (data.success==true){
+                }).fail(function(err) {
                     Swal.fire({
-                        icon    : "success",
-                        title   : "Berhasil Tersimpan"
-                        text    : "Data berhasil tersimpan!"
+                        icon: 'error',
+                        title: 'Oops...',
+                        text: "Terjadi Kesalahan",
                     })
-                    window.assign("{{ route('list_peminjaman') }}")
-                }else{
-                    Swal.fire({
-                        icon : "error",
-                        title : "Gagal Tersimpan"
-                        text : "Terjadi kesalahan dalam proses menyimpan"
-                    })
-                }
+                })
             }
-        }).fail(function(err){
-            Swal.fire({
-                icon : "error",
-                title : "Terjadi Kesalahan",
-                text : "Terjadi kesalahan, Harap check kembali dalam proses meyimpan"
-            })
-        })
 
-    }
-    </script>
+            $(document).ready(function() {
+                $('#denda').on('keyup', function() {
+                    var denda = $('#denda').val();
+                    var diskon = $('#diskon').val();
+                    var total = denda - diskon;
+                    $('#total').val(total.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1."));
+                });
+                $('#diskon').on('keyup', function() {
+                    var denda = $('#denda').val();
+                    var diskon = $('#diskon').val();
+                    var total = denda - diskon;
+                    $('#total').val(total.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1."));
+                });
+
+            });
+
+            function simpan_pengembalian() {
+
+                let id_anggota = $("#id_anggota").val()
+                let denda = $("#denda").val()
+                let tgl_pengembalian = $("#tgl_pengembalian").val()
+
+                $.ajax({
+                    type: "POST",
+                    data: {
+                        id_anggota: id_anggota,
+                        id_petugas: id_petugas,
+                        tgl_pengembalian: tgl_pengembalian,
+                        denda: denda,
+                    },
+                    beforeSend: function() {
+                        console.log("Loading...")
+                    },
+                    success: function(data) {
+                        if (data.success == true) {
+                            Swal.fire({
+                                icon: "success",
+                                title: "Berhasil Tersimpan",
+                                text: "Data berhasil tersimpan!"
+                            })
+                            window.assign("{{ route('list_peminjaman') }}")
+                        } else {
+                            Swal.fire({
+                                icon: "error",
+                                title: "Gagal Tersimpan",
+                                text: "Terjadi kesalahan dalam proses menyimpan"
+                            })
+                        }
+                    }
+                }).fail(function(err) {
+                    Swal.fire({
+                        icon: "error",
+                        title: "Terjadi Kesalahan",
+                        text: "Terjadi kesalahan, Harap check kembali dalam proses meyimpan"
+                    })
+                })
+
+            }
+        </script>
 
 
 </x-app-layout>

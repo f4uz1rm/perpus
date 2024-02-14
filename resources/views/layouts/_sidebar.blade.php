@@ -1,11 +1,9 @@
 <nav class="sidebar" x-data="{ open: false }">
     <div class="sidebar-header d-flex justify-content-between">
-        <a href="#" class="sidebar-brand ">
+        <a href="#" class="sidebar-brand">
             {{-- E-Perpus --}}
-            <div class="">
                 <img src="{{ asset('assets/images/logo-ponpes.png') }}" alt="" width="50px">
-                Miftahul'ulum
-            </div>
+                {{-- Miftahul'ulum --}}
         </a>
         <div class="sidebar-toggler not-active">
             <span></span>

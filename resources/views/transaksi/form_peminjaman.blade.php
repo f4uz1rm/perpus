@@ -78,7 +78,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="row mb-3">
+                    {{-- <div class="row mb-3">
                         <label for="keterangan" class="col-sm-3 col-form-label">Keterangan Lain</label>
                         <div class="col-sm">
                             <div class="input-group">
@@ -86,7 +86,7 @@
                                     placeholder="Keterangan Lain">
                             </div>
                         </div>
-                    </div>
+                    </div> --}}
                 </div>
 
             </div>
