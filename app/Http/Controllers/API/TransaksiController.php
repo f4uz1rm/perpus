@@ -113,26 +113,50 @@ class TransaksiController extends Controller
     }
     function get_pengembalian(Request $request)
     {
-        if ($request->input('id_anggota') != "") {
-            $get_peminjaman = t_peminjaman::leftJoin('m_kelas', 'm_kelas.id', '=', 't_peminjaman.id_kelas')
-                ->leftJoin('m_anggota', 'm_anggota.id', '=', 't_peminjaman.id_anggota')
-                ->select('t_peminjaman.*', 'm_kelas.nm_kelas', 'm_anggota.nm_lengkap')
-                ->get();
-            $list_pengembalian["peminjam"] = $get_peminjaman;
-            $list_pengembalian["buku"] = t_peminjaman_detail::where('id', $get_peminjaman[0]['id'])->get();
-            return response()->json([
-                'success'   => true,
-                'data'      => $list_pengembalian,
-            ], 200);
-        } else {
-            $t_pengembalian = t_pengembalian::leftJoin('m_anggota', 'm_anggota.id', '=', 't_pengembalian.id_anggota')
-            ->select('t_pengembalian.*', 'm_anggota.nm_lengkap','m_anggota.id_kelas')
-            ->get();
-            return response()->json([
-                'success'   => true,
-                'message'   => 'Data peminjaman',
-                'data'      => $t_pengembalian,
-            ], 200);
+        switch ($request->input('is_metode')) {
+            case "ambil":
+                $get_peminjaman = t_peminjaman::leftJoin('m_kelas', 'm_kelas.id', '=', 't_peminjaman.id_kelas')
+                    ->leftJoin('m_anggota', 'm_anggota.id', '=', 't_peminjaman.id_anggota')
+                    ->select('t_peminjaman.*', 'm_kelas.nm_kelas', 'm_anggota.nm_lengkap')->where('t_peminjaman.id_anggota', $request->input('id_anggota'))
+                    ->get();
+
+                if ($get_peminjaman->count() == 0) {
+                    return response()->json([
+                        'success'   => false,
+                        'message'   => 'Data peminjaman tidak di temukan',
+                    ], 200);
+                } else {
+
+                    $list_pengembalian["peminjam"] = $get_peminjaman;
+                    $list_pengembalian["buku"] = t_peminjaman_detail::leftJoin('m_buku', 'm_buku.kd_buku', '=', 't_peminjaman_detail.kd_buku')
+                        ->select('t_peminjaman_detail.*', 'm_buku.judul')
+                        ->where('t_peminjaman_detail.id', $get_peminjaman[0]['id'])->get();
+
+                    // where('id', $get_peminjaman[0]['id'])->get();
+                    return response()->json([
+                        'success'   => true,
+                        'data'      => $list_pengembalian,
+                    ], 200);
+                }
+
+                break;
+            case "daftar":
+                $t_pengembalian = t_pengembalian::leftJoin('m_anggota', 'm_anggota.id', '=', 't_pengembalian.id_anggota')
+                    ->select('t_pengembalian.*', 'm_anggota.nm_lengkap', 'm_anggota.id_kelas')
+                    ->get();
+                return response()->json([
+                    'success'   => true,
+                    'message'   => 'Data peminjaman',
+                    'data'      => $t_pengembalian,
+                ], 200);
+                break;
+
+            default:
+                return [
+                    "success" => false,
+                    "message" => "Metode tidak di temukan",
+                ];
+                break;
         }
     }
 

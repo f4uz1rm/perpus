@@ -10,8 +10,11 @@
                         <div class="col-sm">
                             <div class="input-group">
                                 <input type="text" class="form-control" id="id_anggota" placeholder="Kode Anggota">
-                                <span class="input-group-text">
+                                <span class="input-group-text" id="btn-search">
                                     <i class="icon-sm" data-feather="search"></i>
+                                </span>
+                                <span class="input-group-text">
+                                    <i class="icon-sm" data-feather="camera" id="btn-camera"></i>
                                 </span>
                             </div>
                         </div>
@@ -57,9 +60,9 @@
                     Buku yang dipinjam
                 </label>
             </div>
-            <div class="" id="list_buku">
+            <div id="lit_peminjaman_buku">
                 @for ($i = 0; $i < 5; $i++)
-                    <div class="row ">
+                    {{-- <div class="row ">
                         <div class="col-sm">
                             <div class="row mb-3">
                                 <div class="col-sm">
@@ -74,7 +77,7 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </div> --}}
                 @endfor
             </div>
             <hr>
@@ -102,11 +105,11 @@
                         <label for="tgl_pengembalian" class="col-sm-3 col-form-label">Tanggal Pengembalian</label>
                         <div class="col-sm">
                             <div class="input-group">
-                                <input type="text" class="form-control text-center" placeholder="DD-MM-YYYY"
-                                    value="{{ date('d-m-Y') }}" readonly>
-                                <span class="input-group-text">
+                                <input type="date" class="form-control text-center" placeholder="DD-MM-YYYY"
+                                    id="tgl_pengembalian" value="{{ date('Y-m-d') }}">
+                                {{-- <span class="input-group-text">
                                     <i class="icon-sm" data-feather="calendar"></i>
-                                </span>
+                                </span> --}}
                             </div>
                         </div>
                     </div>
@@ -114,7 +117,8 @@
                         <label for="keterlambatan" class="col-sm-3 col-form-label">Keterlambatan</label>
                         <div class="col-sm">
                             <div class="input-group">
-                                <input type="text" class="form-control" placeholder="0" value="0" readonly id="keterlambatan">
+                                <input type="text" class="form-control" placeholder="0" value="0" readonly
+                                    id="keterlambatan">
                                 <span class="input-group-text ">
                                     Hari
                                 </span>
@@ -186,12 +190,10 @@
 
         <script>
             $("#id_anggota").on("change", function() {
-                    get_peminjam($(this).val());
+                get_peminjam($(this).val());
             });
-            $("#id_anggota").on("keypress", function() {
-                if (event.keyCode === 13) {
-                    get_peminjam($(this).val());
-                }
+            $("#btn-search").on("click", function() {
+                get_peminjam($("#id_anggota").val());
             });
 
             function get_peminjam(kd_anggota) {
@@ -199,12 +201,12 @@
                     type: "GET",
                     url: "{{ route('get_pengembalian') }}",
                     data: {
-                        id_anggota: kd_anggota
+                        id_anggota: kd_anggota,
+                        is_metode: "ambil"
                     },
                     beforeSend: function() {
                         $("#nm_peminjam").val("Loading...");
                         $("#kelas").val("Loading...");
-                        // $("#keterangan").val("Loading...");
                         $("#list_buku").html("")
                         Swal.fire({
                             title: 'Loading',
@@ -223,25 +225,54 @@
                         let item = data.data;
                         Swal.close()
 
-                        if (item.length == 0) {
+                        if (data.success == false) {
                             Swal.fire({
                                 icon: "error",
                                 text: "Data Anggota Tidak di temukan!"
                             })
+
+                            $("#nm_peminjam").val("");
+                            $("#kelas").val("");
+                            $("#list_buku").html("")
                         } else {
-                            console.log(item.peminjam)
+
+                            let list_buku = "";
+
+                            $.each(item.buku, function(index, value) {
+                                list_buku += ` <div class="row ">`;
+                                list_buku += ` <div class="col-sm">`;
+                                list_buku += ` <div class="row mb-3">`;
+                                list_buku += ` <div class="col-sm">`;
+                                list_buku += ` <div class="input-group">`;
+                                list_buku += ` <span class="input-group-text">${value.kd_buku}</span>`;
+                                list_buku += ` <input type="text" class="form-control" id="judul"`;
+                                list_buku += ` placeholder="Judul Buku" value="${value.judul}" readonly>`;
+                                list_buku += ` <span class="input-group-text ">`;
+                                list_buku += ` ${value.qty}`;
+                                list_buku += ` </span>`;
+                                list_buku += ` </div>`;
+                                list_buku += ` </div>`;
+                                list_buku += ` </div>`;
+                                list_buku += ` </div>`;
+                                list_buku += ` </div>`;
+
+                            });
+                            $("#lit_peminjaman_buku").html(list_buku)
+
                             $.each(item.peminjam, function(index, value) {
                                 $("#nm_peminjam").val(value.nm_lengkap);
                                 $("#nm_kelas").val(value.nm_kelas);
                                 $("#id_kelas").html(value.id_kelas);
-                                $("#tgl_pinjam").val(moment(value.tgl_pinjam,"YYYY-MM-DD").format("DD-MM-YYYY"));
-                                $("#tgl_kembali").val(moment(value.tgl_kembali,"YYYY-MM-DD").format("DD-MM-YYYY"));
+                                $("#tgl_pinjam").val(moment(value.tgl_pinjam, "YYYY-MM-DD").format(
+                                    "DD-MM-YYYY"));
+                                $("#tgl_kembali").val(moment(value.tgl_kembali, "YYYY-MM-DD").format(
+                                    "DD-MM-YYYY"));
                                 var tglKembali = value.tgl_kembali;
                                 var tglKembaliObj = new Date(tglKembali);
                                 $("#list_buku").html("")
-                                var today = new Date();
-                                console.log(tglKembaliObj, today)
-                                if (tglKembaliObj !== today) {
+
+                                var today = new Date($("#tgl_pengembalian").val());
+                                if (tglKembaliObj !== today && tglKembaliObj < today) {
                                     var hariIni = today.getDay();
                                     var selisihHari = Math.floor((today - tglKembaliObj) / (1000 * 60 * 60 *
                                         24));
@@ -252,6 +283,31 @@
                                     }
                                 }
                             });
+
+                            $("#tgl_pengembalian").on("change", function() {
+                                var tglKembali = $("#tgl_kembali").val();
+                                var tglKembaliObj = moment(tglKembali, "DD-MM-YYYY").format("DD-MM-YYYY");
+                                var today = moment($(this).val(), "YYYY-MM-DD").format("DD-MM-YYYY");
+
+                                console.log(tglKembaliObj, today)
+                                if (tglKembaliObj !== today && tglKembaliObj < today) {
+                                    var hariIni = moment(today, "DD-MM-YYYY").format("d");
+                                    var selisihHari = Math.floor((today - tglKembaliObj) / (1000 * 60 * 60 *
+                                        24));
+                                    var denda = selisihHari * 1000;
+
+                                    console.log(hariIni, selisihHari, denda)
+                                    $("#keterlambatan").val(selisihHari);
+                                    if (hariIni !== 0 && hariIni !== 6) {
+                                        $("#denda").val(denda);
+                                    }
+                                } else {
+                                    $("#keterlambatan").val(0);
+                                    $("#denda").val(0);
+                                }
+                            })
+
+
                         }
                     }
                 }).fail(function(err) {
@@ -322,6 +378,8 @@
 
             }
         </script>
+
+        <script></script>
 
 
 </x-app-layout>

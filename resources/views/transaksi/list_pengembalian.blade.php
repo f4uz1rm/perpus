@@ -40,6 +40,9 @@
             $.ajax({
                 type: "GET",
                 url: "{{ route('get_pengembalian') }}",
+                data : {
+                    is_metode : "daftar"
+                },
 
                 beforeSend: function() {
                     $("#tbody-pengembalian").html(`
