@@ -40,15 +40,7 @@
 
                         </div>
                     </div>
-                    {{-- <div class="row mb-3">
-                        <label for="keterangan" class="col-sm-3 col-form-label">Keterangan</label>
-                        <div class="col-sm">
-                            <div class="input-group">
-                                <input id="keterangan" type="text" class="form-control" placeholder="Keterangan"
-                                    readonly> </input>
-                            </div>
-                        </div>
-                    </div> --}}
+              
                 </div>
 
             </div>
@@ -60,26 +52,7 @@
                     Buku yang dipinjam
                 </label>
             </div>
-            <div id="lit_peminjaman_buku">
-                @for ($i = 0; $i < 5; $i++)
-                    {{-- <div class="row ">
-                        <div class="col-sm">
-                            <div class="row mb-3">
-                                <div class="col-sm">
-                                    <div class="input-group">
-                                        <span class="input-group-text">Kode Buku</span>
-                                        <input type="text" class="form-control" id="judul"
-                                            placeholder="Judul Buku" readonly>
-                                        <span class="input-group-text ">
-                                            Qty
-                                        </span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div> --}}
-                @endfor
-            </div>
+         
             <hr>
             <div class="alert alert-info ">
                 <i class="icon-sm" data-feather="info"></i>
@@ -107,9 +80,7 @@
                             <div class="input-group">
                                 <input type="date" class="form-control text-center" placeholder="DD-MM-YYYY"
                                     id="tgl_pengembalian" value="{{ date('Y-m-d') }}">
-                                {{-- <span class="input-group-text">
-                                    <i class="icon-sm" data-feather="calendar"></i>
-                                </span> --}}
+                            
                             </div>
                         </div>
                     </div>
@@ -230,10 +201,17 @@
                                 icon: "error",
                                 text: "Data Anggota Tidak di temukan!"
                             })
-
                             $("#nm_peminjam").val("");
-                            $("#kelas").val("");
+                            $("#nm_kelas").val("");
+                            $("#id_kelas").html("");
                             $("#list_buku").html("")
+                            $("#tgl_kembali").val("");
+                            $("#tgl_pinjam").val("");
+                            $("#denda").val("");
+                            $("#keterlambatan").val("");
+                            $("#diskon").val("");
+                            $("#total").val("");
+
                         } else {
 
                             let list_buku = "";
@@ -245,8 +223,7 @@
                                 list_buku += ` <div class="col-sm">`;
                                 list_buku += ` <div class="input-group">`;
                                 list_buku += ` <span class="input-group-text">${value.kd_buku}</span>`;
-                                list_buku += ` <input type="text" class="form-control" id="judul"`;
-                                list_buku += ` placeholder="Judul Buku" value="${value.judul}" readonly>`;
+                                list_buku += ` <input type="text" class="form-control" id="judul" placeholder="Judul Buku" value="${value.judul}" readonly>`;
                                 list_buku += ` <span class="input-group-text ">`;
                                 list_buku += ` ${value.qty}`;
                                 list_buku += ` </span>`;

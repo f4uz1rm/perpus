@@ -11,7 +11,7 @@
                 <i class="icon-sm" data-feather="plus"></i>
                 Tambah Data</a>
         </div>
-        <div class="card-body py-0">
+        <div class="card-body pt-0">
             <div class="table-responsive">
                 <x-table id="table-pengembalian">
                     <thead>

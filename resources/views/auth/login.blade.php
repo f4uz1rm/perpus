@@ -53,25 +53,19 @@
     <div class="page-content d-flex align-items-center justify-content-center"
     style="background-image: url({{ asset('assets/images/bg-library.jpg') }}); background-size: cover; background-position: center;"  
     >
-       {{--  style="background-image: url({{ asset('assets/images/bg-library.jpg') }}); background-size: cover; background-position: center;" --}}
         <form method="POST" action="{{ route('login') }}">
             @csrf
-            <div class="card">
+            <div class="card rounded-lg">
                 <div class="row">
                     <div class="col-md-12 ps-md-0">
                         <div class="auth-form-wrapper px-4 py-2">
-                            {{-- <a href="#" class="noble-ui-logo d-block mb-2">Sistem Informasi<span
-                                    class="ml-1">Perpustakaan</span></a> --}}
                             <div class="d-flex justify-content-center mb-3">
                                 <img src="{{ asset('assets/images/logo-ponpes.png') }}" alt="Logo Miftahul Ulum"
-                                    width="200px">
+                                    width="150px">
                             </div>
                             <div class="d-flex justify-content-center mb-3">
                                 <h6 class="text-center">Selamat datang di Perpustakaan Miftahul'ulum </h6>
                             </div>
-                            {{-- <h6 class="alert alert-info">Silahkan login menggunakan
-                                akun
-                                yang terdaftar.</h6> --}}
                             <form class="forms-sample">
                                 <div class="mb-3">
                                     <label for="email" class="form-label">Email</label>
