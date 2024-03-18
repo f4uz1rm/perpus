@@ -1,9 +1,11 @@
 <nav class="sidebar" x-data="{ open: false }">
     <div class="sidebar-header d-flex justify-content-between">
-        <a href="#" class="sidebar-brand">
+        <a href="{{ route('dashboard') }}" class="sidebar-brand">
             {{-- E-Perpus --}}
-                {{-- <img src="{{ asset('assets/images/logo-ponpes.png') }}" alt="" width="50px"> --}}
+            {{-- <img src="{{ asset('assets/images/logo-ponpes.png') }}" alt="" width="50px"> --}}
+            <h5>
                 Miftahul'ulum
+            </h5>
         </a>
         <div class="sidebar-toggler not-active">
             <span></span>
@@ -56,7 +58,7 @@
                     <span class="link-title">Data Anggota </span>
                 </a>
             </li>
-          
+
             <li class="nav-item">
                 <a href="{{ route('list_pengunjung') }}" class="nav-link">
                     <i class="link-icon" data-feather="user-check"></i>
@@ -88,7 +90,7 @@
                     <span class="link-title">Data Rak Buku</span>
                 </a>
             </li>
-          
+
 
             <li class="nav-item nav-category">Laporan <span class="badge bg-primary text-light">Dev</span></li>
             <li class="nav-item">

@@ -29,8 +29,8 @@
                         <label for="kd_anggota" class="col-sm-3 col-form-label">Kode Anggota</label>
                         <div class="col-sm">
                             <div class="input-group">
-                                <input type="text" class="form-control" id="kd_anggota" placeholder="Kode Anggota" tabindex="1"
-                                    readonly>
+                                <input type="text" class="form-control" id="kd_anggota" placeholder="Kode Anggota"
+                                    tabindex="1" readonly>
                             </div>
                         </div>
                     </div>
@@ -94,7 +94,8 @@
             <div class="mb-3">
                 <label for="kd_buku" class="form-label">Kode Buku</label>
                 <div class="input-group">
-                    <input type="search" class="form-control" id="kd_buku" placeholder="Masukan Kode Buku" tabindex="3">
+                    <input type="search" class="form-control" id="kd_buku" placeholder="Masukan Kode Buku"
+                        tabindex="3">
                     <span class="input-group-text" id="btn-camera">
                         <i class="icon-sm" data-feather="camera"></i>
                     </span>
@@ -132,7 +133,7 @@
                 <h5 class="modal-title" id="modalCameraLabel">Scan Barcode</h5>
                 <button type="button" data-feather="x" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <div class="modal-body">
+            <div class="modal-body d-flex justify-content-center">
                 <div style="width: 500px" id="reader"></div>
 
             </div>
@@ -197,11 +198,14 @@
                         exact: "environment"
                     },
                     fps: 10,
-                    qrbox: 150,
+                    qrbox: {
+                        width: 400,
+                        height: 150
+                    },
                     aspectRatio: 1.0,
-                    disableFlip: false,
+                    disableFlip: true,
                 },
-                qrCodeMessage => {
+                qrCodeMessage  => {
 
                     Swal.fire({
                         icon: 'success',
@@ -210,28 +214,32 @@
                         timer: 2000,
                     }).then((result) => {})
                     getCameras();
-
-
                     html5QrcodeScanner.stop().then(ignore => {
+
                         // Scanner berhenti
                     }).catch(err => {
                         console.error(err);
                     });
                 },
                 errorMessage => {
-                    console.error(errorMessage);
+                    // console.error(errorMessage);
                 })
             .catch(err => {
                 console.log(err);
             });
     }
+
+    function onScanSuccess(decodedText, decodedResult) {
+  // Handle the scanned code as you like, for example:
+  console.log(`Code matched = ${decodedText}`, decodedResult);
+}
 </script>
 
 
 <script>
     $("#btn-camera").on("click", function() {
-        $("#modalCamera").modal("show");
         getCameras();
+        $("#modalCamera").modal("show");
     })
 </script>
 
